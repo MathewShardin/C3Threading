@@ -31,10 +31,10 @@ The application will be able to:
 ## MoSCoW Analysis
 | Priority    | Task                                        |
 | ----------- | ------------------------------------------- |
-| Must have   | GUI, Displaying number of hotels through database,
-                                          Displaying hotels |
+| Must have   | GUI, Displaying number of hotels through database, Displaying hotels |
 | Should have | Distance between hotels using Google API    |
 | Could have  | Distance between hotels using Google API    |
-| Wont have   | Booking hotels inside the app               |
+| Won't have  | Booking hotels inside the app               |
+
 
 
