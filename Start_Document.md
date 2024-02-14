@@ -35,3 +35,35 @@ The application will be able to:
 | Should have | Distance between hotels using Google API    |
 | Could have  | Time between hotels using Google API <br> Getting coordinates of a city <br> CSV entries entered with asynchronous IO <br> Search for the name of a hotel using async <br>       |
 | Won't have  | Booking hotels inside the app               |
+
+
+
+### Input
+
+| Case       | Type     | Conditions   |
+| ---------- | -------- | ------------ |
+| Hotel      | `String` | not empty    |
+| Location   | `String` | not empty    |
+| CSV Import | `CSV`    | valid format |
+| JSON file  | `JSON`   | valid format |
+
+### Output
+
+| Case         | Type           |
+| ------------ | -------------- |
+| LocationStop | `LocationStop` |
+| Trip         | `Trip`         |
+
+### Calculations
+
+| Case                    | Calculation   |
+| ----------------------- | ------------- |
+| CalculateTotalTripPrice | `Price*Price` |
+| SplittingCsv            | `Division`    |
+| SortingHotels           | `Comparison`  |
+
+### Remarks
+
+- Input will be validated
+- Players with the same username cannot connect
+- Lobby can be created only once with the same code
