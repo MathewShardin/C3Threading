@@ -26,17 +26,12 @@ The application will be able to:
 
 
 ## Class Diagram
-
+![Trip_Buddy_Class_Diagram.png](Trip_Buddy_Class_Diagram.png)
 
 ## MoSCoW Analysis
 | Priority    | Task                                        |
 | ----------- | ------------------------------------------- |
-| Must have   | GUI, Displaying number of hotels			|
-| Must Have   | Based on the selection of  the location threading will be used to write in a JSON file |
-| Must Have   | Import trip into program from a file, using a locking method to make sure they dont write to it at the same time | |
-| Could have  | Time between hotels using Google API        |
-| Could Have  | Getting coordinates of a city               |
-| Could Have  | CSV entries entered with asynchronous IO    |
-| Could Have  | Search for the name of a hotel using async  |
+| Must have   | GUI <br> Displaying number of hotels <br> Based on the selection of  the location threading will be used to write in a JSON file <br> Import trip into program from a file, using a locking method to make sure they dont write to it at the same time <br> 	    |
 | Should have | Distance between hotels using Google API    |
+| Could have  | Time between hotels using Google API <br> Getting coordinates of a city <br> CSV entries entered with asynchronous IO <br> Search for the name of a hotel using async <br>       |
 | Won't have  | Booking hotels inside the app               |
