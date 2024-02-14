@@ -17,12 +17,9 @@ Using the application users can:
 - Interact with an app using a UI MAUI interface
 
 The application will be able to:
-- Contain a DB with hotel information
-- Parse a CSV file with hotel information into an internal DB (MSSQL)
+- Parse a CSV file with hotel information into a custom class objects
 - Sort hotels based on user preference
 - Display graphs that outline hotel prices per city
-
-## Input & Output
 
 
 ## Class Diagram
@@ -36,8 +33,7 @@ The application will be able to:
 | Could have  | Time between hotels using Google API <br> Getting coordinates of a city <br> CSV entries entered with asynchronous IO <br> Search for the name of a hotel using async <br>       |
 | Won't have  | Booking hotels inside the app               |
 
-
-
+## Input & Output
 ### Input
 
 | Case       | Type     | Conditions   |
@@ -63,7 +59,13 @@ The application will be able to:
 | SortingHotels           | `Comparison`  |
 
 ### Remarks
-
 - Input will be validated
-- Players with the same username cannot connect
-- Lobby can be created only once with the same code
+
+## GUI Sketches
+Main window of the application
+![GUI_Skecth.png](GUI_Skecth.png)
+
+Drop down context menus
+![Menu_Sketch.png](Menu_Sketch.png)
+
+
