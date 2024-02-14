@@ -31,10 +31,12 @@ The application will be able to:
 ## MoSCoW Analysis
 | Priority    | Task                                        |
 | ----------- | ------------------------------------------- |
-| Must have   | GUI, Displaying number of hotels through database, Displaying hotels |
+| Must have   | GUI, Displaying number of hotels			|
+| Must Have   | Based on the selection of  the location threading will be used to write in a JSON file |
+| Must Have   | Import trip into program from a file, using a locking method to make sure they dont write to it at the same time | |
+| Could have  | Time between hotels using Google API        |
+| Could Have  | Getting coordinates of a city               |
+| Could Have  | CSV entries entered with asynchronous IO    |
+| Could Have  | Search for the name of a hotel using async  |
 | Should have | Distance between hotels using Google API    |
-| Could have  | Distance between hotels using Google API    |
 | Won't have  | Booking hotels inside the app               |
-
-
-
