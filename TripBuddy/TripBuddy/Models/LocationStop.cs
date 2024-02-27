@@ -8,5 +8,19 @@ namespace TripBuddy.Models
 {
     internal class LocationStop
     {
+        // This class defines a place where a user wants to stay
+
+        public Hotel Hotel { get; set; }
+
+        public DateTime date { get; set; }
+
+        // Constructor
+
+        public LocationStop(Hotel hotel, DateTime date)
+        {
+            Hotel = hotel;
+            this.date = date;
+        }
+
     }
 }
