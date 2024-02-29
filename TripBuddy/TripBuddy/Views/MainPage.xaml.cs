@@ -1,9 +1,9 @@
-﻿namespace TripBuddy
+﻿using TripBuddy.Models;
+
+namespace TripBuddy
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
-
         public MainPage()
         {
             InitializeComponent();
@@ -11,12 +11,8 @@
 
         private void OnCounterClicked(object sender, EventArgs e)
         {
-            count++;
-
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
+            var file = CsvAccessor.ReadCsvFile();
+            CounterBtn.Text = $"text changed";
 
             SemanticScreenReader.Announce(CounterBtn.Text);
         }

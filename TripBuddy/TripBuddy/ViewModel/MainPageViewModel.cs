@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TripBuddy.Models;
 
 namespace TripBuddy.ViewModel
 {
@@ -13,11 +14,7 @@ namespace TripBuddy.ViewModel
         public MainPageViewModel()
         {
             Count = 0;
-        }
-
-        public void IncrementCount()
-        {
-            Count++;
+            CsvAccessor.ReadCsvFile();
         }
     }
 }

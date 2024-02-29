@@ -6,21 +6,23 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Reflection;
 using Microsoft.Maui.Storage;
+using System.Diagnostics;
 
 namespace TripBuddy.Models
 {
     internal static class CsvAccessor
     {
-        const string CSVFILENAME = "hotelbookingdata";
+        const string CSVFILENAME = "hotelbookingdata.csv";
+        const string FOLDERRESOURCES = @"/Resources/Csv/";
 
         //Method returns a list of arrays with string objects inside (2 dimensional array/Table) 
         public static List<string[]> ReadCsvFile()
         {
             // Get dynamic file path to a CSV file with hotel info
-            var assembly = Assembly.GetExecutingAssembly();
-            var resourceName = $"{assembly.GetName().Name}.Resources.Csv.{CSVFILENAME}";
-            var filePath = assembly.GetManifestResourceStream(resourceName)?.ToString() ?? string.Empty;
+            string workingDirectory = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\..\\..\\"));
+            string filePath = workingDirectory + FOLDERRESOURCES + CSVFILENAME;
 
+            //Checks if the string is not null
             if (string.IsNullOrEmpty(filePath)) { return null; }
 
             try
@@ -34,9 +36,10 @@ namespace TripBuddy.Models
                         data.Add(line.Split(','));
                     }
                 }
-                // Also contains header!!!
+                //Also contains header!!!
                 return data;
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine($"Error reading CSV data: {ex.Message}");
                 return null;
