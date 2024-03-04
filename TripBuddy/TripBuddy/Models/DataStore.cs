@@ -13,33 +13,51 @@ namespace TripBuddy.Models
         // This class contains hotel information from the csv file
 
         public List<Hotel> HotelCatalogue { get; set; }
+        public List<City> CityCatalogue { get; set; }
 
 
         // Constructor
         public DataStore()
         {
             HotelCatalogue = new List<Hotel>();
+            CityCatalogue = new List<City>();
         }
 
         public void AddHotel(Hotel hotel)
         {
             HotelCatalogue.Add(hotel);
         }
+        public void AddCity(City cityInp)
+        {
+            CityCatalogue.Add(cityInp);
+        }
+        public City GetCityByName(string cityName)
+        {
+            //TODO MAKE THIS MORE EFFICIENT
+            // Find the city in the list
+            foreach (City entry in CityCatalogue)
+            {
+                if (entry.Name == cityName) { return entry; }
+            }
 
-        //public void ParseFromCsv()
-        //{
-        //    // Read the CSV file
-        //    List<string[]> csvEntries = CsvAccessor.ReadCsvFile();
-        //    // Parse the data into custom objects type Hotel
-        //    var customers = csvEntries.Skip(1) // Skip the header row
-        //                         .AsParallel()
-        //                         .Select(line =>
-        //                         {
-        //                             Hotel tempHotel = new Hotel(line[1], line[]);
-        //                         });
+            // If it doesn't exist make a new City object and save it
+            City cityTemp = new City(cityName);
+            AddCity(cityTemp);
+            // Return last inserted element
+            return CityCatalogue.Last();
+        }
 
-
-        //}
+        public void ParseFromCsv()
+        {
+            // read the csv file
+            List<string[]> csventries = CsvAccessor.ReadCsvFile();
+            // parse the data into custom objects type hotel
+            List<Hotel> hotels = csventries.AsParallel().Skip(1)
+                       .Select(data => new Hotel(data[1], Convert.ToDouble(data[4]), GetCityByName(data[7]), data[3], Convert.ToInt32(data[0])))
+                       .ToList();
+            // save the list of ojects into the field
+            HotelCatalogue = hotels;
+        }
 
     }
 }

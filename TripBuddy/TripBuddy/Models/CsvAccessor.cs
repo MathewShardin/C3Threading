@@ -12,8 +12,9 @@ namespace TripBuddy.Models
 {
     internal static class CsvAccessor
     {
-        const string CSVFILENAME = "hotelbookingdata.csv";
+        const string CSVFILENAME = "HotelFinalDataset.csv";
         const string FOLDERRESOURCES = @"/Resources/Csv/";
+        const string CITYCSVFILENAME = "worldcities.csv";
 
         //Method returns a list of arrays with string objects inside (2 dimensional array/Table) 
         public static List<string[]> ReadCsvFile()
@@ -44,6 +45,23 @@ namespace TripBuddy.Models
                 Console.WriteLine($"Error reading CSV data: {ex.Message}");
                 return null;
             }
+        }
+
+        //TO DO FINISH PROPER PLINQ
+        public static string[] GetCityInfo(string cityName)
+        {
+            // Get dynamic file path to a CSV file with hotel info
+            string workingDirectory = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\..\\..\\"));
+            string filePath = workingDirectory + FOLDERRESOURCES + CITYCSVFILENAME;
+
+            var csvLines = File.ReadLines(filePath)
+                   .AsParallel()
+                   .Where(line =>
+                   {
+                       var columns = line.Split(',');
+                       return columns[0].Trim() == cityName;
+                   });
+            return null;
         }
     }
 }

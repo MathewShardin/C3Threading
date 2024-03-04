@@ -1,4 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
+using System.Diagnostics;
+using TripBuddy.Models;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -17,6 +19,8 @@ namespace TripBuddy.WinUI
         public App()
         {
             this.InitializeComponent();
+            City city1 = new City("Zwolle");
+            Debug.WriteLine(city1.Name);
         }
 
         protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
