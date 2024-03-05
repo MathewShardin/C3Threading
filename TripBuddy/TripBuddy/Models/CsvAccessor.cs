@@ -53,7 +53,6 @@ namespace TripBuddy.Models
             }
         }
 
-        //TO DO FINISH PROPER PLINQ
         // Returns info about a city from a flat CSV file based on given cityName
         public static string[] GetCityInfo(string cityName)
         {

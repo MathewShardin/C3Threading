@@ -34,7 +34,6 @@ namespace TripBuddy.Models
             {
                 Country = "Netherlands";
                 Coordinates = "52.3728:4.8936"; // AMS lat and long
-                   
             }
         }
 
