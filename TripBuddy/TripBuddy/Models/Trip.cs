@@ -22,6 +22,19 @@ namespace TripBuddy.Models
             Stops = new HashSet<LocationStop>();
         }
 
+        public bool AddStop(LocationStop stop)
+        {
+            if (stop != null)
+            {
+                Stops.Add(stop);
+            }
+            else
+            {
+                return false;
+            }
+            return true;
+        }
+
         public void calculateTotalPrice()
         {
             double sum = 0;

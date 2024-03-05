@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
+using System.Diagnostics;
 
 
 namespace TripBuddy.Models
@@ -19,9 +20,16 @@ namespace TripBuddy.Models
             this.trip = trip;
         }
 
-        public async void makeJSON()
+        public async void MakeJsonAsync()
         {
-                        
+            string jsonString = JsonSerializer.Serialize(trip);
+            Debug.WriteLine(jsonString);
+        }
+
+        public void MakeJson()
+        {
+            string jsonString = JsonSerializer.Serialize(trip);
+            Debug.WriteLine(jsonString);
         }
     }
 }
