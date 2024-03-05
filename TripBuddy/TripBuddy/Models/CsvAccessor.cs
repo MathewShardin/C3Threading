@@ -57,16 +57,17 @@ namespace TripBuddy.Models
         // Returns info about a city from a flat CSV file based on given cityName
         public static string[] GetCityInfo(string cityName)
         {
+            // Check input
+            if (string.IsNullOrEmpty(cityName)) { return null; }
+
             // Read the CSV File
             List<string[]> cityData = GetCSVString(CITYCSVFILENAME);
-            // Use PLINQ to iterate over the list in parallel and find City Info
-            //var result = cityData.AsParallel().FirstOrDefault(arr => (String)arr[0] == cityName);
-            var result = from city in cityData.AsParallel()
-                         where city[0] == cityName
-                         select city;
-            var output = result.ToArray();
-            Debug.WriteLine(output);
-            return output[0];
+            // Check CSV contents
+            if (cityData == null) { return null; }
+
+            // Use PLINQ to iterate over the list in parallel and return City Info as array of strings or NULL
+            var result = (from city in cityData.AsParallel() where city[0].Contains(cityName) select city).FirstOrDefault();
+            return result;
         }
     }
 }
