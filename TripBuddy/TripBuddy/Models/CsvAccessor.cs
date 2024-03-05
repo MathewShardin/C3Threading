@@ -16,12 +16,18 @@ namespace TripBuddy.Models
         const string FOLDERRESOURCES = @"/Resources/Csv/";
         const string CITYCSVFILENAME = "worldcities.csv";
 
-        //Method returns a list of arrays with string objects inside (2 dimensional array/Table) 
+        //Method returns a list of arrays with string objects inside (2 dimensional array/Table) from Hotel flat file
         public static List<string[]> ReadCsvFile()
+        {
+            return GetCSVString(CSVFILENAME);
+        }
+
+        // Reads a CSV file from resources folder with a given fileName
+        public static List<String[]> GetCSVString(String fileName)
         {
             // Get dynamic file path to a CSV file with hotel info
             string workingDirectory = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\..\\..\\"));
-            string filePath = workingDirectory + FOLDERRESOURCES + CSVFILENAME;
+            string filePath = workingDirectory + FOLDERRESOURCES + fileName;
 
             //Checks if the string is not null
             if (string.IsNullOrEmpty(filePath)) { return null; }
@@ -48,20 +54,19 @@ namespace TripBuddy.Models
         }
 
         //TO DO FINISH PROPER PLINQ
+        // Returns info about a city from a flat CSV file based on given cityName
         public static string[] GetCityInfo(string cityName)
         {
-            // Get dynamic file path to a CSV file with hotel info
-            string workingDirectory = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\..\\..\\"));
-            string filePath = workingDirectory + FOLDERRESOURCES + CITYCSVFILENAME;
-
-            var csvLines = File.ReadLines(filePath)
-                   .AsParallel()
-                   .Where(line =>
-                   {
-                       var columns = line.Split(',');
-                       return columns[0].Trim() == cityName;
-                   });
-            return null;
+            // Read the CSV File
+            List<string[]> cityData = GetCSVString(CITYCSVFILENAME);
+            // Use PLINQ to iterate over the list in parallel and find City Info
+            //var result = cityData.AsParallel().FirstOrDefault(arr => (String)arr[0] == cityName);
+            var result = from city in cityData.AsParallel()
+                         where city[0] == cityName
+                         select city;
+            var output = result.ToArray();
+            Debug.WriteLine(output);
+            return output[0];
         }
     }
 }
