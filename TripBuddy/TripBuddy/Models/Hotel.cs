@@ -32,39 +32,39 @@ namespace TripBuddy.Models
             Id = id;
         }
 
-            public int CompareTo(object? obj)
+        public int CompareTo(object? obj)
+        {
+            if (obj is null)
             {
-                if (obj is null)
+                throw new NoNullAllowedException();
+            }
+
+            if (this.GetType() != obj.GetType())
+            {
+                throw new ArgumentException("Object is not a Hotel");
+            }
+
+            Hotel otherHotel = (Hotel)obj;
+
+            if (this.Price is double && otherHotel.Price is double)
+            {
+                if (this.Price < otherHotel.Price)
                 {
-                    throw new NoNullAllowedException();
+                    return -1;
                 }
-
-                if (this.GetType() != obj.GetType())
+                else if (this.Price > otherHotel.Price)
                 {
-                    throw new ArgumentException("Object is not a Hotel");
-                }
-
-                Hotel otherHotel = (Hotel)obj;
-
-                if (this.Price is double && otherHotel.Price is double)
-                {
-                    if (this.Price < otherHotel.Price)
-                    {
-                        return -1;
-                    }
-                    else if (this.Price > otherHotel.Price)
-                    {
-                        return 1;
-                    }
-                    else
-                    {
-                        return 0;
-                    }
+                    return 1;
                 }
                 else
                 {
-                    throw new ArgumentException("Object is not a number");
+                    return 0;
                 }
             }
+            else
+            {
+                throw new ArgumentException("Object is not a number");
+            }
+        }
     }
 }
