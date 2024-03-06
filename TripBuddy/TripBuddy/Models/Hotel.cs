@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace TripBuddy.Models
 {
-    internal class Hotel
+    internal class Hotel : IComparable
     {
         // This is a custom data type to store information about a hotel
 
@@ -30,5 +31,40 @@ namespace TripBuddy.Models
             Description = description;
             Id = id;
         }
+
+            public int CompareTo(object? obj)
+            {
+                if (obj is null)
+                {
+                    throw new NoNullAllowedException();
+                }
+
+                if (this.GetType() != obj.GetType())
+                {
+                    throw new ArgumentException("Object is not a Hotel");
+                }
+
+                Hotel otherHotel = (Hotel)obj;
+
+                if (this.Price is double && otherHotel.Price is double)
+                {
+                    if (this.Price < otherHotel.Price)
+                    {
+                        return -1;
+                    }
+                    else if (this.Price > otherHotel.Price)
+                    {
+                        return 1;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+                else
+                {
+                    throw new ArgumentException("Object is not a number");
+                }
+            }
     }
 }
