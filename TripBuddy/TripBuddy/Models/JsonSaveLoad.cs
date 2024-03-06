@@ -22,35 +22,44 @@ namespace TripBuddy.Models
         }
 
         //turns the trip and date into a Json string asynchronously
-        public async void MakeJsonAsync()
+        public async void MakeJso   nAsync()
         {
             //makes json string
-            string jsonString = JsonSerializer.Serialize(trip);
+            string jsonString = JsonSerializer.Serialize(trip, new JsonSerializerOptions
+            {
+                //This will format the JSON with indentation
+                WriteIndented = true
+            }); ;
 
             //make the file name of the first hotel
-            string fileName = trip.Stops.ToList().First().Hotel.Name;
+            string fileName = trip.Stops.ToList().First().Hotel.Name + ".json";
 
-            //make file via filestream
-            await using FileStream createStream = File.Create(fileName);
+            // Get dynamic file path to saves folder
+            string workingDirectory = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\..\\..\\"));
+            string filePath = Path.Combine(workingDirectory, "Saves", fileName);
 
-            //serialize the json into the file
-            await JsonSerializer.SerializeAsync(createStream, jsonString);
-
+            //make file via filestream and add the text
+            File.WriteAllText(filePath, jsonString);
         }
 
         public void MakeJson()
         {
             //makes json string
-            string jsonString = JsonSerializer.Serialize(trip);
+            string jsonString = JsonSerializer.Serialize(trip, new JsonSerializerOptions
+            {
+                //This will format the JSON with indentation
+                WriteIndented = true
+            }); ;
 
             //make the file name of the first hotel
-            string fileName = trip.Stops.ToList().First().Hotel.Name;
+            string fileName = trip.Stops.ToList().First().Hotel.Name + ".json";
 
-            //make file via filestream
-            using FileStream createStream = File.Create(fileName);
+            // Get dynamic file path to saves folder
+            string workingDirectory = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\..\\..\\"));
+            string filePath = Path.Combine(workingDirectory, "Saves", fileName);
 
-            //serialize the json into the file
-            JsonSerializer.SerializeAsync(createStream, jsonString);
+            //make file via filestream and add the text
+            File.WriteAllTextAsync(filePath, jsonString);
         }
     }
 }
