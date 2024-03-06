@@ -21,7 +21,6 @@ namespace TripBuddy.WinUI
             this.InitializeComponent();
             DataStore ds = new DataStore();
             ds.ParseFromCsv();
-            System.Diagnostics.Debug.WriteLine(ds.CityCatalogue.Count);
         }
 
         protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
