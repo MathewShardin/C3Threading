@@ -24,6 +24,7 @@
 
     </ContentPage.MenuBarItems>
     <ScrollView>
+        
         <VerticalStackLayout>
             <Button
                 x:Name="CounterBtn"
