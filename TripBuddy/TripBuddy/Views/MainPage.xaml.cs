@@ -27,7 +27,7 @@ namespace TripBuddy
 
             JsonSaveLoad json = new JsonSaveLoad(trip);
 
-            await json.MakeJsonAsync();
+            //json.MakeJsonAsync();
 
             SemanticScreenReader.Announce(CounterBtn.Text);
         }
