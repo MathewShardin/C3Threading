@@ -53,7 +53,7 @@ namespace TripBuddy.Models
             List<string[]> csventries = CsvAccessor.ReadCsvFile();
             // parse the data into custom objects type hotel
             List<Hotel> hotels = csventries.AsParallel().Skip(1)
-                       .Select(data => new Hotel(data[1], Convert.ToDouble(data[4]), GetCityByName(data[7]), data[3], Convert.ToInt32(data[0])))
+                       .Select(data => new Hotel(Convert.ToString(data[1]), Convert.ToDouble(data[4]), GetCityByName(data[7]), Convert.ToString(data[3]), Convert.ToInt16(data[0])))
                        .ToList();
             // save the list of ojects into the field
             HotelCatalogue = hotels;
