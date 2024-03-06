@@ -35,47 +35,72 @@ namespace TripBuddy
 
         public void AscendingSortHotelsPrice<T>(List<T> hotels, Func<T, double> price)
         {
-            // Create a local copy of the list
-            var localItems = new List<T>(hotels);
+            // Convert the list to an array for better performance
+            T[] hotelArray = hotels.ToArray();
 
-            // Using Parallel.ForEach to sort the items in parallel
-            Parallel.ForEach(localItems, (item, state) =>
+            // Perform parallel quicksort
+            ParallelQuickSort(hotelArray, 0, hotelArray.Length - 1, price);
+
+            // Clear the original list and add the sorted items
+            hotels.Clear();
+            hotels.AddRange(hotelArray);
+        }
+
+        private void ParallelQuickSort<T>(T[] arr, int left, int right, Func<T, double> price)
+        {
+            const int SEQUENTIAL_THRESHOLD = 2048;
+
+            if (right > left)
             {
-                bool swapped;
-                do
+                if (right - left < SEQUENTIAL_THRESHOLD)
                 {
-                    swapped = false;
-                    for (int i = 0; i < localItems.Count - 1; i++)
-                    {
-                        for (int j = 0; j < localItems.Count - i - 1; j++)
-                        {
-                            // If the price of the current item is greater than the next item
-                            if (price(localItems[j]).CompareTo(price(localItems[j + 1])) > 0)
-                            {
-                                // Swapping the elements
-                                var temp = localItems[j];
-                                localItems[j] = localItems[j + 1];
-                                localItems[j + 1] = temp;
-                                swapped = true;
-                            }
-                        }
-                    }
-                } while (swapped);
-
-                // If the local list is sorted, add it to the original list
-                if (!swapped)
-                {
-                    lock (hotels)
-                    {
-                        hotels.Clear();
-                        hotels.AddRange(localItems);
-                    }
-
-                    // Stop the parallel execution
-                    state.Stop();
+                    // Sequential quicksort for small partitions
+                    QuickSortSequential(arr, left, right, price);
                 }
-            });
+                else
+                {
+                    // Parallel quicksort for larger partitions
+                    int pivot = Partition(arr, left, right, price);
+                    Parallel.Invoke(
+                        () => ParallelQuickSort(arr, left, pivot - 1, price),
+                        () => ParallelQuickSort(arr, pivot + 1, right, price)
+                    );
+                }
+            }
+        }
+        private void QuickSortSequential<T>(T[] arr, int left, int right, Func<T, double> price)
+        {
+            if (left < right)
+            {
+                int pivotIndex = Partition(arr, left, right, price);
+                QuickSortSequential(arr, left, pivotIndex - 1, price);
+                QuickSortSequential(arr, pivotIndex + 1, right, price);
+            }
+        }
+        private int Partition<T>(T[] arr, int left, int right, Func<T, double> price)
+        {
+            T pivot = arr[right];
+            int i = left - 1;
+
+            for (int j = left; j < right; j++)
+            {
+                if (price(arr[j]) <= price(pivot))
+                {
+                    i++;
+                    Swap(arr, i, j);
+                }
+            }
+
+            Swap(arr, i + 1, right);
+            return i + 1;
+        }
+
+        private void Swap<T>(T[] arr, int i, int j)
+        {
+            T temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
         }
     }
-
 }
+
