@@ -1,18 +1,12 @@
-﻿    using Microsoft.Maui.Controls.Shapes;
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-
-    namespace TripBuddy.Models
-    {
-        internal class DataStore
+﻿namespace TripBuddy.Models
+{
+    internal class DataStore
         {
-            // This class contains hotel information from the csv file
+        private object Assert;
 
-            public List<Hotel> HotelCatalogue { get; set; }
+        // This class contains hotel information from the csv file
+
+        public List<Hotel> HotelCatalogue { get; set; }
             public List<City> CityCatalogue { get; set; }
 
 
@@ -59,7 +53,7 @@
                 HotelCatalogue = hotels;
             }
 
-        public void AscendingSortHotels(List<Hotel> hotels, Func<Hotel, double> price)
+        public void AscendingSortHotelsPrice(List<Hotel> hotels, Func<Hotel, double> price)
         {
             // create a local copy of the list
             var localItems = new List<Hotel>(hotels);
