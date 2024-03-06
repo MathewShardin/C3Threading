@@ -30,6 +30,33 @@
                 SemanticProperties.Hint="Counts the number of times you click"
                 Clicked="OnCounterClicked"
                 HorizontalOptions="Fill" />
+
+            <Button
+            Text="Sort Hotels"
+            Clicked="SortHotels_Clicked"
+            HorizontalOptions="Fill" />
+
+            <ListView
+            x:Name="HotelsListView"
+            ItemsSource="{Binding Hotels}"
+            HasUnevenRows="true"
+            SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Vertical" Padding="10">
+                                <Label Text="{Binding Name}"
+                                   FontAttributes="Bold"
+                                   FontSize="Large" />
+                                <Label Text="{Binding Price}"
+                                   FontAttributes="Bold"
+                                   FontSize="Medium"
+                                   HorizontalOptions="End" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </VerticalStackLayout>
     </ScrollView>
 

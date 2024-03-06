@@ -17,5 +17,6 @@ namespace TripBuddy.ViewModel
             //CsvAccessor.ReadCsvFile();
 
         }
+
     }
 }
