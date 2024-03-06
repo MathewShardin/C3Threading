@@ -20,7 +20,7 @@ namespace TripBuddy.WinUI
         {
             this.InitializeComponent();
             City city1 = new City("Zwolle");
-            Debug.WriteLine(city1.Name);
+            System.Diagnostics.Debug.WriteLine(city1.Coordinates);
         }
 
         protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
