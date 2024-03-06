@@ -1,29 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TripBuddy.MainPage">
+             x:Class="TripBuddy.MainPage"
+             BackgroundColor="AliceBlue">
+    <ContentPage.MenuBarItems>
+        <MenuBarItem
+            Text="File">
+            <!--the command to connect the button to function-->
+            <!--add here backend form teo-->
+            <MenuFlyoutItem Text="Save To File" />
+            <MenuFlyoutItem Text="Load From File"/>
+        </MenuBarItem>
 
+        <MenuBarItem
+            Text="Sort">
+            <!--the command to connect the button to function-->
+            <!--add here backend form teo-->
+            <MenuFlyoutItem Text="Price Acending" IconImageSource="arrow.png"/>
+            <MenuFlyoutItem Text="Price Decending" IconImageSource="arrow_down.png"/>
+            <MenuFlyoutItem Text="Name A-Z"/>
+            <MenuFlyoutItem Text="Name Z-A"/>
+        </MenuBarItem>
+
+    </ContentPage.MenuBarItems>
     <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
-            <Image
-                Source="dotnet_bot.png"
-                HeightRequest="185"
-                Aspect="AspectFit"
-                SemanticProperties.Description="dot net bot in a race car number eight" />
-
-            <Label
-                Text="Hello, World!"
-                Style="{StaticResource Headline}"
-                SemanticProperties.HeadingLevel="Level1" />
-
-            <Label
-                Text="Welcome to &#10;.NET Multi-platform App UI"
-                Style="{StaticResource SubHeadline}"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
-
+        <VerticalStackLayout>
             <Button
                 x:Name="CounterBtn"
                 Text="Click me" 
