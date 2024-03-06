@@ -16,13 +16,6 @@ namespace TripBuddy
 
             SemanticScreenReader.Announce(CounterBtn.Text);
         }
-        private void NavigateToSecondPage(object sender, EventArgs e)
-        {
-            //go to testpage.xaml
-
-            Shell.Current.GoToAsync("TestPage.xaml");
-            
-        }
     }
 
 }
