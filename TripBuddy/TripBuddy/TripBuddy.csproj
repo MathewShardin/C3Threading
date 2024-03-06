@@ -63,4 +63,10 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Saves\" />
+	</ItemGroup>
+
+	<ProjectExtensions><VisualStudio><UserProperties saves_4hotelplace_1json__JsonSchema="https://enduricastorage.blob.core.windows.net/public/endurica-cl-schema.json" /></VisualStudio></ProjectExtensions>
+
 </Project>

@@ -1,0 +1,19 @@
+{
+  "TotalPrice": 0,
+  "Stops": [
+    {
+      "Hotel": {
+        "Name": "hotelplace",
+        "Price": 1000,
+        "City": {
+          "Name": "towscity",
+          "Country": "Netherlands",
+          "Coordinates": "52.3728:4.8936"
+        },
+        "Description": "nice place",
+        "Id": 1
+      },
+      "date": "2024-03-06T13:43:44.8050577+01:00"
+    }
+  ]
+}
