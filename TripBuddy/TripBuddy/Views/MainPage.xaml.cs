@@ -19,114 +19,122 @@ namespace TripBuddy
 
         private void SortHotels_Clicked(object sender, EventArgs e)
         {
-            // create a list of hotels
+            // Create a list of hotels
             List<Hotel> hotels = new List<Hotel>
             {
-                new Hotel("Hotel C", 150.0, new City("City 1"), "Description C", 3),
-                new Hotel("Hotel A", 100.0, new City("City 1"), "Description A", 1),
-                new Hotel("Hotel B", 120.0, new City("City 2"), "Description B", 2),
-                new Hotel("Hotel D", 200.0, new City("City 3"), "Description D", 4)
+                new Hotel("AA", 150.0, new City("City 1"), "Description C", 3),
+                new Hotel("AB", 100.0, new City("City 1"), "Description A", 1),
+                new Hotel("AAC", 120.0, new City("City 2"), "Description B", 2),
+                new Hotel("AD", 200.0, new City("City 3"), "Description D", 4)
             };
 
-            // sort the hotels
-            DescendingSortHotelsPrice(hotels, hotel => hotel.Price);
+            // Sort the hotels by name in ascending order
+            AscendingSortHotelNames(hotels, hotel => hotel.Name);
 
+            // Now the 'hotels' list contains the sorted hotels
+            // You can use the updated list as needed
         }
 
-        public void AscendingSortHotelsPrice<T>(List<T> hotels, Func<T, double> price)
+
+        public void AscendingSortHotelsPrice<T>(List<T> hotels, Func<T, IComparable> keySelector)
         {
-            //Convert the list to an array for better performance during sorting
+            //Convert the list to an array for better performance
             T[] hotelArray = hotels.ToArray();
 
-            //Parallel quicksort
-            ParallelQuickSort(hotelArray, 0, hotelArray.Length - 1, price);
+            //Perform parallel quicksort
+            ParallelQuickSort(hotelArray, 0, hotelArray.Length - 1, keySelector);
 
             //Clear the original list and add the sorted items
             hotels.Clear();
-
-            //Add the sorted items
             hotels.AddRange(hotelArray);
         }
 
-        private void ParallelQuickSort<T>(T[] arr, int left, int right, Func<T, double> price)
+        private void ParallelQuickSort<T>(T[] arr, int left, int right, Func<T, IComparable> keySelector)
         {
-            //Threshold for sequential quicksort
-            //If the length of the partition is less than this threshold, use sequential quicksort
+            // Threshold for sequential quicksort
             const int SEQUENTIAL_THRESHOLD = 2048;
 
-            //If the partition has more than one element
             if (right > left)
             {
-                //If the partition is small enough, use sequential quicksort
+                // If the partition is small enough, use sequential quicksort
                 if (right - left < SEQUENTIAL_THRESHOLD)
                 {
                     // Sequential quicksort for small partitions
-                    QuickSortSequential(arr, left, right, price);
+                    QuickSortSequential(arr, left, right, keySelector);
                 }
                 else
                 {
                     // Parallel quicksort for larger partitions
-                    int pivot = Partition(arr, left, right, price);
-                    //Invoke two tasks to sort the two partitions in parallel
+                    int pivot = Partition(arr, left, right, keySelector);
+                    // Invoke two tasks to sort the two partitions in parallel
                     Parallel.Invoke(
-                        //Sort the left partition
-                        () => ParallelQuickSort(arr, left, pivot - 1, price),
-                        //Sort the right partition
-                        () => ParallelQuickSort(arr, pivot + 1, right, price)
+                        // Sort the left partition
+                        () => ParallelQuickSort(arr, left, pivot - 1, keySelector),
+                        // Sort the right partition
+                        () => ParallelQuickSort(arr, pivot + 1, right, keySelector)
                     );
                 }
             }
         }
-        private void QuickSortSequential<T>(T[] arr, int left, int right, Func<T, double> price)
+        private void QuickSortSequential<T>(T[] arr, int left, int right, Func<T, IComparable> keySelector)
         {
-            //If the left index is less than the right index
+            // If the left index is less than the right index
             if (left < right)
             {
-                //Partition the array and get the pivot index
-                int pivotIndex = Partition(arr, left, right, price);
-                //Recursively sort the left partition
-                QuickSortSequential(arr, left, pivotIndex - 1, price);
-                //Recursively sort the right partition
-                QuickSortSequential(arr, pivotIndex + 1, right, price);
+                // Partition the array and get the pivot index
+                int pivotIndex = Partition(arr, left, right, keySelector);
+                // Recursively sort the left partition
+                QuickSortSequential(arr, left, pivotIndex - 1, keySelector);
+                // Recursively sort the right partition
+                QuickSortSequential(arr, pivotIndex + 1, right, keySelector);
             }
         }
-        private int Partition<T>(T[] arr, int left, int right, Func<T, double> price)
+        private int Partition<T>(T[] arr, int left, int right, Func<T, IComparable> keySelector)
         {
-            //Choose the rightmost element as the pivot
+            // Choose the rightmost element as the pivot
             T pivot = arr[right];
-            //The index of the smaller element
             int i = left - 1;
-
 
             for (int j = left; j < right; j++)
             {
-                //If the current element is smaller than or equal to the pivot
-                if (price(arr[j]) <= price(pivot))
+                if (keySelector(arr[j]).CompareTo(keySelector(pivot)) <= 0)
                 {
-
                     i++;
-                    Swap(arr, i, j);
+                    // Swap arr[i] and arr[j]
+                    T temp = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = temp;
                 }
             }
-            //Move the pivot to its correct position
-            Swap(arr, i + 1, right);
+
+            // Swap arr[i+1] and arr[right] (pivot)
+            T tempPivot = arr[i + 1];
+            arr[i + 1] = arr[right];
+            arr[right] = tempPivot;
+
             return i + 1;
         }
 
-        private void Swap<T>(T[] arr, int i, int j)
+        public void DescendingSortHotelsPrice<T>(List<T> hotels, Func<T, IComparable> keySelector)
         {
-            T temp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = temp;
+            //call the AscendingSortHotelsPrice method
+            AscendingSortHotelsPrice(hotels, keySelector);
+
+            //reverse the list to get descending order
+            hotels.Reverse();
         }
 
-        public void DescendingSortHotelsPrice<T>(List<T> hotels, Func<T, double> price)
+        public void AscendingSortHotelNames<T>(List<T> hotels, Func<T, IComparable> keySelector)
         {
-            //Call the AscendingSortHotelsPrice method
-            AscendingSortHotelsPrice(hotels, price);
+            //Convert the list to an array for better performance
+            T[] hotelArray = hotels.ToArray();
 
-            //Reverse the list to get descending order
-            hotels.Reverse();
+            //Perform parallel quicksort
+            ParallelQuickSort(hotelArray, 0, hotelArray.Length - 1, keySelector);
+
+            //Clear the original list and add the sorted items
+            hotels.Clear();
+            hotels.AddRange(hotelArray);
         }
 
     }
