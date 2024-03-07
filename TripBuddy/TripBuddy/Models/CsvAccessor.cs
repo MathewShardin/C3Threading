@@ -26,6 +26,7 @@ namespace TripBuddy.Models
             //Checks if the string is not null
             if (string.IsNullOrEmpty(filePath)) { return null; }
 
+
             try
             {
                 List<string[]> data = new List<string[]>();
