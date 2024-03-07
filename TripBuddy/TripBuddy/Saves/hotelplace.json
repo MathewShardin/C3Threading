@@ -2,7 +2,7 @@
   "TotalPrice": 0,
   "Stops": [
     {
-      "Hotel": {
+      "Hotel": {  
         "Name": "hotelplace",
         "Price": 1000,
         "City": {

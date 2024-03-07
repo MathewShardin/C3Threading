@@ -13,12 +13,16 @@ namespace TripBuddy.Models
         public string Country { get; set; }
         public string Coordinates { get; set; } // Format Lat:lng
 
-        // Constructor
+        // Constructors
         public City(string name, string country, string coordinates)
         {
             Name = name;
             Country = country;
             Coordinates = coordinates;
+        }
+
+        public City() // Default constructor
+        {
         }
 
         // Get City info based on csv of cities

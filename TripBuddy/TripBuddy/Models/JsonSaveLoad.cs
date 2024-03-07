@@ -6,6 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
 using System.Diagnostics;
+using System.Text.Json.Nodes;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 
 namespace TripBuddy.Models
@@ -22,10 +25,10 @@ namespace TripBuddy.Models
         }
 
         //turns the trip and date into a Json string asynchronously
-        public async void MakeJso   nAsync()
+        public async void MakeJsonAsync()
         {
             //makes json string
-            string jsonString = JsonSerializer.Serialize(trip, new JsonSerializerOptions
+            string jsonString = System.Text.Json.JsonSerializer.Serialize(trip, new JsonSerializerOptions
             {
                 //This will format the JSON with indentation
                 WriteIndented = true
@@ -45,7 +48,7 @@ namespace TripBuddy.Models
         public void MakeJson()
         {
             //makes json string
-            string jsonString = JsonSerializer.Serialize(trip, new JsonSerializerOptions
+            string jsonString = System.Text.Json.JsonSerializer.Serialize(trip, new JsonSerializerOptions
             {
                 //This will format the JSON with indentation
                 WriteIndented = true
@@ -60,6 +63,21 @@ namespace TripBuddy.Models
 
             //make file via filestream and add the text
             File.WriteAllTextAsync(filePath, jsonString);
+        }
+
+        public Trip loadJson()
+        {
+            //get file
+            string fileName = "hotelplace.json";
+            //Get dynamic file path to saves folder
+            string workingDirectory = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\..\\..\\"));
+            string filePath = Path.Combine(workingDirectory, "Saves", fileName);
+
+            //read file
+            var jsonFile = JObject.Parse(File.ReadAllText(filePath));
+            string jsonString = jsonFile.ToString();
+            Trip trip = JsonConvert.DeserializeObject<Trip>(jsonString);
+            return trip;
         }
     }
 }
