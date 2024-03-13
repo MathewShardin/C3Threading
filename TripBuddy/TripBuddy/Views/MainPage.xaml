@@ -106,8 +106,8 @@
                 <!--Make the listview for hotels-->
                 <ListView ItemsSource="{Binding Hotel}">
                     <ListView.ItemTemplate>
-                        <DataTemplate
-                            x:DataType="{x:Type model:Hotel}">
+                        <DataTemplate>
+                            <!--x:DataType="{x:Type model:Hotel}">-->
                             <ViewCell>
                                 <Grid Padding="10">
                                     <Grid.RowDefinitions>

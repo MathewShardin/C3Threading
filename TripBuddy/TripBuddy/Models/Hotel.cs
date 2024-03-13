@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TripBuddy.Models
 {
-    internal class Hotel : IComparable
+    public class Hotel : IComparable
     {
         // This is a custom data type to store information about a hotel
 
