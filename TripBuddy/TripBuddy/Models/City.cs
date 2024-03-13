@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TripBuddy.Models
 {
-    internal class City
+    public class City
     {
         // This class is used to store information about a city and hotel will be placed in a city
         public string Name { get; set; }

@@ -16,6 +16,7 @@
             Text="Sort">
             <!--the command to connect the button to function-->
             <!--add here backend form teo-->
+            <!-- add binding here-->
             <MenuFlyoutItem Text="Price Acending" IconImageSource="arrow.png"/>
             <MenuFlyoutItem Text="Price Decending" IconImageSource="arrow_down.png"/>
             <MenuFlyoutItem Text="Name A-Z"/>
@@ -26,7 +27,7 @@
     <ContentPage.Content>
         <Grid>
             <!--Grid index start at 0-->
-lll            <Grid.RowDefinitions>
+            <Grid.RowDefinitions>
                 <RowDefinition Height="100" />
                 <RowDefinition Height="100" />
                 <RowDefinition Height="100" />
@@ -103,9 +104,10 @@ lll            <Grid.RowDefinitions>
                 Grid.Row="2">
                 <!--https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/listview?view=net-maui-8.0-->
                 <!--Make the listview for hotels-->
-                <ListView ItemsSource="{Binding Hotels}">
+                <ListView ItemsSource="{Binding Hotel}">
                     <ListView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate
+                            x:DataType="{x:Type model:Hotel}">
                             <ViewCell>
                                 <Grid Padding="10">
                                     <Grid.RowDefinitions>
@@ -117,6 +119,7 @@ lll            <Grid.RowDefinitions>
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <Label Grid.Column="1"
+                                           Grid.Row="0"
                                         Text="{Binding Name}"
                                         FontAttributes="Bold" />
                                         <Label Grid.Row="1"
