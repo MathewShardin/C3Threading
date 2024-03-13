@@ -8,7 +8,7 @@ using TripBuddy.Models;
 
 namespace TripBuddy.ViewModel
 {
-    public partial class MainPageViewModel
+    public partial class MainPageViewModel 
     {
         public int Count { get; private set; }
         
@@ -28,11 +28,11 @@ namespace TripBuddy.ViewModel
 
 
 
-        public MainPageViewModel()
+        public MainPageViewModel(Hotel hotel, City city)
         {
             Count = 0;
-            City = new City("City", "Country","010002000" );
-            Hotel = new Hotel("Hotel", 100,City,"good",1);
+            city = new City("City", "Country","010002000" );
+            hotel = new Hotel("Hotel", 100,city,"good",1);
             //CsvAccessor.ReadCsvFile();
 
         }
