@@ -1,4 +1,7 @@
-﻿using TripBuddy.Models;
+﻿using Microcharts.Maui;
+using Microcharts;
+using SkiaSharp;
+using TripBuddy.Models;
 
 namespace TripBuddy
 {
@@ -10,31 +13,31 @@ namespace TripBuddy
 
         }
 
-        private void OnCounterClicked(object sender, EventArgs e)
+        private void SortHotels_Click(object sender, EventArgs e)
         {
-            var file = CsvAccessor.ReadCsvFile();
-            CounterBtn.Text = $"text changed";
+            // Create an instance of DataStore
+            DataStore dataStore = new DataStore();
 
-            SemanticScreenReader.Announce(CounterBtn.Text);
+            // Parse the hotels from the CSV file
+            dataStore.ParseFromCsv();
+
+            // Sort the hotels by price in ascending order
+            var sortedHotels = dataStore.HotelCatalogue.OrderBy(hotel => hotel.Price).ToList();
+
+            // Create entries for the chart based on sorted hotel prices
+            var entries = sortedHotels.Select(hotel =>
+                            new Microcharts.ChartEntry((float)hotel.Price)
+                            {
+                                Label = hotel.Name,
+                                ValueLabel = hotel.Price.ToString(),
+                                Color = SKColor.Parse("#266489")
+                            }).ToList();
+
+            // Update the chart view with the entries
+            chartView.Chart = new BarChart() { Entries = entries };
         }
 
-        private void SortHotels_Clicked(object sender, EventArgs e)
-        {
-            // Create a list of hotels
-            List<Hotel> hotels = new List<Hotel>
-            {
-                new Hotel("AA", 150.0, new City("City 1"), "Description C", 3),
-                new Hotel("AB", 100.0, new City("City 1"), "Description A", 1),
-                new Hotel("AAC", 120.0, new City("City 2"), "Description B", 2),
-                new Hotel("AD", 200.0, new City("City 3"), "Description D", 4)
-            };
 
-            // Sort the hotels by name in ascending order
-            AscendingSortHotelNames(hotels, hotel => hotel.Name);
-
-            // Now the 'hotels' list contains the sorted hotels
-            // You can use the updated list as needed
-        }
 
 
         public void AscendingSortHotelsPrice<T>(List<T> hotels, Func<T, IComparable> keySelector)
