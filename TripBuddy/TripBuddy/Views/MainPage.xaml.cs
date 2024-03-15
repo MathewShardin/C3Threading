@@ -29,7 +29,7 @@ namespace TripBuddy
             var entries = sortedHotels.Select(hotel =>
                             new Microcharts.ChartEntry((float)hotel.Price)
                             {
-                                //Label = hotel.Name,
+                                Label = hotel.Name,
                                 ValueLabel = hotel.Price.ToString(),
                                 Color = SKColor.Parse("#266489")
                             }).ToList();
