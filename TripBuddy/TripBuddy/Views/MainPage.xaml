@@ -6,7 +6,7 @@
 
     <VerticalStackLayout>
         <Button x:Name="SortBtn" Text="Sort Hotels" Clicked="SortHotels_Click"/>
-        <micro:ChartView x:Name="chartView" HeightRequest="300" />
+        <micro:ChartView x:Name="chartView" HeightRequest="1000"/>
     </VerticalStackLayout>
 
 </ContentPage>
