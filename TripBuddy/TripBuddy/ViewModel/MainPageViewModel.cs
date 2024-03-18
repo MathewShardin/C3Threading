@@ -24,7 +24,7 @@ namespace TripBuddy.ViewModel
             {
                 _hotel = value;
             }
-        }   
+        }
 
 
 
@@ -32,7 +32,7 @@ namespace TripBuddy.ViewModel
         {
             Count = 0;
             city = new City("City", "Country","010002000" );
-            hotel = new Hotel("Hotel", 100,city,"good",1);
+            this._hotel = new Hotel("Hotel", 100,city,"good",1);
             //CsvAccessor.ReadCsvFile();
 
         }

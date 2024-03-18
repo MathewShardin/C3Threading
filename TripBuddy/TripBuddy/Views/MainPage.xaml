@@ -35,8 +35,10 @@
                 <RowDefinition Height="100" />
                 <RowDefinition Height="100" />
                 <RowDefinition Height="100" />
+
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300" />
                 <ColumnDefinition Width="300" />
                 <ColumnDefinition Width="300" />
                 <ColumnDefinition Width="300" />
@@ -104,7 +106,7 @@
 
             <VerticalStackLayout
                 Grid.Column="1"
-                Grid.Row="2"
+                Grid.Row="1"
                 >
                 <!--https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/listview?view=net-maui-8.0-->
                 <!--Make the listview for hotels-->
@@ -112,7 +114,8 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Grid Padding="10">
+                                <Grid Padding="10"
+                                      BackgroundColor="Black">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="Auto" />
@@ -123,21 +126,11 @@
                                     </Grid.ColumnDefinitions>
                                     <Label Grid.Column="1"
                                            Grid.Row="0"
-                                        Text="{Binding Name}"
+                                        Text="{Binding Hotel.Name}"
                                         FontAttributes="Bold" />
                                     <Label Grid.Row="1"
                                         Grid.Column="1"
-                                        Text="{Binding Location}"
-                                        FontAttributes="Italic"
-                                        VerticalOptions="End" />
-                                    <Label Grid.Row="0"
-                                        Grid.Column="0"
-                                        Text="{Binding Price}"
-                                        FontAttributes="Bold"
-                                        VerticalOptions="End" />
-                                    <Label Grid.Row="1"
-                                        Grid.Column="0"
-                                        Text="{Binding Rating}"
+                                        Text="{Binding Hotel.City.Name}"
                                         FontAttributes="Italic"
                                         VerticalOptions="End" />
                                 </Grid>
