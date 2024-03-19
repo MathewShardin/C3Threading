@@ -5,7 +5,7 @@
              x:Class="TripBuddy.MainPage">
 
     <VerticalStackLayout>
-        <Button x:Name="SortBtn" Text="Sort Hotels" Clicked="SortHotels_Click"/>
+        <Picker x:Name="CityPicker" Title="Select a City" SelectedIndexChanged="SortHotels_Click"/>
         <micro:ChartView x:Name="chartView" HeightRequest="600"/>
     </VerticalStackLayout>
 
