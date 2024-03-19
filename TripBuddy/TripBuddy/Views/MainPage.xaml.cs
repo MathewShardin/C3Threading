@@ -19,31 +19,38 @@ namespace TripBuddy
 
         private void SortHotels_Click(object sender, EventArgs e)
         {
-
-              // Sort the hotels by price in ascending order
-            var sortedHotels = dataStore.HotelCatalogue.OrderBy(hotel => hotel.Price).ToList();
-
-            sortedHotels = sortedHotels.Take(10).ToList();
-
-            // Create entries for the chart based on sorted hotel prices
-            var entries = sortedHotels.Select(hotel =>
-                            new Microcharts.ChartEntry((float)hotel.Price)
-                            {
-                                Label = hotel.Name,
-                                ValueLabel = hotel.Price.ToString(),
-                                Color = SKColor.Parse("#266489")
-                            }).ToList();
-
-            var barChart = new BarChart()
+            ThreadPool.QueueUserWorkItem(_ =>
             {
-                Entries = entries,
-                LabelTextSize = 20f, // Adjust the text size
-                ValueLabelOrientation = Orientation.Horizontal, // Change the orientation
-                LabelOrientation = Orientation.Horizontal, // Change the orientation
-            };
+                // Sort the hotels by price in ascending order
+                var sortedHotels = dataStore.HotelCatalogue.OrderBy(hotel => hotel.Price).ToList();
 
-            chartView.Chart = barChart;
+                sortedHotels = sortedHotels.Take(10).ToList();
+
+                // Create entries for the chart based on sorted hotel prices
+                var entries = sortedHotels.Select(hotel =>
+                                new Microcharts.ChartEntry((float)hotel.Price)
+                                {
+                                    Label = hotel.Name,
+                                    ValueLabel = hotel.Price.ToString(),
+                                    Color = SKColor.Parse("#266489")
+                                }).ToList();
+
+                var barChart = new BarChart()
+                {
+                    Entries = entries,
+                    LabelTextSize = 20f, // Adjust the text size
+                    ValueLabelOrientation = Orientation.Horizontal, // Change the orientation
+                    LabelOrientation = Orientation.Horizontal, // Change the orientation
+                };
+
+                // Update the UI on the main thread
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    chartView.Chart = barChart;
+                });
+            });
         }
+
     }
 }
 
