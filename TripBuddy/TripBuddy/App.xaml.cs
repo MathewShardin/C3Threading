@@ -1,4 +1,6 @@
-﻿namespace TripBuddy
+﻿using TripBuddy.Models;
+
+namespace TripBuddy
 {
     public partial class App : Application
     {

@@ -15,6 +15,7 @@ namespace TripBuddy.ViewModel
         public MainPageViewModel()
         {
             Count = 0;
+
         }
     }
 }
