@@ -1,41 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TripBuddy.Models;
+﻿using TripBuddy.Models;
+using CommunityToolkit.Mvvm.ComponentModel;
+using System.Collections.ObjectModel;
+
 
 namespace TripBuddy.ViewModel
 {
-    public partial class MainPageViewModel 
+    public partial class MainPageViewModel : ObservableObject
     {
-        public int Count { get; private set; }
-        
+        [ObservableProperty]
         private Hotel _hotel;
 
+        [ObservableProperty]
+        private ObservableCollection<Hotel> _hotels = new();
 
-        public City City { get; set; }
+        [ObservableProperty]
+        private City _city;
 
-        public Hotel Hotel
+        [ObservableProperty]
+        private int _count;
+
+        public MainPageViewModel()
         {
-            get => _hotel;
-            set
-            {
-                _hotel = value;
-            }
+            this.Count = 0;
+            this.City = new City("City", "Country","010002000");
+            this.Hotel = new Hotel("Hotel", 100, City, "good", 1);
+            this.Hotels.Add(this.Hotel);
         }
-
-
-
-        public MainPageViewModel(Hotel hotel, City city)
-        {
-            Count = 0;
-            city = new City("City", "Country","010002000" );
-            this._hotel = new Hotel("Hotel", 100,city,"good",1);
-            //CsvAccessor.ReadCsvFile();
-
-        }
-
     }
 }

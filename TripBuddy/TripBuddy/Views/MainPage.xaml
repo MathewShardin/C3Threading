@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TripBuddy.MainPage"   
+             x:Class="TripBuddy.Views.MainPage"   
              BackgroundColor="AliceBlue"
              xmlns:viewmodel="clr-namespace:TripBuddy.ViewModel"
              x:DataType="viewmodel:MainPageViewModel">
@@ -104,15 +104,31 @@
                     HorizontalOptions="StartAndExpand" />
             </VerticalStackLayout>
 
+
+            <Label Text="Text"
+                      FontAttributes="Bold"
+                      FontSize="Large"
+                      VerticalOptions="Center"
+                      HorizontalOptions="Center"
+                      Margin="0,0,0,0"/>
+
+            <Label Text="{Binding Hotel.Name}"
+                  FontAttributes="Bold"
+                  FontSize="Large"
+                  VerticalOptions="Center"
+                  HorizontalOptions="Center"
+                  Margin="0,0,0,0"/>
+            
+
             <VerticalStackLayout
+                BindableLayout.ItemsSource="{Binding Hotels}"
                 Grid.Column="1"
                 Grid.Row="1"
                 >
                 <!--https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/listview?view=net-maui-8.0-->
                 <!--Make the listview for hotels-->
-                <ListView ItemsSource="{Binding Hotel}" >
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate >
                             <ViewCell>
                                 <Grid Padding="10"
                                       BackgroundColor="Black">
@@ -136,12 +152,10 @@
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-                
+                    </BindableLayout.ItemTemplate>
             </VerticalStackLayout>
 
-    </Grid>
+        </Grid>
     </ContentPage.Content>
 
 </ContentPage>

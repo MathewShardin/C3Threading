@@ -1,12 +1,14 @@
 ﻿using TripBuddy.Models;
+using TripBuddy.ViewModel;
 
-namespace TripBuddy
+namespace TripBuddy.Views
 {
     public partial class MainPage : ContentPage
     {
-        public MainPage()
+        public MainPage(MainPageViewModel vm)
         {
             InitializeComponent();
+            BindingContext = vm;
         }
 
         private void OnCounterClicked(object sender, EventArgs e)
