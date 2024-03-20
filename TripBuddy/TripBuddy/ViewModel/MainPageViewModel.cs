@@ -11,7 +11,7 @@ namespace TripBuddy.ViewModel
         private Hotel _hotel;
 
         [ObservableProperty]
-        private ObservableCollection<Hotel> _hotels = [];
+        private ObservableCollection<Hotel> _hotels;
 
         [ObservableProperty]
         private City _city;
@@ -21,9 +21,10 @@ namespace TripBuddy.ViewModel
 
         public MainPageViewModel()
         {
+            this.Hotels = new ObservableCollection<Hotel>();
             this.Count = 0;
             this.City = new City("City", "Country","010002000");
-            this.Hotel = new Hotel("Dimis Sex House", 100, City, "good", 1);
+            this.Hotel = new Hotel("Dimis House", 100, City, "good", 1);
             this.Hotels.Add(this.Hotel);
         }
     }

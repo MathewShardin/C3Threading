@@ -4,6 +4,7 @@
              x:Class="TripBuddy.Views.MainPage"   
              BackgroundColor="AliceBlue"
              xmlns:viewmodel="clr-namespace:TripBuddy.ViewModel"
+             xmlns:model="clr-namespace:TripBuddy.Models"
              x:DataType="viewmodel:MainPageViewModel">
     <ContentPage.MenuBarItems>
         <MenuBarItem
@@ -103,28 +104,22 @@
                   Margin="0,0,0,0"/>-->
             
 
-            <HorizontalStackLayout
-                BindableLayout.ItemsSource="{Binding Hotels}"
+            <VerticalStackLayout
                 Grid.Column="1"
-                Grid.Row="0"
+                BindableLayout.ItemsSource="{Binding Hotels}"
                 >
                 <!--https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/listview?view=net-maui-8.0-->
                 <!--Make the listview for hotels-->
-                <ListView
-                    ItemsSource="{Binding Hotels}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <Grid Padding="10">
-                                    <Label 
-                                           Text="{Binding Hotel.Name}"
-                                           FontAttributes="Bold"/>
-                                </Grid>
-                            </ViewCell>
-                        </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-            </HorizontalStackLayout>
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type model:Hotel}">
+                        <Grid Padding="10">
+                            <Label 
+                                    Text="{Binding Name}"
+                                    FontAttributes="Bold"/>
+                        </Grid>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
 
         </Grid>
     </ContentPage.Content>
