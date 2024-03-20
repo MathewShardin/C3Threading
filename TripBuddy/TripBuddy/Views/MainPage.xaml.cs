@@ -109,5 +109,10 @@ namespace TripBuddy.Views
             this.tripCurrent = JsonSaveLoad.loadJson();
             // TO DO: Update GUI here
         }
+        
+        private void addNewLocationStop(Hotel hotel)
+        {
+            this.tripCurrent.addLocationStop(new LocationStop(hotel));
+        }
     }
 }

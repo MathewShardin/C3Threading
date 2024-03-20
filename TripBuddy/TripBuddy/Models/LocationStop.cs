@@ -22,5 +22,11 @@ namespace TripBuddy.Models
             this.date = date;
         }
 
+        public LocationStop(Hotel hotel)
+        {
+            Hotel = hotel;
+            this.date = DateTime.Now;
+        }
+
     }
 }

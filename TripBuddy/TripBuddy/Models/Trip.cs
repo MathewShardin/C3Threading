@@ -32,5 +32,10 @@ namespace TripBuddy.Models
 
             this.TotalPrice = sum;
         }
+
+        public void addLocationStop(LocationStop stop)
+        {
+            Stops.Add(stop);
+        }
     }
 }
