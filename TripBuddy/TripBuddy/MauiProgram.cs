@@ -1,7 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
-using TripBuddy.ViewModel;
-using TripBuddy.Views;
-
+﻿using Microcharts.Maui;
+using Microsoft.Extensions.Logging;
 namespace TripBuddy
 {
     public static class MauiProgram
@@ -11,6 +9,7 @@ namespace TripBuddy
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMicrocharts()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -21,7 +20,7 @@ namespace TripBuddy
                 .AddTransient<MainPageViewModel>();
 
 #if DEBUG
-    		builder.Logging.AddDebug();     
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();
