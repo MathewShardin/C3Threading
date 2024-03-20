@@ -2,6 +2,7 @@
 using Microcharts;
 using SkiaSharp;
 using TripBuddy.Models;
+using System.Diagnostics;
 
 namespace TripBuddy
 {
@@ -12,8 +13,16 @@ namespace TripBuddy
 
         public MainPage()
         {
+            // Initialize the GUI and start parsing CSV contents in seperate thread so that GUI is not frozen
             InitializeComponent();
-            dataStore.ParseFromCsv();
+            Thread threadCsv = new Thread(() => this.dataStore.ParseFromCsv());
+            threadCsv.IsBackground = true;
+            //Thread thread_gui_start = new Thread(InitializeComponent);
+            //thread_gui_start.Start();
+            threadCsv.Start();
+            //Wait for Threads to end and join them
+            //thread_gui_start.Join();
+            threadCsv.Join();
 
             // Populate the Picker with the list of cities
             //CityPicker.ItemsSource = dataStore.HotelCatalogue.Select(hotel => hotel.City.Name).Distinct().ToList(); // Assuming City has a Name property
