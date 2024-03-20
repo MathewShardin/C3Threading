@@ -1,5 +1,7 @@
 ﻿using Microcharts.Maui;
 using Microsoft.Extensions.Logging;
+using TripBuddy.ViewModel;
+using TripBuddy.Views;
 namespace TripBuddy
 {
     public static class MauiProgram

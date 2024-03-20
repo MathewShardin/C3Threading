@@ -2,6 +2,7 @@
 using Microcharts;
 using SkiaSharp;
 using TripBuddy.Models;
+using TripBuddy.ViewModel;
 using System.Diagnostics;
 
 namespace TripBuddy.Views
@@ -11,7 +12,7 @@ namespace TripBuddy.Views
         DataStore dataStore = new DataStore();
 
 
-        public MainPage()
+        public MainPage(MainPageViewModel vm)
         {
             // Initialize the GUI and start parsing CSV contents in seperate thread so that GUI is not frozen
             InitializeComponent();
@@ -24,12 +25,14 @@ namespace TripBuddy.Views
             //thread_gui_start.Join();
             threadCsv.Join();
 
+            BindingContext = vm;
+
             // Populate the Picker with the list of cities
             //CityPicker.ItemsSource = dataStore.HotelCatalogue.Select(hotel => hotel.City.Name).Distinct().ToList(); // Assuming City has a Name property
 
         }
 
-        private void SortHotels_Click(object sender, EventArgs e)
+        /*private void SortHotels_Click(object sender, EventArgs e)
         {
             {
                 if (CityPicker.SelectedItem != null)
@@ -72,7 +75,7 @@ namespace TripBuddy.Views
                     });
                 }
             }
-        }
+        }*/
 
         private async void SortByPriceAscending_Click(object sender, EventArgs e)
         {
