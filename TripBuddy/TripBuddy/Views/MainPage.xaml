@@ -31,7 +31,7 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="300" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
 
@@ -102,27 +102,30 @@
                   VerticalOptions="Center"
                   HorizontalOptions="Center"
                   Margin="0,0,0,0"/>-->
-            
 
-            <VerticalStackLayout
-                Grid.Column="1"
-                BindableLayout.ItemsSource="{Binding Hotels}"
-                >
-                <!--https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/listview?view=net-maui-8.0-->
-                <!--Make the listview for hotels-->
-                <ScrollView>
-                    <BindableLayout.ItemTemplate>
-                        <DataTemplate x:DataType="{x:Type model:Hotel}">
-                            <Grid Padding="10">
+            <ScrollView
+                Grid.Column="1">
+                <VerticalStackLayout
+                    BindableLayout.ItemsSource="{Binding Hotels}"
+                    >
+                    <!--https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/listview?view=net-maui-8.0-->
+                    <!--Make the listview for hotels-->
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="{x:Type model:Hotel}">
+                                <Grid Padding="10">
                                 <Label 
                                     Text="{Binding Name}"
-                                    FontAttributes="Bold"/>
-                            </Grid>
-                        </DataTemplate>
-                    </BindableLayout.ItemTemplate>
-                </ScrollView>
-            </VerticalStackLayout>
-
+                                    FontAttributes="Bold"
+                                        >
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="Onclicked"/>
+                                        </Label.GestureRecognizers>
+                                </Label>
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </ScrollView>
         </Grid>
     </ContentPage.Content>
 

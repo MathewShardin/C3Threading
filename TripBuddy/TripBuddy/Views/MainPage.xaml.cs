@@ -96,5 +96,13 @@ namespace TripBuddy.Views
         {
             await Task.Run(() => dataStore.DescendingSortHotelNames(dataStore.HotelCatalogue, hotel => hotel.Name));
         }
+
+        private void Onclicked(object sender, EventArgs e)
+        {
+            if(sender is Label label)
+            {
+                DisplayAlert("Label Clicked", label.Text, "OK");
+            }
+        }
     }
 }
