@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TripBuddy.MainPage"
+             xmlns:micro="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
              BackgroundColor="AliceBlue">
     <ContentPage.MenuBarItems >
         <MenuBarItem
@@ -87,19 +88,6 @@
             </VerticalStackLayout>
 
             <VerticalStackLayout
-                Grid.Row="4"
-                Grid.Column="0"
-                WidthRequest="60">
-                
-                <Button
-                    x:Name="CounterBtn"
-                    Text="+" 
-                    SemanticProperties.Hint="Counts the number of times you click"
-                    Clicked="OnCounterClicked"
-                    HorizontalOptions="StartAndExpand" />
-            </VerticalStackLayout>
-
-            <VerticalStackLayout
                 Grid.Column="1"
                 Grid.Row="2">
                 <!--https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/listview?view=net-maui-8.0-->
@@ -134,8 +122,13 @@
                 </ListView>
                 
             </VerticalStackLayout>
+            
+            <VerticalStackLayout>
+                <Picker x:Name="CityPicker" Title="Select a City" SelectedIndexChanged="SortHotels_Click"/>
+                <micro:ChartView x:Name="chartView" HeightRequest="600"/>
+            </VerticalStackLayout>
 
-    </Grid>
+        </Grid>
     </ContentPage.Content>
 
 </ContentPage>
