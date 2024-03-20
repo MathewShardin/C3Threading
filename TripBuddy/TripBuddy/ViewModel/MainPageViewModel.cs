@@ -23,7 +23,7 @@ namespace TripBuddy.ViewModel
         {
             this.Count = 0;
             this.City = new City("City", "Country","010002000");
-            this.Hotel = new Hotel("Hotel", 100, City, "good", 1);
+            this.Hotel = new Hotel("Dimis Sex House", 100, City, "good", 1);
             this.Hotels.Add(this.Hotel);
         }
     }
