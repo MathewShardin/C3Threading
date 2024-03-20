@@ -15,17 +15,15 @@ namespace TripBuddy.Models
 {
     internal class JsonSaveLoad
     {
-        DateTime creationDate { get; }
-        Trip trip = new Trip();
+        //DateTime creationDate { get; }
+        //Trip trip = new Trip();
 
-        public JsonSaveLoad(Trip trip)
+        public JsonSaveLoad()
         {
-            this.trip = trip;
-            creationDate = DateTime.Now;
         }
 
         //turns the trip and date into a Json string asynchronously
-        public async void MakeJsonAsync()
+        public static async void MakeJsonAsync(Trip trip)
         {
             //makes json string
             string jsonString = System.Text.Json.JsonSerializer.Serialize(trip, new JsonSerializerOptions
@@ -45,7 +43,7 @@ namespace TripBuddy.Models
             File.WriteAllText(filePath, jsonString);
         }
 
-        public void MakeJson()
+        public void MakeJson(Trip trip)
         {
             //makes json string
             string jsonString = System.Text.Json.JsonSerializer.Serialize(trip, new JsonSerializerOptions
@@ -65,7 +63,7 @@ namespace TripBuddy.Models
             File.WriteAllTextAsync(filePath, jsonString);
         }
 
-        public Trip loadJson()
+        public static Trip loadJson()
         {
             //get file
             string fileName = "hotelplace.json";

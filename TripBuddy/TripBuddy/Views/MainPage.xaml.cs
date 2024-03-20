@@ -10,20 +10,19 @@ namespace TripBuddy.Views
     public partial class MainPage : ContentPage
     {
         DataStore dataStore = new DataStore();
+        Trip tripCurrent { get; set; }
 
 
         public MainPage(MainPageViewModel vm)
         {
-            // Initialize the GUI and start parsing CSV contents in seperate thread so that GUI is not frozen
+            // Start parsing CSV contents in seperate thread so that GUI is not frozen
             InitializeComponent();
             Thread threadCsv = new Thread(() => this.dataStore.ParseFromCsv());
             threadCsv.IsBackground = true;
-            //Thread thread_gui_start = new Thread(InitializeComponent);
-            //thread_gui_start.Start();
             threadCsv.Start();
-            //Wait for Threads to end and join them
-            //thread_gui_start.Join();
-            threadCsv.Join();
+            // Initialize the Trip object that will contain User selection
+            resetTrip();
+            threadCsv.Join(); //Wait for Threads to end and join them
 
             BindingContext = vm;
 
@@ -95,6 +94,20 @@ namespace TripBuddy.Views
         private async void SortByHotelNamesDescending_Click(object sender, EventArgs e)
         {
             await Task.Run(() => dataStore.DescendingSortHotelNames(dataStore.HotelCatalogue, hotel => hotel.Name));
+        }
+        private void resetTrip()
+        {
+            this.tripCurrent = new Trip();
+        }
+        private void saveJsonTrip()
+        {
+            JsonSaveLoad.MakeJsonAsync(this.tripCurrent);
+        }
+
+        private void loadJsonTrip()
+        {
+            this.tripCurrent = JsonSaveLoad.loadJson();
+            // TO DO: Update GUI here
         }
     }
 }
