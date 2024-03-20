@@ -18,10 +18,10 @@
             <!--the command to connect the button to function-->
             <!--add here backend form teo-->
             <!-- add binding here-->
-            <MenuFlyoutItem Text="Price Acending" IconImageSource="arrow.png"/>
-            <MenuFlyoutItem Text="Price Decending" IconImageSource="arrow_down.png"/>
-            <MenuFlyoutItem Text="Name A-Z"/>
-            <MenuFlyoutItem Text="Name Z-A"/>
+            <MenuFlyoutItem Text="Price Acending" Clicked="SortByPriceAscending_Click" IconImageSource="arrow.png"/>
+            <MenuFlyoutItem Text="Price Decending" Clicked="SortByPriceDescending_Click" IconImageSource="arrow_down.png"/>
+            <MenuFlyoutItem Text="Name A-Z" Clicked="SortByHotelNamesAscending_Click"/>
+            <MenuFlyoutItem Text="Name Z-A" Clicked="SortByHotelNamesDescending_Click"/>
         </MenuBarItem>
 
     </ContentPage.MenuBarItems>
