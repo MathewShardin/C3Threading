@@ -5,7 +5,7 @@
              BackgroundColor="AliceBlue"
              xmlns:viewmodel="clr-namespace:TripBuddy.ViewModel"
              x:DataType="viewmodel:MainPageViewModel">
-    <ContentPage.MenuBarItems >
+    <ContentPage.MenuBarItems>
         <MenuBarItem
             Text="File">
             <!--the command to connect the button to function-->
@@ -28,132 +28,101 @@
     </ContentPage.MenuBarItems>
     <ContentPage.Content>
         <Grid>
-            <!--Grid index start at 0-->
-            <Grid.RowDefinitions>
-                <RowDefinition Height="100" />
-                <RowDefinition Height="100" />
-                <RowDefinition Height="100" />
-                <RowDefinition Height="100" />
-                <RowDefinition Height="100" />
-
-            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="300" />
-                <ColumnDefinition Width="300" />
-                <ColumnDefinition Width="300" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="300" />
             </Grid.ColumnDefinitions>
 
 
-
-            <VerticalStackLayout
-                    Grid.Column="0"
-                    Grid.Row="1"
-                    Padding="20">
-
-                <Picker
-                        x:Name="DestinationStartPicker"
-                        Title="Choose A Start"
-                        HorizontalOptions="StartAndExpand">
-                    <!--Method to select the cities-->
-                    <!--<SelectedIndexChanged="OnDestinationSelected">-->
-                    <Picker.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Paris</x:String>
-                            <x:String>London</x:String>
-                            <x:String>New York</x:String>
-                            <x:String>Tokyo</x:String>
-                        </x:Array>
-                    </Picker.ItemsSource>
-                </Picker>
-            </VerticalStackLayout>
-
-            <VerticalStackLayout
+            <VerticalStackLayout>
+                <HorizontalStackLayout
                         Grid.Column="0"
-                        Grid.Row="2"
-                        Padding="20"
-                       >
-                <Picker
-                        x:Name="DestinationEndPicker"
-                        Title="Select Final Destination"
-                        HorizontalOptions="StartAndExpand">
-                    <!--Method to select the cities-->
-                    <!--<SelectedIndexChanged="OnDestinationSelected">-->
-                    <Picker.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Paris</x:String>
-                            <x:String>London</x:String>
-                            <x:String>New York</x:String>
-                            <x:String>Tokyo</x:String>
-                        </x:Array>
-                    </Picker.ItemsSource>
-                </Picker>
+                        Grid.Row="0"
+                        Padding="20">
 
+                    <Picker
+                            x:Name="DestinationStartPicker"
+                            Title="Choose A Start"
+                            HorizontalOptions="StartAndExpand">
+                        <!--Method to select the cities-->
+                        <!--<SelectedIndexChanged="OnDestinationSelected">-->
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Paris</x:String>
+                                <x:String>London</x:String>
+                                <x:String>New York</x:String>
+                                <x:String>Tokyo</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout
+                            Grid.Column="0"
+                            Grid.Row="0"
+                            Padding="20,50,0,20"
+                           >
+                    <Picker
+                            x:Name="DestinationEndPicker"
+                            Title="Select Final Destination"
+                            HorizontalOptions="StartAndExpand">
+                        <!--Method to select the cities-->
+                        <!--<SelectedIndexChanged="OnDestinationSelected">-->
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Paris</x:String>
+                                <x:String>London</x:String>
+                                <x:String>New York</x:String>
+                                <x:String>Tokyo</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    WidthRequest="60">
+
+                    <Button
+                        x:Name="CounterBtn"
+                        Text="+" 
+                        SemanticProperties.Hint="Counts the number of times you click"
+                        Clicked="OnCounterClicked"
+                        HorizontalOptions="StartAndExpand" />
+                </HorizontalStackLayout>
+
+                <!--<HorizontalStackLayout>
+                    Put graph here
+                </HorizontalStackLayout>-->
             </VerticalStackLayout>
 
-            <VerticalStackLayout
-                Grid.Row="4"
-                Grid.Column="0"
-                WidthRequest="60">
-                
-                <Button
-                    x:Name="CounterBtn"
-                    Text="+" 
-                    SemanticProperties.Hint="Counts the number of times you click"
-                    Clicked="OnCounterClicked"
-                    HorizontalOptions="StartAndExpand" />
-            </VerticalStackLayout>
-
-
-            <Label Text="Text"
-                      FontAttributes="Bold"
-                      FontSize="Large"
-                      VerticalOptions="Center"
-                      HorizontalOptions="Center"
-                      Margin="0,0,0,0"/>
-
-            <Label Text="{Binding Hotel.Name}"
+            <!--<Label Text="{Binding Hotel.Name}"
                   FontAttributes="Bold"
                   FontSize="Large"
                   VerticalOptions="Center"
                   HorizontalOptions="Center"
-                  Margin="0,0,0,0"/>
+                  Margin="0,0,0,0"/>-->
             
 
-            <VerticalStackLayout
+            <HorizontalStackLayout
                 BindableLayout.ItemsSource="{Binding Hotels}"
                 Grid.Column="1"
-                Grid.Row="1"
+                Grid.Row="0"
                 >
                 <!--https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/listview?view=net-maui-8.0-->
                 <!--Make the listview for hotels-->
                     <BindableLayout.ItemTemplate>
-                        <DataTemplate >
-                            <ViewCell>
-                                <Grid Padding="10"
-                                      BackgroundColor="Black">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <Label Grid.Column="1"
-                                           Grid.Row="0"
-                                        Text="{Binding Hotel.Name}"
-                                        FontAttributes="Bold" />
-                                    <Label Grid.Row="1"
-                                        Grid.Column="1"
-                                        Text="{Binding Hotel.City.Name}"
-                                        FontAttributes="Italic"
-                                        VerticalOptions="End" />
-                                </Grid>
-                            </ViewCell>
+                        <DataTemplate x:DataType="{x:Type model:Hotel}">
+                            <Grid Padding="10">
+                                <Label 
+                                       Text="{Binding Hotel.Name}"
+                                       FontAttributes="Bold"/>
+                            </Grid>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
-            </VerticalStackLayout>
+            </HorizontalStackLayout>
 
         </Grid>
     </ContentPage.Content>

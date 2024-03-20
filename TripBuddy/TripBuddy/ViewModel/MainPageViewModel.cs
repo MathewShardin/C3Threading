@@ -11,7 +11,7 @@ namespace TripBuddy.ViewModel
         private Hotel _hotel;
 
         [ObservableProperty]
-        private ObservableCollection<Hotel> _hotels = new();
+        private ObservableCollection<Hotel> _hotels = [];
 
         [ObservableProperty]
         private City _city;
