@@ -110,15 +110,17 @@
                 >
                 <!--https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/listview?view=net-maui-8.0-->
                 <!--Make the listview for hotels-->
-                <BindableLayout.ItemTemplate>
-                    <DataTemplate x:DataType="{x:Type model:Hotel}">
-                        <Grid Padding="10">
-                            <Label 
+                <ScrollView>
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="{x:Type model:Hotel}">
+                            <Grid Padding="10">
+                                <Label 
                                     Text="{Binding Name}"
                                     FontAttributes="Bold"/>
-                        </Grid>
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
+                            </Grid>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </ScrollView>
             </VerticalStackLayout>
 
         </Grid>
