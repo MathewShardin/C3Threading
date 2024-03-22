@@ -32,7 +32,8 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
+              
+                <ColumnDefinition Width="0.5*" />
             </Grid.ColumnDefinitions>
 
             <ScrollView>
@@ -94,6 +95,7 @@
                                 <Grid Padding="10">
                                 <Label 
                                     Text="{Binding Name}"
+                                    TextColor="Black"
                                     FontAttributes="Bold"
                                         >
                                         <Label.GestureRecognizers>
