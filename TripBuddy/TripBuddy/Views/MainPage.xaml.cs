@@ -4,12 +4,15 @@ using SkiaSharp;
 using TripBuddy.Models;
 using TripBuddy.ViewModel;
 using System.Diagnostics;
+using System.Collections.ObjectModel;
+
 
 namespace TripBuddy.Views
 {
     public partial class MainPage : ContentPage
     {
         DataStore dataStore = new DataStore();
+
 
 
         public MainPage(MainPageViewModel vm)
@@ -23,61 +26,73 @@ namespace TripBuddy.Views
             threadCsv.Start();
             //Wait for Threads to end and join them
             //thread_gui_start.Join();
-            threadCsv.Join();
-
+            threadCsv.Join();    
+           
             BindingContext = vm;
-
-            // Populate the Picker with the list of cities
-            //CityPicker.ItemsSource = dataStore.HotelCatalogue.Select(hotel => hotel.City.Name).Distinct().ToList(); // Assuming City has a Name property
+                
 
         }
+
+        //private void OnClickNewPicker(object sender, EventArgs e)
+        //{
+        //    var newPicker = new Picker
+        //    {
+        //        Title = "Choose A Start",
+        //        HorizontalOptions = LayoutOptions.StartAndExpand,
+        //        BackgroundColor = Color.FromRgb(240, 248, 255),
+        //        TextColor = Color.FromRgb(0, 0, 0),
+
+        //    };
+
+        //    Add the picker to the collection or UI as needed
+        //   CitiesContainer.Children.Add(newPicker);
+        //}
 
         private void SortHotels_Click(object sender, EventArgs e)
         {
+            // Determine which picker triggered the event
+            Picker picker = sender as Picker;
+
+            if (picker.SelectedItem != null)
             {
-                if (CityPicker.SelectedItem != null)
+                // Get the selected city
+                var selectedCity = (picker.SelectedItem as City).Name; // Change this line
+
+                ThreadPool.QueueUserWorkItem(o =>
                 {
-                    ThreadPool.QueueUserWorkItem(_ =>
+                    // Filter and sort the hotels by price in ascending order
+                    var sortedHotels = dataStore.HotelCatalogue
+                        .Where(hotel => hotel.City.Name == selectedCity)
+                        .OrderBy(hotel => hotel.Price)
+                        .ToList();
+
+                    // Create entries for the chart based on sorted hotel prices
+                    var entries = sortedHotels.Select(hotel =>
+                                    new Microcharts.ChartEntry((float)hotel.Price)
+                                    {
+                                        Label = hotel.Name,
+                                        ValueLabel = hotel.Price.ToString(),
+                                        Color = SKColor.Parse("#266489")
+                                    }).ToList();
+
+                    var lineChart = new LineChart()
                     {
-                        // Get the selected city
-                        var selectedCity = CityPicker.SelectedItem.ToString();
+                        Entries = entries,
+                        LabelTextSize = 10f, // Adjust the text size
+                        ValueLabelOrientation = Orientation.Horizontal, // Change the orientation
+                        LabelOrientation = Orientation.Horizontal, // Change the orientation
+                    };
 
-                        // Filter and sort the hotels by price in ascending order
-                        var sortedHotels = dataStore.HotelCatalogue
-                            .Where(hotel => hotel.City.Name == selectedCity) // Assuming City has a Name property
-                            .OrderBy(hotel => hotel.Price)
-                            .ToList();
-
-                        //sortedHotels = sortedHotels.Take(10).ToList();
-
-                        // Create entries for the chart based on sorted hotel prices
-                        var entries = sortedHotels.Select(hotel =>
-                                        new Microcharts.ChartEntry((float)hotel.Price)
-                                        {
-                                            Label = hotel.Name,
-                                            ValueLabel = hotel.Price.ToString(),
-                                            Color = SKColor.Parse("#266489")
-                                        }).ToList();
-
-                        var lineChart = new LineChart()
-                        {
-                            Entries = entries,
-                            LabelTextSize = 10f, // Adjust the text size
-                            ValueLabelOrientation = Orientation.Horizontal, // Change the orientation
-                            LabelOrientation = Orientation.Horizontal, // Change the orientation
-                        };
-
-                        // Update the UI on the main thread
-                        Device.BeginInvokeOnMainThread(() =>
-                        {
-                            chartView.Chart = lineChart;
-                        });
+                    // Update the UI on the main thread
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        chartView.Chart = lineChart;
                     });
-                }
+                });
             }
         }
 
-        private async void SortByPriceAscending_Click(object sender, EventArgs e)
+            private async void SortByPriceAscending_Click(object sender, EventArgs e)
         {
             await Task.Run(() => dataStore.AscendingSortHotelsPrice(dataStore.HotelCatalogue, hotel => hotel.Price));
         }
@@ -104,5 +119,8 @@ namespace TripBuddy.Views
                 DisplayAlert("Label Clicked", label.Text, "OK");
             }
         }
+        
+        
+        
     }
 }
