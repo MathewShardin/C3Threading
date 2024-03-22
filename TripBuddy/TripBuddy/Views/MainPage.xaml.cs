@@ -99,15 +99,14 @@ namespace TripBuddy.Views
         {
             this.tripCurrent = new Trip();
         }
-        private void saveJsonTrip()
+        private void saveJsonTrip_Click(object sender, EventArgs e)
         {
             JsonSaveLoad.MakeJsonAsync(this.tripCurrent);
         }
 
-        private void loadJsonTrip()
+        private void loadJsonTrip_Click(object sender, EventArgs e)
         {
             this.tripCurrent = JsonSaveLoad.loadJson();
-            // TO DO: Update GUI here
         }
         
         private void addNewLocationStop(Hotel hotel)
