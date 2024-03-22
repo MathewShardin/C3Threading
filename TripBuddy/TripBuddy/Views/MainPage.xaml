@@ -32,7 +32,8 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
+              
+                <ColumnDefinition Width="0.5*" />
             </Grid.ColumnDefinitions>
 
 
@@ -85,8 +86,12 @@
                 </HorizontalStackLayout>
 
                 <VerticalStackLayout>
-                    <Picker x:Name="CityPicker" Title="Select a City" SelectedIndexChanged="SortHotels_Click"/>
-                    <micro:ChartView x:Name="chartView" HeightRequest="600"/>
+                    <Picker x:Name="CityPicker" 
+                            Title="Select a City"
+                            ItemsSource="{Binding Cities}"
+                            ItemDisplayBinding="{Binding Name}"
+                            SelectedIndexChanged="SortHotels_Click"/>
+                    <micro:ChartView x:Name="chartView" HeightRequest="100"/>
                 </VerticalStackLayout>
                 
             </VerticalStackLayout>
@@ -104,6 +109,7 @@
                                 <Grid Padding="10">
                                 <Label 
                                     Text="{Binding Name}"
+                                    TextColor="Black"
                                     FontAttributes="Bold"
                                         >
                                         <Label.GestureRecognizers>
