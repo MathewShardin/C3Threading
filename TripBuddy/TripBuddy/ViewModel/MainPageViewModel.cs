@@ -14,6 +14,9 @@ namespace TripBuddy.ViewModel
         private ObservableCollection<Hotel> _hotels;
 
         [ObservableProperty]
+        private ObservableCollection<City> _cities;
+
+        [ObservableProperty]
         private City _city;
 
         [ObservableProperty]
@@ -26,6 +29,7 @@ namespace TripBuddy.ViewModel
             dStore.ParseFromCsv();
 
             Hotels = new ObservableCollection<Hotel>(dStore.HotelCatalogue);
+            Cities = new ObservableCollection<City>(dStore.CityCatalogue);
         }
     }
 }

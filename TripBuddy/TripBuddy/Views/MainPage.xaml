@@ -42,20 +42,15 @@
                         Padding="20">
 
                     <Picker
-                            x:Name="DestinationStartPicker"
-                            Title="Choose A Start"
-                            HorizontalOptions="StartAndExpand">
-                        <!--Method to select the cities-->
-                        <!--<SelectedIndexChanged="OnDestinationSelected">-->
-                        <Picker.ItemsSource>
-                            <x:Array Type="{x:Type x:String}">
-                                <x:String>Paris</x:String>
-                                <x:String>London</x:String>
-                                <x:String>New York</x:String>
-                                <x:String>Tokyo</x:String>
-                            </x:Array>
-                        </Picker.ItemsSource>
-                    </Picker>
+                        x:Name="DestinationStartPicker"
+                        Title="Choose A Start"
+                        HorizontalOptions="StartAndExpand"
+                        ItemsSource="{Binding Cities}"
+                        ItemDisplayBinding="{Binding City.Name}"
+                        SelectedItem="{Binding City}"/>
+
+                    <Label Text="{Binding City.Name}"/>
+
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout
@@ -64,19 +59,11 @@
                             Padding="20,50,0,20"
                            >
                     <Picker
-                            x:Name="DestinationEndPicker"
-                            Title="Select Final Destination"
-                            HorizontalOptions="StartAndExpand">
-                        <!--Method to select the cities-->
-                        <!--<SelectedIndexChanged="OnDestinationSelected">-->
-                        <Picker.ItemsSource>
-                            <x:Array Type="{x:Type x:String}">
-                                <x:String>Paris</x:String>
-                                <x:String>London</x:String>
-                                <x:String>New York</x:String>
-                                <x:String>Tokyo</x:String>
-                            </x:Array>
-                        </Picker.ItemsSource>
+                        x:Name="DestinationEndPicker"
+                        Title="Choose A Start"
+                        HorizontalOptions="StartAndExpand"
+                        ItemsSource="{Binding Cities}"
+                        ItemDisplayBinding="{Binding City.Name}">
                     </Picker>
 
                 </HorizontalStackLayout>
