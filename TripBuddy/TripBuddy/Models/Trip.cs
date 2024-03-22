@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace TripBuddy.Models
 {
-    internal class Trip
+    public class Trip
     {
 
         // This class is used to store information about a trip
 
         public double TotalPrice { get; set; }
-        public HashSet<LocationStop> Stops { get; set; }
+        public List<LocationStop> Stops { get; set; }
 
 
         // Constructor
         public Trip()
         {
             TotalPrice = 0;
-            Stops = new HashSet<LocationStop>();
+            Stops = new List<LocationStop>();
         }
 
         public void calculateTotalPrice()

@@ -1,6 +1,6 @@
 ﻿namespace TripBuddy.Models
 {
-    internal class DataStore
+    public class DataStore
     {
         private object Assert;
 

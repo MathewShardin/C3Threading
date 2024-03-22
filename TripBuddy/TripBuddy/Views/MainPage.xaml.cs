@@ -21,7 +21,7 @@ namespace TripBuddy.Views
             threadCsv.IsBackground = true;
             threadCsv.Start();
             // Initialize the Trip object that will contain User selection
-            resetTrip();
+            ResetTrip();
             threadCsv.Join(); //Wait for Threads to end and join them
 
             BindingContext = vm;
@@ -95,23 +95,67 @@ namespace TripBuddy.Views
         {
             await Task.Run(() => dataStore.DescendingSortHotelNames(dataStore.HotelCatalogue, hotel => hotel.Name));
         }
-        private void resetTrip()
+        private void ResetTrip()
         {
             this.tripCurrent = new Trip();
         }
-        private void saveJsonTrip_Click(object sender, EventArgs e)
+        private void SaveJsonTrip_Click(object sender, EventArgs e)
         {
             JsonSaveLoad.MakeJsonAsync(this.tripCurrent);
         }
 
-        private void loadJsonTrip_Click(object sender, EventArgs e)
+        private void LoadJsonTrip_Click(object sender, EventArgs e)
         {
             this.tripCurrent = JsonSaveLoad.loadJson();
         }
         
-        private void addNewLocationStop(Hotel hotel)
+        public void AddNewLocationStop(Hotel hotel)
         {
             this.tripCurrent.addLocationStop(new LocationStop(hotel));
         }
+
+        public void AddNewLocationStop()
+        {
+            LocationStop tempStop = new LocationStop();
+            this.tripCurrent.addLocationStop(tempStop);
+        }
+        public void AddNewLocationStop(LocationStop stop)
+        {
+            this.tripCurrent.addLocationStop(stop);
+        }
+
+        //Remove a LocationStop based on its index in the list. The order stays as users manually add new Stops top to bottom
+        public void RemoveLocationStop(int index)
+        {
+            try
+            {
+                this.tripCurrent.Stops.RemoveAt(index);
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                Debug.WriteLine(ex.StackTrace);
+            }
+        }
+
+        //Remove a LocationStop based on the object itself
+        public void RemoveLocationStop(LocationStop stop)
+        {
+            try
+            {
+                this.tripCurrent.Stops.Remove(stop);
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                Debug.WriteLine(ex.StackTrace);
+            }
+        }
+
+        //Adds a specified Hotel object to a LocationStop with a given index (index for tripCurrent.Stops)
+        public void AddHotelToLocationStop(Hotel hotel, int index)
+        {
+            tripCurrent.Stops[index].Hotel = hotel;
+        }
+
+
     }
 }

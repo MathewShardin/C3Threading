@@ -10,8 +10,8 @@
             Text="File">
             <!--the command to connect the button to function-->
             <!--add here backend form teo-->
-            <MenuFlyoutItem Text="Save To File" Clicked="saveJsonTrip_Click"/>
-            <MenuFlyoutItem Text="Load From File" Clicked="loadJsonTrip_Click"/>
+            <MenuFlyoutItem Text="Save To File" Clicked="SaveJsonTrip_Click"/>
+            <MenuFlyoutItem Text="Load From File" Clicked="LoadJsonTrip_Click"/>
         </MenuBarItem>
 
         <MenuBarItem
