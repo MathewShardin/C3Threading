@@ -32,7 +32,7 @@ namespace TripBuddy.Views
 
         }
 
-        /*private void SortHotels_Click(object sender, EventArgs e)
+        private void SortHotels_Click(object sender, EventArgs e)
         {
             {
                 if (CityPicker.SelectedItem != null)
@@ -75,7 +75,7 @@ namespace TripBuddy.Views
                     });
                 }
             }
-        }*/
+        }
 
         private async void SortByPriceAscending_Click(object sender, EventArgs e)
         {

@@ -5,6 +5,7 @@
              BackgroundColor="AliceBlue"
              xmlns:viewmodel="clr-namespace:TripBuddy.ViewModel"
              xmlns:model="clr-namespace:TripBuddy.Models"
+             xmlns:micro="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
              x:DataType="viewmodel:MainPageViewModel">
     <ContentPage.MenuBarItems>
         <MenuBarItem
@@ -45,11 +46,14 @@
                         x:Name="DestinationStartPicker"
                         Title="Choose A Start"
                         HorizontalOptions="StartAndExpand"
+                        BackgroundColor="AliceBlue"
+                        TextColor="Black"
                         ItemsSource="{Binding Cities}"
-                        ItemDisplayBinding="{Binding City.Name}"
-                        SelectedItem="{Binding City}"/>
+                        ItemDisplayBinding="{Binding Name}">
+                        
+                    </Picker>
 
-                    <Label Text="{Binding City.Name}"/>
+                   
 
                 </HorizontalStackLayout>
 
@@ -60,10 +64,12 @@
                            >
                     <Picker
                         x:Name="DestinationEndPicker"
-                        Title="Choose A Start"
+                        Title="Choose Another City"
                         HorizontalOptions="StartAndExpand"
+                        BackgroundColor="AliceBlue"
+                        TextColor="Black"
                         ItemsSource="{Binding Cities}"
-                        ItemDisplayBinding="{Binding City.Name}">
+                        ItemDisplayBinding="{Binding Name}">
                     </Picker>
 
                 </HorizontalStackLayout>
@@ -78,17 +84,13 @@
                         Text="+"  />
                 </HorizontalStackLayout>
 
-                <!--<HorizontalStackLayout>
-                    Put graph here
-                </HorizontalStackLayout>-->
+                <VerticalStackLayout>
+                    <Picker x:Name="CityPicker" Title="Select a City" SelectedIndexChanged="SortHotels_Click"/>
+                    <micro:ChartView x:Name="chartView" HeightRequest="600"/>
+                </VerticalStackLayout>
+                
             </VerticalStackLayout>
 
-            <!--<Label Text="{Binding Hotel.Name}"
-                  FontAttributes="Bold"
-                  FontSize="Large"
-                  VerticalOptions="Center"
-                  HorizontalOptions="Center"
-                  Margin="0,0,0,0"/>-->
 
             <ScrollView
                 Grid.Column="1">
