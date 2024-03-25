@@ -19,6 +19,7 @@ namespace TripBuddy.Views
         {
             // Initialize the GUI and start parsing CSV contents in seperate thread so that GUI is not frozen
             InitializeComponent();
+            BindingContext = vm;
             Thread threadCsv = new Thread(() => this.dataStore.ParseFromCsv());
             threadCsv.IsBackground = true;
             //Thread thread_gui_start = new Thread(InitializeComponent);
@@ -28,25 +29,28 @@ namespace TripBuddy.Views
             //thread_gui_start.Join();
             threadCsv.Join();    
            
-            BindingContext = vm;
+            
                 
 
         }
 
-        //private void OnClickNewPicker(object sender, EventArgs e)
-        //{
-        //    var newPicker = new Picker
-        //    {
-        //        Title = "Choose A Start",
-        //        HorizontalOptions = LayoutOptions.StartAndExpand,
-        //        BackgroundColor = Color.FromRgb(240, 248, 255),
-        //        TextColor = Color.FromRgb(0, 0, 0),
+        private void OnClickNewPicker(object sender, EventArgs e)
+        {
+            // Create a new picker
+            Picker newPicker = new Picker
+            {
+                Title = "Choose A Start",
+                HorizontalOptions = LayoutOptions.StartAndExpand,
+                ItemsSource = { "Cities" }, // Set the items source
+                ItemDisplayBinding = new Binding("Name") // Set the item display binding
+            };
 
-        //    };
+            // Add a selected index changed event handler for the new picker
+            newPicker.SelectedIndexChanged += SortHotels_Click;
 
-        //    Add the picker to the collection or UI as needed
-        //   CitiesContainer.Children.Add(newPicker);
-        //}
+            // Add the new picker to the layout
+            CitiesContainer.Children.Add(newPicker);
+        }
 
         private void SortHotels_Click(object sender, EventArgs e)
         {
