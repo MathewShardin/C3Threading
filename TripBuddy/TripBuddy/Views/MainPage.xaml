@@ -29,7 +29,7 @@
 
     </ContentPage.MenuBarItems>
     <ContentPage.Content>
-        <Grid>
+        <Grid x:Name="LeftGrid">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
               
@@ -71,7 +71,7 @@
                         WidthRequest="60">
 
                         <Button
-                            x:Name="Create Picker"
+                            x:Name="CreatePicker"
                             Text="+"  
                             Clicked="OnClickNewPicker"/>
                     </HorizontalStackLayout>

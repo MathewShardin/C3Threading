@@ -36,20 +36,36 @@ namespace TripBuddy.Views
 
         private void OnClickNewPicker(object sender, EventArgs e)
         {
-            // Create a new picker
+            //create a horizontal stack similar to that of how it is in our maui
+            var newHorizontalStackLayout = new HorizontalStackLayout
+            {
+                Padding = new Thickness(20),
+                HorizontalOptions = LayoutOptions.StartAndExpand
+            };
+
+            //make the picker
             Picker newPicker = new Picker
             {
                 Title = "Choose A Start",
                 HorizontalOptions = LayoutOptions.StartAndExpand,
-                ItemsSource = { "Cities" }, // Set the items source
-                ItemDisplayBinding = new Binding("Name") // Set the item display binding
             };
+            
+            //define the bindings
+            newPicker.SetBinding(Picker.ItemsSourceProperty, "Cities");
+            newPicker.ItemDisplayBinding = new Binding("Name");
 
             // Add a selected index changed event handler for the new picker
             newPicker.SelectedIndexChanged += SortHotels_Click;
 
-            // Add the new picker to the layout
-            CitiesContainer.Children.Add(newPicker);
+            //add the picker to the horizontal layour
+            newHorizontalStackLayout.Children.Add(newPicker);
+
+            //set the collumn and row of the layout to be the same as the other pickers
+            Grid.SetColumn(newHorizontalStackLayout, 0);
+            Grid.SetRow(newHorizontalStackLayout, 0);
+
+            //add the stacklayout to the city container vertical layout
+            CitiesContainer.Children.Add(newHorizontalStackLayout);
         }
 
         private void SortHotels_Click(object sender, EventArgs e)
