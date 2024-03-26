@@ -55,8 +55,6 @@ namespace TripBuddy.Views
 
             // Add a selected index changed event handler for the new picker
             newPicker.SelectedIndexChanged += SortHotels_Click;
-            //CitiesContainer.SetBinding(Picker.ItemsSourceProperty, new Binding("Cities")); // Set the items source
-            CitiesContainer.SetValue(Picker.SelectedItemProperty, dataStore.CityCatalogue[0]); // Set the selected item
 
             //add the picker to the horizontal layour
             newHorizontalStackLayout.Children.Add(newPicker);

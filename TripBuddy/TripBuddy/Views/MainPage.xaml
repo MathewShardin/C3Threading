@@ -35,53 +35,47 @@
               
                 <ColumnDefinition Width="0.5*" />
             </Grid.ColumnDefinitions>
-
-            <ScrollView>
-                <VerticalStackLayout
-                    x:Name="CitiesContainer">
-                    <HorizontalStackLayout
-                            Grid.Column="0"
-                            Grid.Row="0"
-                            Padding="20">
-                        <Picker
-                            x:Name="DestinationStartPicker"
-                            Title="Choose A Start"
-                            HorizontalOptions="StartAndExpand"
-                            ItemsSource="{Binding Cities}"
-                            ItemDisplayBinding="{Binding Name}"
-                            SelectedIndexChanged="SortHotels_Click">
-                        </Picker>
-                    </HorizontalStackLayout>
-                    <HorizontalStackLayout
-                            Grid.Column="0"
-                            Grid.Row="0"
-                            Padding="20">
-                        <Picker
-                                x:Name="DestinationStartttPicker"
-                                Title="Choose A Start"
-                                HorizontalOptions="StartAndExpand"
-                                ItemsSource="{Binding Cities}"
-                                ItemDisplayBinding="{Binding Name}"
-                                SelectedIndexChanged="SortHotels_Click">
-                        </Picker>
-                    </HorizontalStackLayout>
-                    <HorizontalStackLayout
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        WidthRequest="60">
-
-                        <Button
-                            x:Name="CreatePicker"
-                            Text="+"  
-                            Clicked="OnClickNewPicker"/>-->
-                    </HorizontalStackLayout>
-                    <micro:ChartView x:Name="chartView" HeightRequest="600"/>
-                </VerticalStackLayout>
-            </ScrollView>
-
-                    
-  
             
+
+            <VerticalStackLayout>
+                <ScrollView VerticalOptions="FillAndExpand"
+                            Grid.Column="0">
+                    <VerticalStackLayout>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <VerticalStackLayout x:Name="CitiesContainer">
+                            <HorizontalStackLayout
+                                Grid.Column="0"
+                                Grid.Row="0"
+                                Padding="20">
+                                <Picker
+                                    x:Name="DestinationStartPicker"
+                                    Title="Choose A Start"
+                                    HorizontalOptions="StartAndExpand"
+                                    ItemsSource="{Binding Cities}"
+                                    ItemDisplayBinding="{Binding Name}"
+                                    SelectedIndexChanged="SortHotels_Click">
+                                </Picker>
+                            </HorizontalStackLayout>
+                            <Button
+                                Margin="60,0,0,0"
+                                Grid.Column="1"
+                                x:Name="CreatePicker"
+                                WidthRequest="60"
+                                Text="+"
+                                Clicked="OnClickNewPicker"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                    </VerticalStackLayout>
+                </ScrollView>
+                
+                <micro:ChartView x:Name="chartView" HeightRequest="600"/>
+
+            </VerticalStackLayout>
+
 
             <ScrollView
                 Grid.Column="1">
