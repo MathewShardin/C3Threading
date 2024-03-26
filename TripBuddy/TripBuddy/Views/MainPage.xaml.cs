@@ -28,9 +28,7 @@ namespace TripBuddy.Views
             //Wait for Threads to end and join them
             //thread_gui_start.Join();
             threadCsv.Join();    
-           
-            
-                
+
 
         }
 
@@ -39,14 +37,15 @@ namespace TripBuddy.Views
             // Create a new picker
             Picker newPicker = new Picker
             {
-                Title = "Choose A Start",
+
+                Title = "Choose A Stop",
                 HorizontalOptions = LayoutOptions.StartAndExpand,
-                ItemsSource = { "Cities" }, // Set the items source
                 ItemDisplayBinding = new Binding("Name") // Set the item display binding
             };
-
             // Add a selected index changed event handler for the new picker
             newPicker.SelectedIndexChanged += SortHotels_Click;
+            //CitiesContainer.SetBinding(Picker.ItemsSourceProperty, new Binding("Cities")); // Set the items source
+            CitiesContainer.SetValue(Picker.SelectedItemProperty, dataStore.CityCatalogue[0]); // Set the selected item
 
             // Add the new picker to the layout
             CitiesContainer.Children.Add(newPicker);

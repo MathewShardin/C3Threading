@@ -70,10 +70,10 @@
                         Grid.Column="0"
                         WidthRequest="60">
 
-                        <Button
+                        <!--<Button
                             x:Name="Create Picker"
                             Text="+"  
-                            Clicked="OnClickNewPicker"/>
+                            Clicked="OnClickNewPicker"/>-->
                     </HorizontalStackLayout>
                     <micro:ChartView x:Name="chartView" HeightRequest="600"/>
                 </VerticalStackLayout>
