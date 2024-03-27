@@ -53,7 +53,7 @@
             HotelCatalogue = hotels;
         }
 
-        public void AscendingSortHotelsPrice<T>(List<T> hotels, Func<T, IComparable> keySelector)
+        public List<T> AscendingSortHotelsPrice<T>(List<T> hotels, Func<T, IComparable> keySelector)
         {
             //Convert the list to an array for better performance
             T[] hotelArray = hotels.ToArray();
@@ -64,6 +64,7 @@
             //Clear the original list and add the sorted items
             hotels.Clear();
             hotels.AddRange(hotelArray);
+            return hotels;
         }
 
         private void ParallelQuickSort<T>(T[] arr, int left, int right, Func<T, IComparable> keySelector)
@@ -132,16 +133,17 @@
             return i + 1;
         }
 
-        public void DescendingSortHotelsPrice<T>(List<T> hotels, Func<T, IComparable> keySelector)
+        public List<T> DescendingSortHotelsPrice<T>(List<T> hotels, Func<T, IComparable> keySelector)
         {
             //call the AscendingSortHotelsPrice method
             AscendingSortHotelsPrice(hotels, keySelector);
 
             //reverse the list to get descending order
             hotels.Reverse();
+            return hotels;
         }
 
-        public void AscendingSortHotelNames<T>(List<T> hotels, Func<T, IComparable> keySelector)
+        public List<T> AscendingSortHotelNames<T>(List<T> hotels, Func<T, IComparable> keySelector)
         {
             //Convert the list to an array for better performance
             T[] hotelArray = hotels.ToArray();
@@ -152,15 +154,17 @@
             //Clear the original list and add the sorted items
             hotels.Clear();
             hotels.AddRange(hotelArray);
+            return hotels;
         }
 
-        public void DescendingSortHotelNames<T>(List<T> hotels, Func<T, IComparable> keySelector)
+        public List<T> DescendingSortHotelNames<T>(List<T> hotels, Func<T, IComparable> keySelector)
         {
             //call the AscendingSortHotelNames method
             AscendingSortHotelNames(hotels, keySelector);
 
             //reverse the list to get descending order
             hotels.Reverse();
+            return hotels;
         }
     }
 }

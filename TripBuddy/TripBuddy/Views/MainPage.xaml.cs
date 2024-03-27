@@ -130,22 +130,30 @@ namespace TripBuddy.Views
 
         private async void SortByPriceAscending_Click(object sender, EventArgs e)
         {
-            await Task.Run(() => dataStore.AscendingSortHotelsPrice(dataStore.HotelCatalogue, hotel => hotel.Price));
+            List<Hotel> sortedHotels = await Task.Run(() => dataStore.AscendingSortHotelsPrice(viewModel.getHotels().ToList(), hotel => hotel.Price));
+
+            viewModel.setHotels(new ObservableCollection<Hotel>(sortedHotels));
         }
 
         private async void SortByPriceDescending_Click(object sender, EventArgs e)
         {
-            await Task.Run(() => dataStore.DescendingSortHotelsPrice(dataStore.HotelCatalogue, hotel => hotel.Price));
+            List<Hotel> sortedHotels = await Task.Run(() => dataStore.DescendingSortHotelsPrice(viewModel.getHotels().ToList(), hotel => hotel.Price));
+
+            viewModel.setHotels(new ObservableCollection<Hotel>(sortedHotels));
         }
 
         private async void SortByHotelNamesAscending_Click(object sender, EventArgs e)
         {
-            await Task.Run(() => dataStore.AscendingSortHotelNames(dataStore.HotelCatalogue, hotel => hotel.Name));
+            List<Hotel> sortedHotels = await Task.Run(() => dataStore.AscendingSortHotelNames(dataStore.HotelCatalogue, hotel => hotel.Name));
+
+            viewModel.setHotels(new ObservableCollection<Hotel>(sortedHotels));
         }
 
         private async void SortByHotelNamesDescending_Click(object sender, EventArgs e)
         {
-            await Task.Run(() => dataStore.DescendingSortHotelNames(dataStore.HotelCatalogue, hotel => hotel.Name));
+            List<Hotel> sortedHotels = await Task.Run(() => dataStore.DescendingSortHotelNames(dataStore.HotelCatalogue, hotel => hotel.Name));
+
+            viewModel.setHotels(new ObservableCollection<Hotel>(sortedHotels));
         }
 
         private void Onclicked(object sender, EventArgs e)
