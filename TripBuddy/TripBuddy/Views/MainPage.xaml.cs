@@ -59,12 +59,17 @@ namespace TripBuddy.Views
             //add the picker to the horizontal layour
             newHorizontalStackLayout.Children.Add(newPicker);
 
-            //add the stacklayout to the city container vertical layout
-            CitiesContainer.Children.Add(newHorizontalStackLayout);
+            //add the stacklayout to the pickers container vertical layout
+            PickersContainer.Children.Add(newHorizontalStackLayout);
+
+            // Scroll to the newly added picker
+            CitiesScrollView.ScrollToAsync(newHorizontalStackLayout, ScrollToPosition.End, true);
 
             // Update the layout
             this.ForceLayout();
         }
+
+
 
 
 
