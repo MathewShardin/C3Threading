@@ -35,45 +35,34 @@
               
                 <ColumnDefinition Width="0.5*" />
             </Grid.ColumnDefinitions>
-            
+
 
             <VerticalStackLayout>
-                <ScrollView VerticalOptions="FillAndExpand"
-                            Grid.Column="0">
-                    <VerticalStackLayout>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <VerticalStackLayout x:Name="CitiesContainer">
-                            <HorizontalStackLayout
-                                Grid.Column="0"
-                                Grid.Row="0"
-                                Padding="20">
-                                <Picker
-                                    x:Name="DestinationStartPicker"
-                                    Title="Choose A Start"
-                                    HorizontalOptions="StartAndExpand"
-                                    ItemsSource="{Binding Cities}"
-                                    ItemDisplayBinding="{Binding Name}"
-                                    SelectedIndexChanged="SortHotels_Click">
-                                </Picker>
-                            </HorizontalStackLayout>
-                            <Button
-                                Margin="60,0,0,0"
-                                Grid.Column="1"
-                                x:Name="CreatePicker"
-                                WidthRequest="60"
-                                Text="+"
-                                Clicked="OnClickNewPicker"/>
-                        </VerticalStackLayout>
-                    </Grid>
+                <ScrollView VerticalOptions="Start" HeightRequest="150">
+                    <VerticalStackLayout x:Name="CitiesContainer">
+                        <HorizontalStackLayout
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    Padding="20">
+                            <Picker
+                    x:Name="DestinationStartPicker"
+                    Title="Choose A Start"
+                    HorizontalOptions="StartAndExpand"
+                    ItemsSource="{Binding Cities}"
+                    ItemDisplayBinding="{Binding Name}"
+                    SelectedIndexChanged="SortHotels_Click"/>
+                        </HorizontalStackLayout>
+                        <Button
+                Margin="60,0,0,0"
+                Grid.Column="1"
+                x:Name="CreatePicker"
+                WidthRequest="60"
+                Text="+"
+                Clicked="OnClickNewPicker"/>
                     </VerticalStackLayout>
                 </ScrollView>
-                
-                <micro:ChartView x:Name="chartView" HeightRequest="600"/>
 
+                <micro:ChartView x:Name="chartView" HeightRequest="600"/>
             </VerticalStackLayout>
 
             <VerticalStackLayout Grid.Column="1">

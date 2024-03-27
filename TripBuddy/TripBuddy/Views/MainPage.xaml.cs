@@ -45,11 +45,10 @@ namespace TripBuddy.Views
             //make the picker
             Picker newPicker = new Picker
             {
-
                 Title = "Choose A Stop",
                 HorizontalOptions = LayoutOptions.StartAndExpand,
             };
-            
+
             //define the bindings
             newPicker.SetBinding(Picker.ItemsSourceProperty, "Cities");
             newPicker.ItemDisplayBinding = new Binding("Name");
@@ -60,13 +59,15 @@ namespace TripBuddy.Views
             //add the picker to the horizontal layour
             newHorizontalStackLayout.Children.Add(newPicker);
 
-            //set the collumn and row of the layout to be the same as the other pickers
-            Grid.SetColumn(newHorizontalStackLayout, 0);
-            Grid.SetRow(newHorizontalStackLayout, 0);
-
             //add the stacklayout to the city container vertical layout
             CitiesContainer.Children.Add(newHorizontalStackLayout);
+
+            // Update the layout
+            this.ForceLayout();
         }
+
+
+
 
         private void SortHotels_Click(object sender, EventArgs e)
         {
