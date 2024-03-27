@@ -42,40 +42,39 @@
                     <VerticalStackLayout x:Name="CitiesContainer">
                         <VerticalStackLayout x:Name="PickersContainer">
                             <HorizontalStackLayout
-                Grid.Column="0"
-                Grid.Row="0"
-                Padding="20">
+                                                Grid.Column="0"
+                                                Grid.Row="0"
+                                                Padding="20">
                                 <Picker
-                    x:Name="DestinationStartPicker"
-                    Title="Choose A Start"
-                    HorizontalOptions="StartAndExpand"
-                    ItemsSource="{Binding Cities}"
-                    ItemDisplayBinding="{Binding Name}"
-                    SelectedIndexChanged="SortHotels_Click">
-                                </Picker>
+                                      x:Name="DestinationStartPicker"
+                                      Title="Choose A Start"
+                                      HorizontalOptions="StartAndExpand"
+                                      ItemsSource="{Binding Cities}"
+                                      ItemDisplayBinding="{Binding Name}"
+                                      SelectedIndexChanged="SortHotels_Click"/>
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
                         <Button
-            Margin="60,0,0,0"
-            Grid.Column="1"
-            x:Name="CreatePicker"
-            WidthRequest="60"
-            Text="+"
-            Clicked="OnClickNewPicker"/>
+                            Margin="30,0,0,0"
+                            Grid.Column="1"
+                            x:Name="CreatePicker"
+                            WidthRequest="60"
+                            Text="+"
+                            Clicked="OnClickNewPicker"
+                            HorizontalOptions="Start"/>
                     </VerticalStackLayout>
                 </ScrollView>
 
-                <micro:ChartView x:Name="chartView" HeightRequest="600"/>
+                <ScrollView VerticalOptions="FillAndExpand">
+                    <micro:ChartView x:Name="chartView" HeightRequest="600"/>
+                </ScrollView>
             </VerticalStackLayout>
-
-
 
 
             <VerticalStackLayout Grid.Column="1">
                 <Entry x:Name="SearchBar"
                    Placeholder="Enter text"
-                   TextChanged="OnSearchTextChanged"
-                />
+                   TextChanged="OnSearchTextChanged"/>
             </VerticalStackLayout>
 
             <ScrollView
