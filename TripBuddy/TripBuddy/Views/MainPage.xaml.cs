@@ -12,7 +12,8 @@ namespace TripBuddy.Views
     public partial class MainPage : ContentPage
     {
         DataStore dataStore = new DataStore();
-
+        List<Hotel> hotelListSave = new List<Hotel>();
+        MainPageViewModel viewModel;
 
 
         public MainPage(MainPageViewModel vm)
@@ -27,9 +28,9 @@ namespace TripBuddy.Views
             threadCsv.Start();
             //Wait for Threads to end and join them
             //thread_gui_start.Join();
-            threadCsv.Join();    
+            threadCsv.Join();
 
-
+            viewModel = vm;
         }
 
         private void OnClickNewPicker(object sender, EventArgs e)
@@ -109,9 +110,24 @@ namespace TripBuddy.Views
                     });
                 });
             }
+
+            //change the viewed list on the right to only hotels within selected city
+            viewModel.setHotels(new ObservableCollection<Hotel>(dataStore.HotelCatalogue));
+            hotelListSave = Search.SearchHotelsWithCity(viewModel.getHotels().ToList(), (City)picker.SelectedItem);
+            viewModel.setHotels(new ObservableCollection<Hotel>(hotelListSave));
         }
 
-            private async void SortByPriceAscending_Click(object sender, EventArgs e)
+        private async void OnSearchTextChanged(object sender, TextChangedEventArgs e)
+        {
+            //get the current piece of text in bar
+            string text = e.NewTextValue.ToString();
+
+            //get the searched hotel list
+            var hotelList = Search.SearchHotels(hotelListSave, text);
+            viewModel.setHotels(new ObservableCollection<Hotel>(hotelList));
+        }
+
+        private async void SortByPriceAscending_Click(object sender, EventArgs e)
         {
             await Task.Run(() => dataStore.AscendingSortHotelsPrice(dataStore.HotelCatalogue, hotel => hotel.Price));
         }

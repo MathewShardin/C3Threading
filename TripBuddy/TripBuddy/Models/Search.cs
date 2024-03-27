@@ -18,6 +18,15 @@ namespace TripBuddy.Models
 
             return results;
         }
+
+        public static List<Hotel> SearchHotelsWithCity(List<Hotel> hotels,  City city)
+        {
+            //using PLINQ looks for all hotels with the specified city
+            var hotelsInCity = hotels.AsParallel()
+                                .Where(hotel => hotel.City.Name == city.Name)
+                                .ToList();
+            return hotelsInCity;
+        }
     }
 
 }

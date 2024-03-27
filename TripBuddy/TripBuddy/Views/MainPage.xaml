@@ -76,15 +76,19 @@
 
             </VerticalStackLayout>
 
-
+            <VerticalStackLayout Grid.Column="1">
+                <Entry x:Name="SearchBar"
+                   Placeholder="Enter text"
+                   TextChanged="OnSearchTextChanged"
+                />
+            </VerticalStackLayout>
+            
             <ScrollView
-                Grid.Column="1">
-                <VerticalStackLayout
-                    BindableLayout.ItemsSource="{Binding Hotels}"
-                    >
+                Grid.Column="1" Margin="0,40,0,0">
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Hotels}">
                     <!--https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/listview?view=net-maui-8.0-->
                     <!--Make the listview for hotels-->
-                        <BindableLayout.ItemTemplate>
+                    <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="{x:Type model:Hotel}">
                                 <Grid Padding="10">
                                 <Label 
