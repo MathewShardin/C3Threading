@@ -84,7 +84,6 @@ namespace TripBuddy.Views
                     // Filter and sort the hotels by price in ascending order
                     var sortedHotels = dataStore.HotelCatalogue
                         .Where(hotel => hotel.City.Name == selectedCity)
-                        .OrderBy(hotel => hotel.Price)
                         .ToList();
 
                     // Create entries for the chart based on sorted hotel prices
@@ -133,6 +132,29 @@ namespace TripBuddy.Views
             List<Hotel> sortedHotels = await Task.Run(() => dataStore.AscendingSortHotelsPrice(viewModel.getHotels().ToList(), hotel => hotel.Price));
 
             viewModel.setHotels(new ObservableCollection<Hotel>(sortedHotels));
+
+            // Create entries for the chart based on sorted hotel prices
+            var entries = sortedHotels.Select(hotel =>
+                            new Microcharts.ChartEntry((float)hotel.Price)
+                            {
+                                Label = hotel.Name,
+                                ValueLabel = hotel.Price.ToString(),
+                                Color = SKColor.Parse("#266489")
+                            }).ToList();
+
+            var lineChart = new LineChart()
+            {
+                Entries = entries,
+                LabelTextSize = 10f, // Adjust the text size
+                ValueLabelOrientation = Orientation.Horizontal, // Change the orientation
+                LabelOrientation = Orientation.Horizontal, // Change the orientation
+            };
+
+            // Update the UI on the main thread
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                chartView.Chart = lineChart;
+            });
         }
 
         private async void SortByPriceDescending_Click(object sender, EventArgs e)
@@ -140,21 +162,92 @@ namespace TripBuddy.Views
             List<Hotel> sortedHotels = await Task.Run(() => dataStore.DescendingSortHotelsPrice(viewModel.getHotels().ToList(), hotel => hotel.Price));
 
             viewModel.setHotels(new ObservableCollection<Hotel>(sortedHotels));
+
+            // Create entries for the chart based on sorted hotel prices
+            var entries = sortedHotels.Select(hotel =>
+                            new Microcharts.ChartEntry((float)hotel.Price)
+                            {
+                                Label = hotel.Name,
+                                ValueLabel = hotel.Price.ToString(),
+                                Color = SKColor.Parse("#266489")
+                            }).ToList();
+
+            var lineChart = new LineChart()
+            {
+                Entries = entries,
+                LabelTextSize = 10f, // Adjust the text size
+                ValueLabelOrientation = Orientation.Horizontal, // Change the orientation
+                LabelOrientation = Orientation.Horizontal, // Change the orientation
+            };
+
+            // Update the UI on the main thread
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                chartView.Chart = lineChart;
+            });
         }
 
         private async void SortByHotelNamesAscending_Click(object sender, EventArgs e)
         {
-            List<Hotel> sortedHotels = await Task.Run(() => dataStore.AscendingSortHotelNames(dataStore.HotelCatalogue, hotel => hotel.Name));
+            List<Hotel> sortedHotels = await Task.Run(() => dataStore.AscendingSortHotelNames(viewModel.getHotels().ToList(), hotel => hotel.Name));
 
             viewModel.setHotels(new ObservableCollection<Hotel>(sortedHotels));
+
+            // Create entries for the chart based on sorted hotel names
+            var entries = sortedHotels.Select(hotel =>
+                            new Microcharts.ChartEntry((float)hotel.Price)
+                            {
+                                Label = hotel.Name,
+                                ValueLabel = hotel.Price.ToString(),
+                                Color = SKColor.Parse("#266489")
+                            }).ToList();
+
+            var lineChart = new LineChart()
+            {
+                Entries = entries,
+                LabelTextSize = 10f, // Adjust the text size
+                ValueLabelOrientation = Orientation.Horizontal, // Change the orientation
+                LabelOrientation = Orientation.Horizontal, // Change the orientation
+            };
+
+            // Update the UI on the main thread
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                chartView.Chart = lineChart;
+            });
         }
+
 
         private async void SortByHotelNamesDescending_Click(object sender, EventArgs e)
         {
-            List<Hotel> sortedHotels = await Task.Run(() => dataStore.DescendingSortHotelNames(dataStore.HotelCatalogue, hotel => hotel.Name));
+            List<Hotel> sortedHotels = await Task.Run(() => dataStore.DescendingSortHotelNames(viewModel.getHotels().ToList(), hotel => hotel.Name));
 
             viewModel.setHotels(new ObservableCollection<Hotel>(sortedHotels));
+
+            // Create entries for the chart based on sorted hotel names
+            var entries = sortedHotels.Select(hotel =>
+                            new Microcharts.ChartEntry((float)hotel.Price)
+                            {
+                                Label = hotel.Name,
+                                ValueLabel = hotel.Price.ToString(),
+                                Color = SKColor.Parse("#266489")
+                            }).ToList();
+
+            var lineChart = new LineChart()
+            {
+                Entries = entries,
+                LabelTextSize = 10f, // Adjust the text size
+                ValueLabelOrientation = Orientation.Horizontal, // Change the orientation
+                LabelOrientation = Orientation.Horizontal, // Change the orientation
+            };
+
+            // Update the UI on the main thread
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                chartView.Chart = lineChart;
+            });
         }
+
 
         private void Onclicked(object sender, EventArgs e)
         {
