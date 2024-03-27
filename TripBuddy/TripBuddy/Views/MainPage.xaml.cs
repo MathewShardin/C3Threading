@@ -38,7 +38,7 @@ namespace TripBuddy.Views
             //create a horizontal stack similar to that of how it is in our maui
             var newHorizontalStackLayout = new HorizontalStackLayout
             {
-                Padding = new Thickness(20),
+                Padding = new Thickness(15),
                 HorizontalOptions = LayoutOptions.StartAndExpand
             };
 

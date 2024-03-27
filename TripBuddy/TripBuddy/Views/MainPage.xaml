@@ -41,35 +41,38 @@
                 <ScrollView VerticalOptions="Start" HeightRequest="150">
                     <VerticalStackLayout x:Name="CitiesContainer">
                         <HorizontalStackLayout
-                    Grid.Column="0"
-                    Grid.Row="0"
-                    Padding="20">
+                                            Grid.Column="0"
+                                            Grid.Row="0"
+                                            Padding="20">
                             <Picker
-                    x:Name="DestinationStartPicker"
-                    Title="Choose A Start"
-                    HorizontalOptions="StartAndExpand"
-                    ItemsSource="{Binding Cities}"
-                    ItemDisplayBinding="{Binding Name}"
-                    SelectedIndexChanged="SortHotels_Click"/>
+                                    x:Name="DestinationStartPicker"
+                                    Title="Choose A Start"
+                                    HorizontalOptions="StartAndExpand"
+                                    ItemsSource="{Binding Cities}"
+                                    ItemDisplayBinding="{Binding Name}"
+                                    SelectedIndexChanged="SortHotels_Click"/>
                         </HorizontalStackLayout>
-                        <Button
-                Margin="60,0,0,0"
-                Grid.Column="1"
-                x:Name="CreatePicker"
-                WidthRequest="60"
-                Text="+"
-                Clicked="OnClickNewPicker"/>
                     </VerticalStackLayout>
                 </ScrollView>
+                <Button
+                         Margin="20,0,0,0"
+                         Grid.Column="1"
+                         x:Name="CreatePicker"
+                         WidthRequest="20"
+                         Text="+"
+                         Clicked="OnClickNewPicker"
+                         HorizontalOptions="StartAndExpand"/>
 
-                <micro:ChartView x:Name="chartView" HeightRequest="600"/>
+                <ScrollView VerticalOptions="Start">
+                    <micro:ChartView x:Name="chartView" HeightRequest="600"/>
+                </ScrollView>
+                
             </VerticalStackLayout>
 
             <VerticalStackLayout Grid.Column="1">
                 <Entry x:Name="SearchBar"
                    Placeholder="Enter text"
-                   TextChanged="OnSearchTextChanged"
-                />
+                   TextChanged="OnSearchTextChanged"/>
             </VerticalStackLayout>
             
             <ScrollView
