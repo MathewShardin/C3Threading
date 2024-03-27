@@ -61,12 +61,13 @@
                          WidthRequest="20"
                          Text="+"
                          Clicked="OnClickNewPicker"
-                         HorizontalOptions="StartAndExpand"/>
-
-                <ScrollView VerticalOptions="Start">
-                    <micro:ChartView x:Name="chartView" HeightRequest="600"/>
+                         HorizontalOptions="StartAndExpand"
+                />
+                <ScrollView VerticalOptions="Start" HeightRequest="500">
+                    <VerticalStackLayout>
+                        <micro:ChartView x:Name="chartView" HeightRequest="600"/>
+                    </VerticalStackLayout>
                 </ScrollView>
-                
             </VerticalStackLayout>
 
             <VerticalStackLayout Grid.Column="1">
