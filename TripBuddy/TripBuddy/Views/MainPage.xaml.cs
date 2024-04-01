@@ -5,6 +5,7 @@ using TripBuddy.Models;
 using TripBuddy.ViewModel;
 using System.Diagnostics;
 using System.Collections.ObjectModel;
+using Microsoft.Maui.Controls.Internals;
 
 
 namespace TripBuddy.Views
@@ -15,7 +16,7 @@ namespace TripBuddy.Views
         List<Hotel> hotelListSave = new List<Hotel>(); // List utilized by Search Function
         MainPageViewModel viewModel;
         Trip tripCurrent { get; set; } // Contains Current User Selection
-        int numOfPickers { get; set; }
+        int lastSelectedPickerIndex { get; set; }
 
         public MainPage(MainPageViewModel vm)
         {
@@ -29,12 +30,17 @@ namespace TripBuddy.Views
             ResetTrip();
             threadCsv.Join(); //Wait for Threads to end and join them
             viewModel = vm;
+            int lastSelectedPickerIndex = 0;
         }
 
         private void OnClickNewPicker(object sender, EventArgs e)
         {
-            // Increment the numOfPickers
-            numOfPickers++;
+            // Dont allow users to add new seletion City fields until the old ones are filled
+            if (CitiesContainer.Children.Count() > tripCurrent.Stops.Count())
+            {
+                DisplayAlert("Warning!", "Please select a Hotel for previous City", "OK :)");
+                return; 
+            }
 
             // Create a horizontal stack similar to that of how it is in our maui
             var newHorizontalStackLayout = new HorizontalStackLayout
@@ -46,7 +52,7 @@ namespace TripBuddy.Views
             // Make the picker
             Picker newPicker = new Picker
             {
-                Title = $"Stop number {numOfPickers}",
+                Title = $"Stop number {CitiesContainer.Children.Count()}",
                 HorizontalOptions = LayoutOptions.StartAndExpand,
             };
 
@@ -80,12 +86,14 @@ namespace TripBuddy.Views
         {
             var button = (Button)sender;
             var horLayout = button.Parent as HorizontalStackLayout;
+            // Remove the corresponding LocationStop
+            RemoveLocationStop(CitiesContainer.Children.IndexOf(horLayout));
+            var a = 1;
             CitiesContainer.Children.Remove(horLayout);
         }
 
 
-
-        private void SortHotels_Click(object sender, EventArgs e)
+    private async void SortHotels_Click(object sender, EventArgs e)
         {
             // Determine which picker triggered the event
             Picker picker = sender as Picker;
@@ -93,44 +101,48 @@ namespace TripBuddy.Views
             if (picker.SelectedItem != null)
             {
                 // Get the selected city
-                var selectedCity = (picker.SelectedItem as City).Name; // Change this line
+                var selectedCity = (picker.SelectedItem as City).Name;
 
-                ThreadPool.QueueUserWorkItem(o =>
+                await Task.Run(() =>
                 {
-                    // Filter and sort the hotels by price in ascending order
-                    var sortedHotels = dataStore.HotelCatalogue
-                        .Where(hotel => hotel.City.Name == selectedCity)
-                        .ToList();
-
-                    // Create entries for the chart based on sorted hotel prices
-                    var entries = sortedHotels.Select(hotel =>
-                                    new Microcharts.ChartEntry((float)hotel.Price)
-                                    {
-                                        Label = hotel.Name,
-                                        ValueLabel = hotel.Price.ToString(),
-                                        Color = SKColor.Parse("#266489")
-                                    }).ToList();
-
-                    var lineChart = new LineChart()
+                    ThreadPool.QueueUserWorkItem(o =>
                     {
-                        Entries = entries,
-                        LabelTextSize = 10f, // Adjust the text size
-                        ValueLabelOrientation = Orientation.Horizontal, // Change the orientation
-                        LabelOrientation = Orientation.Horizontal, // Change the orientation
-                    };
+                        // Filter and sort the hotels by price in ascending order
+                        var sortedHotels = dataStore.HotelCatalogue
+                            .Where(hotel => hotel.City.Name == selectedCity)
+                            .ToList();
 
-                    // Update the UI on the main thread
-                    Device.BeginInvokeOnMainThread(() =>
-                    {
-                        chartView.Chart = lineChart;
+                        // Create entries for the chart based on sorted hotel prices
+                        var entries = sortedHotels.Select(hotel =>
+                                        new Microcharts.ChartEntry((float)hotel.Price)
+                                        {
+                                            Label = hotel.Name,
+                                            ValueLabel = hotel.Price.ToString(),
+                                            Color = SKColor.Parse("#266489")
+                                        }).ToList();
+
+                        // Update the UI on the main thread
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            chartView.Chart = new LineChart
+                            {
+                                Entries = entries,
+                                LabelTextSize = 10f, // Adjust the text size
+                                ValueLabelOrientation = Orientation.Horizontal, // Change the orientation
+                                LabelOrientation = Orientation.Horizontal, // Change the orientation
+                            };
+                        });
                     });
                 });
-            }
 
-            //change the viewed list on the right to only hotels within selected city
-            viewModel.setHotels(new ObservableCollection<Hotel>(dataStore.HotelCatalogue));
-            hotelListSave = Search.SearchHotelsWithCity(viewModel.getHotels().ToList(), (City)picker.SelectedItem);
-            viewModel.setHotels(new ObservableCollection<Hotel>(hotelListSave));
+                await Device.InvokeOnMainThreadAsync(() =>
+                {
+                    // Change the viewed list on the right to only hotels within selected city
+                    viewModel.setHotels(new ObservableCollection<Hotel>(dataStore.HotelCatalogue
+                        .Where(hotel => hotel.City.Name == selectedCity)
+                        .ToList()));
+                });
+            }
         }
 
         private async void OnSearchTextChanged(object sender, TextChangedEventArgs e)
@@ -317,6 +329,7 @@ namespace TripBuddy.Views
             catch (IndexOutOfRangeException ex)
             {
                 Debug.WriteLine(ex.StackTrace);
+                return;
             }
         }
 
