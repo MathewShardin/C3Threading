@@ -28,6 +28,7 @@ namespace TripBuddy.Views
             // Initialize the Trip object that will contain User selection
             ResetTrip();
             threadCsv.Join(); //Wait for Threads to end and join them
+            viewModel = vm;
         }
 
         private void OnClickNewPicker(object sender, EventArgs e)
@@ -245,6 +246,7 @@ namespace TripBuddy.Views
             });
         }
 
+
         private void Onclicked(object sender, EventArgs e)
         {
             if(sender is Label label)
@@ -252,6 +254,7 @@ namespace TripBuddy.Views
                 DisplayAlert("Label Clicked", label.Text, "OK");
             }
         }
+
         private void ResetTrip()
         {
             this.tripCurrent = new Trip();
@@ -312,8 +315,6 @@ namespace TripBuddy.Views
         {
             tripCurrent.Stops[index].Hotel = hotel;
         }
-
-
 
 
 

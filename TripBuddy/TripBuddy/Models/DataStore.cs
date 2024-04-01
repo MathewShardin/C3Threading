@@ -1,8 +1,8 @@
 ﻿namespace TripBuddy.Models
 {
-    internal class DataStore
+    public class DataStore
     {
-        private object Assert;
+        //private object Assert;
 
         // This class contains hotel information from the csv file
 
