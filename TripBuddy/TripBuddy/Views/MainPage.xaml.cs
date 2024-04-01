@@ -15,6 +15,7 @@ namespace TripBuddy.Views
         List<Hotel> hotelListSave = new List<Hotel>(); // List utilized by Search Function
         MainPageViewModel viewModel;
         Trip tripCurrent { get; set; } // Contains Current User Selection
+        int numOfPickers { get; set; }
 
         public MainPage(MainPageViewModel vm)
         {
@@ -32,17 +33,20 @@ namespace TripBuddy.Views
 
         private void OnClickNewPicker(object sender, EventArgs e)
         {
-            //create a horizontal stack similar to that of how it is in our maui
-            HorizontalStackLayout newHorizontalStackLayout = new HorizontalStackLayout
+            // Increment the numOfPickers
+            numOfPickers++;
+
+            // Create a horizontal stack similar to that of how it is in our maui
+            var newHorizontalStackLayout = new HorizontalStackLayout
             {
                 Padding = new Thickness(15),
                 HorizontalOptions = LayoutOptions.StartAndExpand
             };
 
-            //make the picker
+            // Make the picker
             Picker newPicker = new Picker
             {
-                Title = "Choose A Stop",
+                Title = $"Stop number {numOfPickers}",
                 HorizontalOptions = LayoutOptions.StartAndExpand,
             };
 
@@ -53,18 +57,18 @@ namespace TripBuddy.Views
             newButton.Clicked += DeletePicker;
             newButton.Margin = new Thickness(750, 0, 0, 0);
 
-            //define the bindings
+            // Define the bindings
             newPicker.SetBinding(Picker.ItemsSourceProperty, "Cities");
             newPicker.ItemDisplayBinding = new Binding("Name");
 
             // Add a selected index changed event handler for the new picker
             newPicker.SelectedIndexChanged += SortHotels_Click;
 
-            //add the picker to the horizontal layour
+            // Add the picker to the horizontal layout
             newHorizontalStackLayout.Children.Add(newPicker);
             newHorizontalStackLayout.Children.Add(newButton);
 
-            //add the stacklayout to the city container vertical layout
+            // Add the stacklayout to the city container vertical layout
             CitiesContainer.Children.Add(newHorizontalStackLayout);
 
             // Update the layout
@@ -78,6 +82,7 @@ namespace TripBuddy.Views
             var horLayout = button.Parent as HorizontalStackLayout;
             CitiesContainer.Children.Remove(horLayout);
         }
+
 
         private void SortHotels_Click(object sender, EventArgs e)
         {
