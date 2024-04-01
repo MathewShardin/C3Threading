@@ -47,6 +47,7 @@
                             <Picker
                                     x:Name="DestinationStartPicker"
                                     Title="Choose A Start"
+                                    BackgroundColor="WhiteSmoke"
                                     HorizontalOptions="StartAndExpand"
                                     ItemsSource="{Binding Cities}"
                                     ItemDisplayBinding="{Binding Name}"
