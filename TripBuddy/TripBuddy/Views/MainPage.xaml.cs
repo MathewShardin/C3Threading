@@ -310,7 +310,15 @@ namespace TripBuddy.Views
 
         public void AddNewLocationStop(Hotel hotel)
         {
-            this.tripCurrent.addLocationStop(new LocationStop(hotel));
+            if (lastSelectedPickerIndex > tripCurrent.Stops.Count - 1)
+            {
+                this.tripCurrent.addLocationStop(new LocationStop(hotel));
+            } else
+            {
+                // If a user interacts with a Picker that corresponds to a LocationStop that already exists, change the
+                // exisiting object
+                AddHotelToLocationStop(hotel, lastSelectedPickerIndex);
+            }
         }
 
         public void AddNewLocationStop()
@@ -356,6 +364,7 @@ namespace TripBuddy.Views
             try
             {
                 tripCurrent.Stops[index].Hotel = hotel;
+                var a = 1;
             }
             catch (IndexOutOfRangeException ex)
             {
