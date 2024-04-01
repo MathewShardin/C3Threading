@@ -16,7 +16,7 @@ namespace TripBuddy.Views
         List<Hotel> hotelListSave = new List<Hotel>(); // List utilized by Search Function
         MainPageViewModel viewModel;
         Trip tripCurrent { get; set; } // Contains Current User Selection
-        int lastSelectedPickerIndex { get; set; }
+        int lastSelectedPickerIndex { get; set; } //Index of picker corresponds to an index of a LocationStop inside tripCurrent
 
         public MainPage(MainPageViewModel vm)
         {
@@ -97,6 +97,10 @@ namespace TripBuddy.Views
         {
             // Determine which picker triggered the event
             Picker picker = sender as Picker;
+
+            // Get the Index of the LocationStop that the user interacts with
+            var parentLayout = picker.Parent as HorizontalStackLayout;
+            lastSelectedPickerIndex = CitiesContainer.Children.IndexOf(parentLayout);
 
             if (picker.SelectedItem != null)
             {
@@ -349,7 +353,15 @@ namespace TripBuddy.Views
         //Adds a specified Hotel object to a LocationStop with a given index (index for tripCurrent.Stops)
         public void AddHotelToLocationStop(Hotel hotel, int index)
         {
-            tripCurrent.Stops[index].Hotel = hotel;
+            try
+            {
+                tripCurrent.Stops[index].Hotel = hotel;
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                Debug.WriteLine(ex.StackTrace);
+                return;
+            }
         }
 
 
