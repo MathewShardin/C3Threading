@@ -14,6 +14,7 @@ namespace TripBuddy.Views
         DataStore dataStore = new DataStore();
         List<Hotel> hotelListSave = new List<Hotel>();
         MainPageViewModel viewModel;
+        Trip tripCurrent { get; set; } // Contains Current User Selection
 
 
         public MainPage(MainPageViewModel vm)
@@ -23,14 +24,10 @@ namespace TripBuddy.Views
             BindingContext = vm;
             Thread threadCsv = new Thread(() => this.dataStore.ParseFromCsv());
             threadCsv.IsBackground = true;
-            //Thread thread_gui_start = new Thread(InitializeComponent);
-            //thread_gui_start.Start();
             threadCsv.Start();
-            //Wait for Threads to end and join them
-            //thread_gui_start.Join();
-            threadCsv.Join();
-
-            viewModel = vm;
+            // Initialize the Trip object that will contain User selection
+            ResetTrip();
+            threadCsv.Join(); //Wait for Threads to end and join them
         }
 
         private void OnClickNewPicker(object sender, EventArgs e)
@@ -248,7 +245,6 @@ namespace TripBuddy.Views
             });
         }
 
-
         private void Onclicked(object sender, EventArgs e)
         {
             if(sender is Label label)
@@ -256,8 +252,70 @@ namespace TripBuddy.Views
                 DisplayAlert("Label Clicked", label.Text, "OK");
             }
         }
-        
-        
-        
+        private void ResetTrip()
+        {
+            this.tripCurrent = new Trip();
+        }
+        private void SaveJsonTrip_Click(object sender, EventArgs e)
+        {
+            JsonSaveLoad.MakeJsonAsync(this.tripCurrent);
+        }
+
+        private void LoadJsonTrip_Click(object sender, EventArgs e)
+        {
+            this.tripCurrent = JsonSaveLoad.loadJson();
+        }
+
+        public void AddNewLocationStop(Hotel hotel)
+        {
+            this.tripCurrent.addLocationStop(new LocationStop(hotel));
+        }
+
+        public void AddNewLocationStop()
+        {
+            LocationStop tempStop = new LocationStop();
+            this.tripCurrent.addLocationStop(tempStop);
+        }
+        public void AddNewLocationStop(LocationStop stop)
+        {
+            this.tripCurrent.addLocationStop(stop);
+        }
+
+        //Remove a LocationStop based on its index in the list. The order stays as users manually add new Stops top to bottom
+        public void RemoveLocationStop(int index)
+        {
+            try
+            {
+                this.tripCurrent.Stops.RemoveAt(index);
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                Debug.WriteLine(ex.StackTrace);
+            }
+        }
+
+        //Remove a LocationStop based on the object itself
+        public void RemoveLocationStop(LocationStop stop)
+        {
+            try
+            {
+                this.tripCurrent.Stops.Remove(stop);
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                Debug.WriteLine(ex.StackTrace);
+            }
+        }
+
+        //Adds a specified Hotel object to a LocationStop with a given index (index for tripCurrent.Stops)
+        public void AddHotelToLocationStop(Hotel hotel, int index)
+        {
+            tripCurrent.Stops[index].Hotel = hotel;
+        }
+
+
+
+
+
     }
 }
