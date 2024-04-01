@@ -390,7 +390,5 @@ namespace TripBuddy.Views
             }
         }
 
-
-
     }
 }
