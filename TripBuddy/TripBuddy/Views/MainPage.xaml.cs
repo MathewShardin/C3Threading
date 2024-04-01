@@ -16,7 +16,6 @@ namespace TripBuddy.Views
         MainPageViewModel viewModel;
         Trip tripCurrent { get; set; } // Contains Current User Selection
 
-
         public MainPage(MainPageViewModel vm)
         {
             // Initialize the GUI and start parsing CSV contents in seperate thread so that GUI is not frozen
@@ -34,7 +33,7 @@ namespace TripBuddy.Views
         private void OnClickNewPicker(object sender, EventArgs e)
         {
             //create a horizontal stack similar to that of how it is in our maui
-            var newHorizontalStackLayout = new HorizontalStackLayout
+            HorizontalStackLayout newHorizontalStackLayout = new HorizontalStackLayout
             {
                 Padding = new Thickness(15),
                 HorizontalOptions = LayoutOptions.StartAndExpand
@@ -47,6 +46,13 @@ namespace TripBuddy.Views
                 HorizontalOptions = LayoutOptions.StartAndExpand,
             };
 
+            Button newButton = new Button
+            {
+                Text = "Delete"
+            };
+            newButton.Clicked += DeletePicker;
+            newButton.Margin = new Thickness(750, 0, 0, 0);
+
             //define the bindings
             newPicker.SetBinding(Picker.ItemsSourceProperty, "Cities");
             newPicker.ItemDisplayBinding = new Binding("Name");
@@ -56,6 +62,7 @@ namespace TripBuddy.Views
 
             //add the picker to the horizontal layour
             newHorizontalStackLayout.Children.Add(newPicker);
+            newHorizontalStackLayout.Children.Add(newButton);
 
             //add the stacklayout to the city container vertical layout
             CitiesContainer.Children.Add(newHorizontalStackLayout);
@@ -64,8 +71,13 @@ namespace TripBuddy.Views
             this.ForceLayout();
         }
 
-
-
+        //removes the picker that was created
+        private void DeletePicker(object sender, EventArgs e)
+        {
+            var button = (Button)sender;
+            var horLayout = button.Parent as HorizontalStackLayout;
+            CitiesContainer.Children.Remove(horLayout);
+        }
 
         private void SortHotels_Click(object sender, EventArgs e)
         {
