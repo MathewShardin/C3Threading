@@ -45,10 +45,10 @@ namespace TripBuddy.Views
             }
 
             // Create a Flex stack similar to that of how it is in our maui
-            var newFlexLayout = new FlexLayout
-            {
-                Padding = new Thickness(15),
-            };
+            var newFlexLayout = new FlexLayout { };
+            // Programmatically align items inside
+            newFlexLayout.JustifyContent = FlexJustify.SpaceBetween;
+            newFlexLayout.Margin = new Thickness(10);
 
             // Make the picker
             Picker newPicker = new Picker
@@ -77,11 +77,6 @@ namespace TripBuddy.Views
 
             // Add a selected index changed event handler for the new picker
             newPicker.SelectedIndexChanged += SortHotels_Click;
-
-            // Align Items Programatically
-            newFlexLayout.SetAlignSelf(newPicker, FlexAlignSelf.Start);
-            newFlexLayout.SetAlignSelf(newLabel, FlexAlignSelf.Center);
-            newFlexLayout.SetAlignSelf(newButton, FlexAlignSelf.End);
 
             // Add the picker to the horizontal layout
             newFlexLayout.Children.Add(newPicker);

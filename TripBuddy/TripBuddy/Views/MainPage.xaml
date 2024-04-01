@@ -38,22 +38,8 @@
 
 
             <VerticalStackLayout>
-                <ScrollView VerticalOptions="Start" HeightRequest="150">
+                <ScrollView VerticalOptions="Start" HeightRequest="225">
                     <VerticalStackLayout x:Name="CitiesContainer">
-                        <!--<HorizontalStackLayout
-                                            Grid.Column="0"
-                                            Grid.Row="0"
-                                            Padding="20">
-                            <Picker
-                                 x:Name="DestinationStartPicker"
-                                 Title="Choose A Stop"
-                                 BackgroundColor="DarkGray"
-                                 TextColor="Black"
-                                 HorizontalOptions="StartAndExpand"
-                                 ItemsSource="{Binding Cities}"
-                                 ItemDisplayBinding="{Binding Name}"
-                                 SelectedIndexChanged="SortHotels_Click"/>
-                        </HorizontalStackLayout>-->
                     </VerticalStackLayout>
                 </ScrollView>
                 <Button
