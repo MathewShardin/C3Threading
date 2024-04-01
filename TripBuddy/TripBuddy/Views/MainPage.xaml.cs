@@ -6,6 +6,8 @@ using TripBuddy.ViewModel;
 using System.Diagnostics;
 using System.Collections.ObjectModel;
 using Microsoft.Maui.Controls.Internals;
+using Microsoft.Maui.Graphics.Text;
+using Microsoft.Maui.Layouts;
 
 
 namespace TripBuddy.Views
@@ -42,26 +44,32 @@ namespace TripBuddy.Views
                 return; 
             }
 
-            // Create a horizontal stack similar to that of how it is in our maui
-            var newHorizontalStackLayout = new HorizontalStackLayout
+            // Create a Flex stack similar to that of how it is in our maui
+            var newFlexLayout = new FlexLayout
             {
                 Padding = new Thickness(15),
-                HorizontalOptions = LayoutOptions.StartAndExpand
             };
 
             // Make the picker
             Picker newPicker = new Picker
             {
-                Title = $"Stop number {CitiesContainer.Children.Count()}",
-                HorizontalOptions = LayoutOptions.StartAndExpand,
+                Title = $"Stop number {CitiesContainer.Children.Count() + 1}",
+                TitleColor = Colors.Black,
             };
+            newPicker.BackgroundColor = Colors.DarkGray;
+            newPicker.TextColor = Colors.Black;
+
+            Label newLabel = new Label
+            {
+                Text = "",
+                TextColor = Colors.Black,
+        };
 
             Button newButton = new Button
             {
-                Text = "Delete"
+                Text = "Delete",
             };
             newButton.Clicked += DeletePicker;
-            newButton.Margin = new Thickness(750, 0, 0, 0);
 
             // Define the bindings
             newPicker.SetBinding(Picker.ItemsSourceProperty, "Cities");
@@ -70,12 +78,18 @@ namespace TripBuddy.Views
             // Add a selected index changed event handler for the new picker
             newPicker.SelectedIndexChanged += SortHotels_Click;
 
+            // Align Items Programatically
+            newFlexLayout.SetAlignSelf(newPicker, FlexAlignSelf.Start);
+            newFlexLayout.SetAlignSelf(newLabel, FlexAlignSelf.Center);
+            newFlexLayout.SetAlignSelf(newButton, FlexAlignSelf.End);
+
             // Add the picker to the horizontal layout
-            newHorizontalStackLayout.Children.Add(newPicker);
-            newHorizontalStackLayout.Children.Add(newButton);
+            newFlexLayout.Children.Add(newPicker);
+            newFlexLayout.Children.Add(newLabel);
+            newFlexLayout.Children.Add(newButton);
 
             // Add the stacklayout to the city container vertical layout
-            CitiesContainer.Children.Add(newHorizontalStackLayout);
+            CitiesContainer.Children.Add(newFlexLayout);
 
             // Update the layout
             this.ForceLayout();
@@ -85,10 +99,14 @@ namespace TripBuddy.Views
         private void DeletePicker(object sender, EventArgs e)
         {
             var button = (Button)sender;
-            var horLayout = button.Parent as HorizontalStackLayout;
+            var horLayout = button.Parent as FlexLayout;
             // Remove the corresponding LocationStop
-            RemoveLocationStop(CitiesContainer.Children.IndexOf(horLayout));
-            var a = 1;
+            int indexTemp = CitiesContainer.Children.IndexOf(horLayout);
+            RemoveLocationStop(indexTemp);
+            if (lastSelectedPickerIndex == indexTemp)
+            {
+                lastSelectedPickerIndex = 0;
+            }
             CitiesContainer.Children.Remove(horLayout);
         }
 
@@ -99,7 +117,7 @@ namespace TripBuddy.Views
             Picker picker = sender as Picker;
 
             // Get the Index of the LocationStop that the user interacts with
-            var parentLayout = picker.Parent as HorizontalStackLayout;
+            var parentLayout = picker.Parent as FlexLayout;
             lastSelectedPickerIndex = CitiesContainer.Children.IndexOf(parentLayout);
 
             if (picker.SelectedItem != null)
@@ -290,6 +308,11 @@ namespace TripBuddy.Views
             if (hotel is Hotel hotelTemp)
             {
                 AddNewLocationStop(hotelTemp);
+                // Display hotel name next to Picker
+                var horLayoutTemp = CitiesContainer.Children[lastSelectedPickerIndex] as FlexLayout;
+                var labelObjectTemp = horLayoutTemp.Children[1] as Label;
+                labelObjectTemp.Text = tripCurrent.Stops[lastSelectedPickerIndex].Hotel.Name;
+
                 DisplayAlert("Hotel Saved!", hotelTemp.Name, "OK");
             }
         }
@@ -364,7 +387,6 @@ namespace TripBuddy.Views
             try
             {
                 tripCurrent.Stops[index].Hotel = hotel;
-                var a = 1;
             }
             catch (IndexOutOfRangeException ex)
             {

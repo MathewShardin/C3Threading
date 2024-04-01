@@ -40,7 +40,7 @@
             <VerticalStackLayout>
                 <ScrollView VerticalOptions="Start" HeightRequest="150">
                     <VerticalStackLayout x:Name="CitiesContainer">
-                        <HorizontalStackLayout
+                        <!--<HorizontalStackLayout
                                             Grid.Column="0"
                                             Grid.Row="0"
                                             Padding="20">
@@ -53,7 +53,7 @@
                                  ItemsSource="{Binding Cities}"
                                  ItemDisplayBinding="{Binding Name}"
                                  SelectedIndexChanged="SortHotels_Click"/>
-                        </HorizontalStackLayout>
+                        </HorizontalStackLayout>-->
                     </VerticalStackLayout>
                 </ScrollView>
                 <Button
