@@ -29,20 +29,21 @@
 
     </ContentPage.MenuBarItems>
     <ContentPage.Content>
-        <Grid x:Name="LeftGrid">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-              
-                <ColumnDefinition Width="0.5*" />
-            </Grid.ColumnDefinitions>
+        <ScrollView>
+            <Grid x:Name="LeftGrid">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+
+                    <ColumnDefinition Width="0.5*" />
+                </Grid.ColumnDefinitions>
 
 
-            <VerticalStackLayout>
-                <ScrollView VerticalOptions="Start" HeightRequest="225">
-                    <VerticalStackLayout x:Name="CitiesContainer">
-                    </VerticalStackLayout>
-                </ScrollView>
-                <Button
+                <VerticalStackLayout>
+                    <ScrollView VerticalOptions="Start" HeightRequest="225">
+                        <VerticalStackLayout x:Name="CitiesContainer">
+                        </VerticalStackLayout>
+                    </ScrollView>
+                    <Button
                          Margin="20,0,0,0"
                          Grid.Column="1"
                          x:Name="CreatePicker"
@@ -50,29 +51,36 @@
                          Text="+"
                          Clicked="OnClickNewPicker"
                          HorizontalOptions="StartAndExpand"/>
-                
-                <ScrollView Orientation="Both" HeightRequest="500">
-                    <VerticalStackLayout>
-                        <micro:ChartView x:Name="chartView" HeightRequest="550" WidthRequest="1000"/>
-                    </VerticalStackLayout>
-                </ScrollView>
-            </VerticalStackLayout>
 
-            <VerticalStackLayout Grid.Column="1">
-                <Entry x:Name="SearchBar"
+                    <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <ScrollView Grid.Row="1" Orientation="Both" HeightRequest="500">
+                            <VerticalStackLayout>
+                                <micro:ChartView x:Name="chartView" HeightRequest="550" WidthRequest="1000"/>
+                            </VerticalStackLayout>
+                        </ScrollView>
+                    </Grid>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="1">
+                    <Entry x:Name="SearchBar"
                    Placeholder="Search Hotels"
                    TextChanged="OnSearchTextChanged"/>
-            </VerticalStackLayout>
-            
-            <ScrollView
+                </VerticalStackLayout>
+
+                <ScrollView
                 Grid.Column="1" Margin="0,40,0,0">
-                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Hotels}">
-                    <!--https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/listview?view=net-maui-8.0-->
-                    <!--Make the listview for hotels-->
-                    <BindableLayout.ItemTemplate>
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Hotels}">
+                        <!--https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/listview?view=net-maui-8.0-->
+                        <!--Make the listview for hotels-->
+                        <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="{x:Type model:Hotel}">
                                 <Grid Padding="10">
-                                <Label 
+                                    <Label 
                                     Text="{Binding Name}"
                                     TextColor="Black"
                                     FontAttributes="Bold"
@@ -80,13 +88,13 @@
                                         <Label.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="Onclicked"/>
                                         </Label.GestureRecognizers>
-                                </Label>
+                                    </Label>
                                 </Grid>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
-                </VerticalStackLayout>
-            </ScrollView>
-        </Grid>
+                    </VerticalStackLayout>
+                </ScrollView>
+            </Grid>
+        </ScrollView>
     </ContentPage.Content>
-
 </ContentPage>
