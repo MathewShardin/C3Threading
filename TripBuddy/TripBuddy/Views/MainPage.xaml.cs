@@ -84,6 +84,7 @@ namespace TripBuddy.Views
         }
 
 
+
         private void SortHotels_Click(object sender, EventArgs e)
         {
             // Determine which picker triggered the event
