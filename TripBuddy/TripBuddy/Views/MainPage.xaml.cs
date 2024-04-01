@@ -12,7 +12,7 @@ namespace TripBuddy.Views
     public partial class MainPage : ContentPage
     {
         DataStore dataStore = new DataStore();
-        List<Hotel> hotelListSave = new List<Hotel>();
+        List<Hotel> hotelListSave = new List<Hotel>(); // List utilized by Search Function
         MainPageViewModel viewModel;
         Trip tripCurrent { get; set; } // Contains Current User Selection
 
@@ -249,9 +249,14 @@ namespace TripBuddy.Views
 
         private void Onclicked(object sender, EventArgs e)
         {
-            if(sender is Label label)
+            // Get Hotel object from the label clicked by user
+            var labelTemp = (Label)sender;
+            var hotel = (Hotel)labelTemp.BindingContext;
+
+            if (hotel is Hotel hotelTemp)
             {
-                DisplayAlert("Label Clicked", label.Text, "OK");
+                AddNewLocationStop(hotelTemp);
+                DisplayAlert("Hotel Saved!", hotelTemp.Name, "OK");
             }
         }
 
