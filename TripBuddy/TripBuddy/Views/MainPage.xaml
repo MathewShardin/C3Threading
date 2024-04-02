@@ -73,7 +73,8 @@
                 </VerticalStackLayout>
 
                 <ScrollView
-                Grid.Column="1" Margin="0,40,0,0">
+                Grid.Column="1" Margin="0,40,0,0" VerticalOptions="Start" HeightRequest="400"
+                    >
                     <VerticalStackLayout BindableLayout.ItemsSource="{Binding Hotels}">
                         <!--https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/listview?view=net-maui-8.0-->
                         <!--Make the listview for hotels-->
