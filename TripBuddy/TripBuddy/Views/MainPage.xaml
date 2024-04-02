@@ -72,13 +72,14 @@
                    TextChanged="OnSearchTextChanged"/>
                 </VerticalStackLayout>
 
-                <ScrollView
+                <ScrollView 
                 Grid.Column="1" Margin="0,40,0,0" VerticalOptions="Start" HeightRequest="400"
                     >
-                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Hotels}">
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Hotels}" 
+                                         x:Name="hotels_Available">
                         <!--https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/listview?view=net-maui-8.0-->
                         <!--Make the listview for hotels-->
-                        <BindableLayout.ItemTemplate>
+                        <BindableLayout.ItemTemplate >
                             <DataTemplate x:DataType="{x:Type model:Hotel}">
                                 <Grid Padding="10">
                                     <Label 
@@ -89,12 +90,12 @@
                                         <Label.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="Onclicked"/>
                                         </Label.GestureRecognizers>
-                                    </Label>
-                                </Grid>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
-                    </VerticalStackLayout>
-                </ScrollView>
+                                        </Label>
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </ScrollView>
             </Grid>
         </ScrollView>
     </ContentPage.Content>

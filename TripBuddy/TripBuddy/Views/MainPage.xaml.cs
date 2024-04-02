@@ -33,10 +33,12 @@ namespace TripBuddy.Views
             threadCsv.Join(); //Wait for Threads to end and join them
             viewModel = vm;
             int lastSelectedPickerIndex = 0;
+            hotels_Available.IsVisible = false;
         }
 
         private void OnClickNewPicker(object sender, EventArgs e)
         {
+            
             // Dont allow users to add new seletion City fields until the old ones are filled
             if (CitiesContainer.Children.Count() > tripCurrent.Stops.Count())
             {
@@ -86,8 +88,12 @@ namespace TripBuddy.Views
             // Add the stacklayout to the city container vertical layout
             CitiesContainer.Children.Add(newFlexLayout);
 
+            
+
             // Update the layout
             this.ForceLayout();
+
+           
         }
 
         //removes the picker that was created
@@ -160,6 +166,7 @@ namespace TripBuddy.Views
                         .ToList()));
                 });
             }
+            hotels_Available.IsVisible = true;
         }
 
         private async void OnSearchTextChanged(object sender, TextChangedEventArgs e)
