@@ -520,6 +520,18 @@ namespace TripBuddy.Views
             {
                 Debug.WriteLine(ex.StackTrace);
             }
+            //decrese the total price after removing a stop
+
+            // Parse the current total price and trip price to double
+            double currentTotalPrice = double.Parse(TotalPrice.Text);
+            double tripPrice = tripCurrent.TotalPrice;
+
+            // Subtract the trip price from the current total price
+            double newTotalPrice = currentTotalPrice - tripPrice
+
+            // Update the TotalPrice.Text with the new total price
+            TotalPrice.Text = newTotalPrice.ToString();
+
         }
 
         //Remove a LocationStop based on the object itself
@@ -534,6 +546,7 @@ namespace TripBuddy.Views
             {
                 Debug.WriteLine(ex.StackTrace);
             }
+            
         }
 
         //Adds a specified Hotel object to a LocationStop with a given index (index for tripCurrent.Stops)

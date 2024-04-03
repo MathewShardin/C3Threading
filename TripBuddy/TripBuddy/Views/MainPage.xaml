@@ -58,7 +58,7 @@
                     <!--add total price here-->
 
                     <Label x:Name="TotalPrice"
-                           Text="{Binding TotalPrice, StringFormat='Total: {0:C}'}"
+                           Text="0"
                            TextColor="Black"
                            FontAttributes="Bold"
                            HorizontalOptions="Center" />        
@@ -97,7 +97,7 @@
                 </VerticalStackLayout>
 
                 <ScrollView 
-                Grid.Column="1" Margin="0,80,0,60" VerticalOptions="Start" HeightRequest="400"
+                Grid.Column="1" Margin="0,88,0,60" VerticalOptions="Start" HeightRequest="700" VerticalScrollBarVisibility="Always"
                     >
                     <VerticalStackLayout BindableLayout.ItemsSource="{Binding Hotels}" 
                                          x:Name="hotels_Available">
