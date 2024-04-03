@@ -1,0 +1,47 @@
+{
+  "TotalPrice": 0,
+  "Stops": [
+    {
+      "Hotel": {
+        "Name": "Cavallaro Hotel",
+        "Price": 16676,
+        "City": {
+          "Name": "Haarlem",
+          "Country": "\u0022Netherlands\u0022",
+          "Coordinates": "\u002252.3833\u0022:\u00224.6333\u0022"
+        },
+        "Description": "Deluxe Room",
+        "Id": 165
+      },
+      "date": "2024-04-03T11:48:04.4933917+02:00"
+    },
+    {
+      "Hotel": {
+        "Name": "En Suite",
+        "Price": 6422,
+        "City": {
+          "Name": "Segbroek",
+          "Country": "Netherlands",
+          "Coordinates": "52.3728:4.8936"
+        },
+        "Description": "Double Room",
+        "Id": 209
+      },
+      "date": "2024-04-03T11:48:11.7416903+02:00"
+    },
+    {
+      "Hotel": {
+        "Name": "NH Amsterdam Schiphol Airport",
+        "Price": 9062,
+        "City": {
+          "Name": "Hoofddorp",
+          "Country": "\u0022Netherlands\u0022",
+          "Coordinates": "\u002252.3061\u0022:\u00224.6907\u0022"
+        },
+        "Description": "Standard Double or Twin Room",
+        "Id": 221
+      },
+      "date": "2024-04-03T11:48:19.7712947+02:00"
+    }
+  ]
+}

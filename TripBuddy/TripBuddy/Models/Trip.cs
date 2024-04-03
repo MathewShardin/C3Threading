@@ -36,6 +36,7 @@ namespace TripBuddy.Models
         public void addLocationStop(LocationStop stop)
         {
             Stops.Add(stop);
+            calculateTotalPrice();
         }
     }
 }

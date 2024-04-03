@@ -33,7 +33,7 @@ namespace TripBuddy.Models
             }); ;
 
             //make the file name of the first hotel
-            string fileName = trip.Stops.ToList().First().Hotel.Name + ".json";
+            string fileName = "hotelplace.json";
 
             // Get dynamic file path to saves folder
             string workingDirectory = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\..\\..\\"));
@@ -53,7 +53,7 @@ namespace TripBuddy.Models
             }); ;
 
             //make the file name of the first hotel
-            string fileName = trip.Stops.ToList().First().Hotel.Name + ".json";
+            string fileName = "hotelplace.json";
 
             // Get dynamic file path to saves folder
             string workingDirectory = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\..\\..\\"));

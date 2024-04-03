@@ -21,6 +21,11 @@ namespace TripBuddy.Models
             Coordinates = coordinates;
         }
 
+        // Constructor for JSON parser
+        public City()
+        {
+        }
+
         // Get City info based on csv of cities
         public City (string name)
         {
