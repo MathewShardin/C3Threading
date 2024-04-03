@@ -127,10 +127,6 @@ namespace TripBuddy.Views
                 var selectedCity = (picker.SelectedItem as City).Name;
                 List<Hotel> sortedHotels = new List<Hotel>();
 
-                viewModel.setHotels(new ObservableCollection<Hotel>(dataStore.HotelCatalogue));
-                hotelListSave = Search.SearchHotelsWithCity(viewModel.getHotels().ToList(), (City)picker.SelectedItem);
-                viewModel.setHotels(new ObservableCollection<Hotel>(hotelListSave));
-
                 // Draw Graph
                 await Task.Run(() =>
                 {
