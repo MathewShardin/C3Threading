@@ -127,6 +127,11 @@ namespace TripBuddy.Views
                 var selectedCity = (picker.SelectedItem as City).Name;
                 List<Hotel> sortedHotels = new List<Hotel>();
 
+                viewModel.setHotels(new ObservableCollection<Hotel>(dataStore.HotelCatalogue));
+                hotelListSave = Search.SearchHotelsWithCity(viewModel.getHotels().ToList(), (City)picker.SelectedItem);
+                viewModel.setHotels(new ObservableCollection<Hotel>(hotelListSave));
+
+                // Draw Graph
                 await Task.Run(() =>
                 {
                     ThreadPool.QueueUserWorkItem(o =>
@@ -364,14 +369,17 @@ namespace TripBuddy.Views
         //Remove a LocationStop based on its index in the list. The order stays as users manually add new Stops top to bottom
         public void RemoveLocationStop(int index)
         {
+            // Make sure to check if an index exists
             try
             {
-                this.tripCurrent.Stops.RemoveAt(index);
+                if (index >= 0 && index < this.tripCurrent.Stops.Count)
+                {
+                    this.tripCurrent.Stops.RemoveAt(index);
+                }
             }
             catch (IndexOutOfRangeException ex)
             {
                 Debug.WriteLine(ex.StackTrace);
-                return;
             }
         }
 
@@ -401,6 +409,8 @@ namespace TripBuddy.Views
                 return;
             }
         }
+
+        //public void loadJsonIU
 
     }
 }
