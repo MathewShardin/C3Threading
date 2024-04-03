@@ -125,10 +125,7 @@ namespace TripBuddy.Views
             {
                 // Get the selected city
                 var selectedCity = (picker.SelectedItem as City).Name;
-
-                viewModel.setHotels(new ObservableCollection<Hotel>(dataStore.HotelCatalogue));
-                hotelListSave = Search.SearchHotelsWithCity(viewModel.getHotels().ToList(), (City)picker.SelectedItem);
-                viewModel.setHotels(new ObservableCollection<Hotel>(hotelListSave));
+                List<Hotel> sortedHotels = new List<Hotel>();
 
                 // Draw Graph
                 await Task.Run(() =>
@@ -136,7 +133,7 @@ namespace TripBuddy.Views
                     ThreadPool.QueueUserWorkItem(o =>
                     {
                         // Filter and sort the hotels by price in ascending order
-                        var sortedHotels = dataStore.HotelCatalogue
+                        sortedHotels = dataStore.HotelCatalogue
                             .Where(hotel => hotel.City.Name == selectedCity)
                             .ToList();
 
@@ -163,16 +160,17 @@ namespace TripBuddy.Views
                     });
                 });
 
-                //await Device.InvokeOnMainThreadAsync(() =>
-                //{
-                //    //// Change the viewed list on the right to only hotels within selected city
-                //    //viewModel.setHotels(new ObservableCollection<Hotel>(dataStore.HotelCatalogue
-                //    //    .Where(hotel => hotel.City.Name == selectedCity)
-                //    //    .ToList()));
-                //    //viewModel.setHotels(new ObservableCollection<Hotel>(dataStore.HotelCatalogue));
-                //    //hotelListSave = Search.SearchHotelsWithCity(viewModel.getHotels().ToList(), (City)picker.SelectedItem);
-                //    //viewModel.setHotels(new ObservableCollection<Hotel>(hotelListSave));
-                //});
+                await Device.InvokeOnMainThreadAsync(() =>
+                {
+                    //after typing a key it resets the list to the original hotels within the city so that it doesnt get stuck on previous keys
+                    viewModel.setHotels(new ObservableCollection<Hotel>(sortedHotels));
+
+                    //look for hotels with letters in the name according to the search box (CASE SENSITIVE)
+                    hotelListSave = Search.SearchHotelsWithCity(viewModel.getHotels().ToList(), (City)picker.SelectedItem);
+
+                    //sets the displayed hotels to only those which have the letters somewhere within the hotel name
+                    viewModel.setHotels(new ObservableCollection<Hotel>(hotelListSave));
+                });
             }
             hotels_Available.IsVisible = true;
         }
