@@ -22,8 +22,8 @@ namespace TripBuddy.ViewModel
         [ObservableProperty]
         private int _count;
 
-        [ObservableProperty]
-        private double _price;
+        
+        
 
         public MainPageViewModel()
         {
@@ -34,7 +34,7 @@ namespace TripBuddy.ViewModel
 
             Hotels = new ObservableCollection<Hotel>(dStore.HotelCatalogue);
             Cities = new ObservableCollection<City>(dStore.CityCatalogue);
-            Price = trip.TotalPrice;
+      
         }
 
         public ObservableCollection<Hotel> getHotels()
@@ -53,5 +53,6 @@ namespace TripBuddy.ViewModel
                 return false;
             }
         }
+    
     }
 }

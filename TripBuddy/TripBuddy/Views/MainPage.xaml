@@ -56,10 +56,13 @@
                          TextColor="White"
                         />
                     <!--add total price here-->
-                    
+
                     <Label x:Name="TotalPrice"
-                        Text="0" TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center"/>
-                    
+                           Text="{Binding TotalPrice, StringFormat='Total: {0:C}'}"
+                           TextColor="Black"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center" />        
+
 
                     <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
                         <Grid.RowDefinitions>
@@ -108,14 +111,15 @@
                                     FontAttributes="Bold"
                                         >
                                         <Label.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="Onclicked"/>
+                                            <TapGestureRecognizer Tapped="Onclicked" />
                                         </Label.GestureRecognizers>
                                     </Label>
-                                    <Label
-                                    Text="{Binding Price}"
-                                    TextColor="Black"
-                                    FontAttributes="Bold"
-                                     VerticalOptions="End"/>
+                                    <Label 
+                                        Text="{Binding Price}"
+                                        TextColor="Black"
+                                        FontSize="Medium"
+                                        VerticalOptions="EndAndExpand"
+                                        HorizontalOptions="EndAndExpand"/>
                                 </Grid>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>

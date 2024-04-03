@@ -464,6 +464,7 @@ namespace TripBuddy.Views
                 // exisiting object
                 AddHotelToLocationStop(hotel, lastSelectedPickerIndex);
             }
+            TotalPrice.Text = tripCurrent.TotalPrice.ToString();
         }
 
         public void AddNewLocationStop()
