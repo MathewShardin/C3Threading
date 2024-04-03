@@ -535,7 +535,7 @@ namespace TripBuddy.Views
             double tripPrice = tripCurrent.TotalPrice;
 
             // Subtract the trip price from the current total price
-            double newTotalPrice = currentTotalPrice - tripPrice
+            double newTotalPrice = currentTotalPrice - tripPrice;
 
             // Update the TotalPrice.Text with the new total price
             TotalPrice.Text = newTotalPrice.ToString();
