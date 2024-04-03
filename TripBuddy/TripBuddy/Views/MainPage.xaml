@@ -111,11 +111,6 @@
                                             <TapGestureRecognizer Tapped="Onclicked"/>
                                         </Label.GestureRecognizers>
                                     </Label>
-                                    <Label
-                                    Text="{Binding Price}"
-                                    TextColor="Black"
-                                    FontAttributes="Bold"
-                                     VerticalOptions="End"/>
                                 </Grid>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>

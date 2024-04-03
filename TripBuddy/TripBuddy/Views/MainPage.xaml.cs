@@ -66,7 +66,10 @@ namespace TripBuddy.Views
                                    && relativeToContainerPosition.Value.X < 30)
                 {
                     var layout = s as FlexLayout;
+                    var oldLayout = CitiesContainer.Children[lastSelectedPickerIndex] as FlexLayout;
+                    oldLayout.BackgroundColor = Colors.AliceBlue;
                     lastSelectedPickerIndex = CitiesContainer.Children.IndexOf(layout);
+                    layout.BackgroundColor = Colors.LightBlue;
                 }
             };
 
@@ -120,18 +123,15 @@ namespace TripBuddy.Views
             // Remove the corresponding LocationStop
             int indexTemp = CitiesContainer.Children.IndexOf(horLayout);
             RemoveLocationStop(indexTemp);
-            if (lastSelectedPickerIndex == indexTemp)
+            if (indexTemp == 0)
             {
-                if (lastSelectedPickerIndex == 0)
-                {
-                    lastSelectedPickerIndex = 0;
-                }
-                else
-                {
-                    lastSelectedPickerIndex = indexTemp - 1;
-                    var newLayout = CitiesContainer.Children[lastSelectedPickerIndex] as FlexLayout;
-                    newLayout.BackgroundColor = Colors.LightBlue;
-                }
+                lastSelectedPickerIndex = 0;
+            }
+            else
+            {
+                lastSelectedPickerIndex = indexTemp - 1;
+                var newLayout = CitiesContainer.Children[lastSelectedPickerIndex] as FlexLayout;
+                newLayout.BackgroundColor = Colors.LightBlue;
             }
             CitiesContainer.Children.Remove(horLayout);
         }
@@ -513,7 +513,10 @@ namespace TripBuddy.Views
         {
             try
             {
-                tripCurrent.Stops[index].Hotel = hotel;
+                if (index >= 0 && index < this.tripCurrent.Stops.Count)
+                {
+                    tripCurrent.Stops[index].Hotel = hotel;
+                }
             }
             catch (IndexOutOfRangeException ex)
             {
