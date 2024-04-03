@@ -81,7 +81,7 @@ namespace TripBuddy.Views
                         // Make sure a hotel and city were prev selected
                         if (tripCurrent.Stops[lastSelectedPickerIndex] != null)
                         {
-                            SortHotels_Click(tripCurrent.Stops[lastSelectedPickerIndex].Hotel.City);
+                            getHotelOnSelection(tripCurrent.Stops[lastSelectedPickerIndex].Hotel.City);
                         }
                     }
                 }
@@ -148,6 +148,11 @@ namespace TripBuddy.Views
                 newLayout.BackgroundColor = Colors.LightBlue;
             }
             CitiesContainer.Children.Remove(horLayout);
+            // Remove hotel list of no pickers are left
+            if (tripCurrent.Stops.Count() == 0)
+            {
+                hotels_Available.IsVisible = false;
+            }
         }
 
 
@@ -156,9 +161,12 @@ namespace TripBuddy.Views
             // Determine which picker triggered the event
             Picker picker = sender as Picker;
 
-            // Update color highlight
-            var oldLayout = CitiesContainer.Children[lastSelectedPickerIndex] as FlexLayout;
-            oldLayout.BackgroundColor = Colors.AliceBlue;
+            if (lastSelectedPickerIndex >= 0 && lastSelectedPickerIndex < this.tripCurrent.Stops.Count)
+            {
+                // Update color highlight
+                var oldLayout = CitiesContainer.Children[lastSelectedPickerIndex] as FlexLayout;
+                oldLayout.BackgroundColor = Colors.AliceBlue;
+            }
 
             // Get the Index of the LocationStop that the user interacts with
             var parentLayout = picker.Parent as FlexLayout;
@@ -432,7 +440,7 @@ namespace TripBuddy.Views
                             // Make sure a hotel and city were prev selected
                             if (tripCurrent.Stops[lastSelectedPickerIndex] != null)
                             {
-                                SortHotels_Click(tripCurrent.Stops[lastSelectedPickerIndex].Hotel.City);
+                                getHotelOnSelection(tripCurrent.Stops[lastSelectedPickerIndex].Hotel.City);
                             }
                         }
                     }
@@ -451,6 +459,7 @@ namespace TripBuddy.Views
                 // Define the bindings
                 newPicker.SetBinding(Picker.ItemsSourceProperty, "Cities");
                 newPicker.ItemDisplayBinding = new Binding("Name");
+                newPicker.BindingContext = viewModel;
                 newPicker.SelectedItem = stopIter.Hotel.City;
 
                 Label newLabel = new Label
@@ -552,7 +561,7 @@ namespace TripBuddy.Views
             }
         }
 
-        private async void SortHotels_Click(City cityInp)
+        private async void getHotelOnSelection(City cityInp)
         {
             // Get the selected city
             var selectedCity = cityInp.Name;
