@@ -6,7 +6,8 @@
              xmlns:viewmodel="clr-namespace:TripBuddy.ViewModel"
              xmlns:model="clr-namespace:TripBuddy.Models"
              xmlns:micro="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
-             x:DataType="viewmodel:MainPageViewModel">
+             x:DataType="viewmodel:MainPageViewModel"
+             >
     <ContentPage.MenuBarItems>
         <MenuBarItem
             Text="File">
@@ -54,6 +55,11 @@
                          HorizontalOptions="End"
                          TextColor="White"
                         />
+                    <!--add total price here-->
+                    
+                    <Label x:Name="TotalPrice"
+                        Text="0" TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center"/>
+                    
 
                     <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
                         <Grid.RowDefinitions>
@@ -88,7 +94,7 @@
                 </VerticalStackLayout>
 
                 <ScrollView 
-                Grid.Column="1" Margin="0,60,0,60" VerticalOptions="Start" HeightRequest="400"
+                Grid.Column="1" Margin="0,80,0,60" VerticalOptions="Start" HeightRequest="400"
                     >
                     <VerticalStackLayout BindableLayout.ItemsSource="{Binding Hotels}" 
                                          x:Name="hotels_Available">
@@ -104,12 +110,17 @@
                                         <Label.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="Onclicked"/>
                                         </Label.GestureRecognizers>
-                                        </Label>
-                                    </Grid>
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </VerticalStackLayout>
-                    </ScrollView>
+                                    </Label>
+                                    <Label
+                                    Text="{Binding Price}"
+                                    TextColor="Black"
+                                    FontAttributes="Bold"
+                                     VerticalOptions="End"/>
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </ScrollView>
             </Grid>
         </ScrollView>
     </ContentPage.Content>

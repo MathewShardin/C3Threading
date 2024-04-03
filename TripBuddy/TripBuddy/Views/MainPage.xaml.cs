@@ -406,6 +406,11 @@ namespace TripBuddy.Views
             }
         }
 
+        private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+        {
+
+        }
+
         //public void loadJsonIU
 
     }

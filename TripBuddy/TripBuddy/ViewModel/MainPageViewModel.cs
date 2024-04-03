@@ -22,14 +22,19 @@ namespace TripBuddy.ViewModel
         [ObservableProperty]
         private int _count;
 
+        [ObservableProperty]
+        private double _price;
+
         public MainPageViewModel()
         {
             DataStore dStore = new DataStore();
+            Trip trip = new Trip();
 
             dStore.ParseFromCsv();
 
             Hotels = new ObservableCollection<Hotel>(dStore.HotelCatalogue);
             Cities = new ObservableCollection<City>(dStore.CityCatalogue);
+            Price = trip.TotalPrice;
         }
 
         public ObservableCollection<Hotel> getHotels()
