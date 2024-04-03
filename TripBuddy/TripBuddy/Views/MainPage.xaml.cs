@@ -129,6 +129,8 @@ namespace TripBuddy.Views
                 else
                 {
                     lastSelectedPickerIndex = indexTemp - 1;
+                    var newLayout = CitiesContainer.Children[lastSelectedPickerIndex] as FlexLayout;
+                    newLayout.BackgroundColor = Colors.LightBlue;
                 }
             }
             CitiesContainer.Children.Remove(horLayout);
@@ -140,9 +142,14 @@ namespace TripBuddy.Views
             // Determine which picker triggered the event
             Picker picker = sender as Picker;
 
+            // Update color highlight
+            var oldLayout = CitiesContainer.Children[lastSelectedPickerIndex] as FlexLayout;
+            oldLayout.BackgroundColor = Colors.AliceBlue;
+
             // Get the Index of the LocationStop that the user interacts with
             var parentLayout = picker.Parent as FlexLayout;
             lastSelectedPickerIndex = CitiesContainer.Children.IndexOf(parentLayout);
+            parentLayout.BackgroundColor = Colors.LightBlue;
 
             if (picker.SelectedItem != null)
             {
