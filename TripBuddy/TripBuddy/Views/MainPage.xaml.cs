@@ -459,8 +459,7 @@ namespace TripBuddy.Views
                 // Define the bindings
                 newPicker.SetBinding(Picker.ItemsSourceProperty, "Cities");
                 newPicker.ItemDisplayBinding = new Binding("Name");
-                newPicker.BindingContext = viewModel;
-                newPicker.SelectedItem = stopIter.Hotel.City;
+                newPicker.SelectedItem = viewModel.Cities.IndexOf(stopIter.Hotel.City);
 
                 Label newLabel = new Label
                 {
