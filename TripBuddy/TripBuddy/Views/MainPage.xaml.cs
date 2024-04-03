@@ -38,12 +38,11 @@ namespace TripBuddy.Views
 
         private void OnClickNewPicker(object sender, EventArgs e)
         {
-            
             // Dont allow users to add new seletion City fields until the old ones are filled
             if (CitiesContainer.Children.Count() > tripCurrent.Stops.Count())
             {
                 DisplayAlert("Warning!", "Please select a Hotel for previous City", "OK :)");
-                return; 
+                return;
             }
 
             // Create a Flex stack similar to that of how it is in our maui
@@ -51,6 +50,27 @@ namespace TripBuddy.Views
             // Programmatically align items inside
             newFlexLayout.JustifyContent = FlexJustify.SpaceBetween;
             newFlexLayout.Margin = new Thickness(10);
+
+            //gets the click when left click the area of the flex layout
+            TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer
+            {
+                Buttons = ButtonsMask.Primary
+            };
+
+            //changes lastSelectedPickerIndex to the selected flexlayout
+            tapGestureRecognizer.Tapped += (s, e) =>
+            {
+                Point? relativeToContainerPosition = e.GetPosition((View)sender);
+                //checks to see if left-click and the position of the click is within the correct area (middle of the flex layout)
+                if (e.Buttons == 0 && relativeToContainerPosition.Value.X > -700
+                                   && relativeToContainerPosition.Value.X < 30)
+                {
+                    var layout = s as FlexLayout;
+                    lastSelectedPickerIndex = CitiesContainer.Children.IndexOf(layout);
+                }
+            };
+
+            newFlexLayout.GestureRecognizers.Add(tapGestureRecognizer);
 
             // Make the picker
             Picker newPicker = new Picker
@@ -65,7 +85,7 @@ namespace TripBuddy.Views
             {
                 Text = "",
                 TextColor = Colors.Black,
-        };
+            };
 
             Button newButton = new Button
             {
@@ -88,12 +108,8 @@ namespace TripBuddy.Views
             // Add the stacklayout to the city container vertical layout
             CitiesContainer.Children.Add(newFlexLayout);
 
-            
-
             // Update the layout
             this.ForceLayout();
-
-           
         }
 
         //removes the picker that was created
@@ -106,7 +122,14 @@ namespace TripBuddy.Views
             RemoveLocationStop(indexTemp);
             if (lastSelectedPickerIndex == indexTemp)
             {
-                lastSelectedPickerIndex = 0;
+                if (lastSelectedPickerIndex == 0)
+                {
+                    lastSelectedPickerIndex = 0;
+                }
+                else
+                {
+                    lastSelectedPickerIndex = indexTemp - 1;
+                }
             }
             CitiesContainer.Children.Remove(horLayout);
         }
@@ -332,11 +355,95 @@ namespace TripBuddy.Views
         private void SaveJsonTrip_Click(object sender, EventArgs e)
         {
             JsonSaveLoad.MakeJsonAsync(this.tripCurrent);
+            DisplayAlert("Success!", "Your trip has been saved in the source folder of the app under as hotelplace.json", "OK");
         }
 
         private void LoadJsonTrip_Click(object sender, EventArgs e)
         {
             this.tripCurrent = JsonSaveLoad.loadJson();
+            loadJsonIU();
+        }
+
+        public void loadJsonIU()
+        {
+            this.lastSelectedPickerIndex = 0;
+
+            // Clean out the previous vertical layout
+            CitiesContainer.Children.Clear();
+
+            // Iterate over stops in the currentTrip
+            foreach (LocationStop stopIter in tripCurrent.Stops)
+            {
+                // Create a Flex stack similar to that of how it is in our maui
+                var newFlexLayout = new FlexLayout { };
+                // Programmatically align items inside
+                newFlexLayout.JustifyContent = FlexJustify.SpaceBetween;
+                newFlexLayout.Margin = new Thickness(10);
+
+                //gets the click when left click the area of the flex layout
+                TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer
+                {
+                    Buttons = ButtonsMask.Primary
+                };
+
+                //Grab the sender object (add new pickwr button)
+                Button sender = (Button)FindByName("CreatePicker");
+                //changes lastSelectedPickerIndex to the selected flexlayout
+                tapGestureRecognizer.Tapped += (s, e) =>
+                {
+                    Point? relativeToContainerPosition = e.GetPosition((View)sender);
+                    //checks to see if left-click and the position of the click is within the correct area (middle of the flex layout)
+                    if (e.Buttons == 0 && relativeToContainerPosition.Value.X > -700
+                                       && relativeToContainerPosition.Value.X < 30)
+                    {
+                        var layout = s as FlexLayout;
+                        var oldLayout = CitiesContainer.Children[lastSelectedPickerIndex] as FlexLayout;
+                        oldLayout.BackgroundColor = Colors.AliceBlue;
+                        lastSelectedPickerIndex = CitiesContainer.Children.IndexOf(layout);
+                        layout.BackgroundColor = Colors.LightBlue;
+                    }
+                };
+
+                newFlexLayout.GestureRecognizers.Add(tapGestureRecognizer);
+
+                // Make the picker
+                Picker newPicker = new Picker
+                {
+                    Title = $"Stop number {CitiesContainer.Children.Count() + 1}",
+                    TitleColor = Colors.Black,
+                };
+                newPicker.BackgroundColor = Colors.DarkGray;
+                newPicker.TextColor = Colors.Black;
+                // Define the bindings
+                newPicker.SetBinding(Picker.ItemsSourceProperty, "Cities");
+                newPicker.ItemDisplayBinding = new Binding("Name");
+                newPicker.SelectedItem = stopIter.Hotel.City;
+
+                Label newLabel = new Label
+                {
+                    Text = stopIter.Hotel.Name,
+                    TextColor = Colors.Black,
+                };
+
+                Button newButton = new Button
+                {
+                    Text = "Delete",
+                };
+                newButton.Clicked += DeletePicker;
+
+                // Add a selected index changed event handler for the new picker
+                newPicker.SelectedIndexChanged += SortHotels_Click;
+
+                // Add the picker to the horizontal layout
+                newFlexLayout.Children.Add(newPicker);
+                newFlexLayout.Children.Add(newLabel);
+                newFlexLayout.Children.Add(newButton);
+
+                // Add the stacklayout to the city container vertical layout
+                CitiesContainer.Children.Add(newFlexLayout);
+            }
+            // Update the layout
+            this.ForceLayout();
         }
 
         public void AddNewLocationStop(Hotel hotel)
@@ -371,6 +478,7 @@ namespace TripBuddy.Views
                 if (index >= 0 && index < this.tripCurrent.Stops.Count)
                 {
                     this.tripCurrent.Stops.RemoveAt(index);
+                    this.tripCurrent.calculateTotalPrice();
                 }
             }
             catch (IndexOutOfRangeException ex)
@@ -385,6 +493,7 @@ namespace TripBuddy.Views
             try
             {
                 this.tripCurrent.Stops.Remove(stop);
+                this.tripCurrent.calculateTotalPrice();
             }
             catch (IndexOutOfRangeException ex)
             {
@@ -405,8 +514,6 @@ namespace TripBuddy.Views
                 return;
             }
         }
-
-        //public void loadJsonIU
 
     }
 }
