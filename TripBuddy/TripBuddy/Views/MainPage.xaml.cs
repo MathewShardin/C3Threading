@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using Microsoft.Maui.Controls.Internals;
 using Microsoft.Maui.Graphics.Text;
 using Microsoft.Maui.Layouts;
+using System;
 
 
 namespace TripBuddy.Views
@@ -66,10 +67,23 @@ namespace TripBuddy.Views
                                    && relativeToContainerPosition.Value.X < 30)
                 {
                     var layout = s as FlexLayout;
+                    if (lastSelectedPickerIndex >= 0 && lastSelectedPickerIndex < this.tripCurrent.Stops.Count)
+                    {
                     var oldLayout = CitiesContainer.Children[lastSelectedPickerIndex] as FlexLayout;
                     oldLayout.BackgroundColor = Colors.AliceBlue;
+                    }
                     lastSelectedPickerIndex = CitiesContainer.Children.IndexOf(layout);
                     layout.BackgroundColor = Colors.LightBlue;
+
+                    // Show hotels relevant to selected city picker
+                    if (lastSelectedPickerIndex >= 0 && lastSelectedPickerIndex < this.tripCurrent.Stops.Count)
+                    {
+                        // Make sure a hotel and city were prev selected
+                        if (tripCurrent.Stops[lastSelectedPickerIndex] != null)
+                        {
+                            SortHotels_Click(tripCurrent.Stops[lastSelectedPickerIndex].Hotel.City);
+                        }
+                    }
                 }
             };
 
@@ -404,10 +418,23 @@ namespace TripBuddy.Views
                                        && relativeToContainerPosition.Value.X < 30)
                     {
                         var layout = s as FlexLayout;
-                        var oldLayout = CitiesContainer.Children[lastSelectedPickerIndex] as FlexLayout;
-                        oldLayout.BackgroundColor = Colors.AliceBlue;
+                        if (lastSelectedPickerIndex >= 0 && lastSelectedPickerIndex < this.tripCurrent.Stops.Count)
+                        {
+                            var oldLayout = CitiesContainer.Children[lastSelectedPickerIndex] as FlexLayout;
+                            oldLayout.BackgroundColor = Colors.AliceBlue;
+                        }
                         lastSelectedPickerIndex = CitiesContainer.Children.IndexOf(layout);
                         layout.BackgroundColor = Colors.LightBlue;
+
+                        // Show hotels relevant to selected city picker
+                        if (lastSelectedPickerIndex >= 0 && lastSelectedPickerIndex < this.tripCurrent.Stops.Count)
+                        {
+                            // Make sure a hotel and city were prev selected
+                            if (tripCurrent.Stops[lastSelectedPickerIndex] != null)
+                            {
+                                SortHotels_Click(tripCurrent.Stops[lastSelectedPickerIndex].Hotel.City);
+                            }
+                        }
                     }
                 };
 
@@ -523,6 +550,59 @@ namespace TripBuddy.Views
                 Debug.WriteLine(ex.StackTrace);
                 return;
             }
+        }
+
+        private async void SortHotels_Click(City cityInp)
+        {
+            // Get the selected city
+            var selectedCity = cityInp.Name;
+            List<Hotel> sortedHotels = new List<Hotel>();
+
+            // Draw Graph
+            await Task.Run(() =>
+            {
+                ThreadPool.QueueUserWorkItem(o =>
+                {
+                    // Filter and sort the hotels by price in ascending order
+                    sortedHotels = dataStore.HotelCatalogue
+                        .Where(hotel => hotel.City.Name == selectedCity)
+                        .ToList();
+
+                    // Create entries for the chart based on sorted hotel prices
+                    var entries = sortedHotels.Select(hotel =>
+                                    new Microcharts.ChartEntry((float)hotel.Price)
+                                    {
+                                        Label = hotel.Name,
+                                        ValueLabel = hotel.Price.ToString(),
+                                        Color = SKColor.Parse("#266489")
+                                    }).ToList();
+
+                    // Update the UI on the main thread
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        chartView.Chart = new LineChart
+                        {
+                            Entries = entries,
+                            LabelTextSize = 10f, // Adjust the text size
+                            ValueLabelOrientation = Orientation.Horizontal, // Change the orientation
+                            LabelOrientation = Orientation.Horizontal, // Change the orientation
+                        };
+                    });
+                });
+            });
+
+            await Device.InvokeOnMainThreadAsync(() =>
+            {
+                //after typing a key it resets the list to the original hotels within the city so that it doesnt get stuck on previous keys
+                viewModel.setHotels(new ObservableCollection<Hotel>(sortedHotels));
+
+                //look for hotels with letters in the name according to the search box (CASE SENSITIVE)
+                hotelListSave = Search.SearchHotelsWithCity(viewModel.getHotels().ToList(), (City)cityInp);
+
+                //sets the displayed hotels to only those which have the letters somewhere within the hotel name
+                viewModel.setHotels(new ObservableCollection<Hotel>(hotelListSave));
+            });
+            hotels_Available.IsVisible = true;
         }
 
     }
