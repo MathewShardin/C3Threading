@@ -10,17 +10,12 @@
     <ContentPage.MenuBarItems>
         <MenuBarItem
             Text="File">
-            <!--the command to connect the button to function-->
-            <!--add here backend form teo-->
-            <MenuFlyoutItem Text="Save To File" Clicked="SaveJsonTrip_Click" />
+            <MenuFlyoutItem Text="Save To File" Clicked="SaveJsonTrip_Click"/>
             <MenuFlyoutItem Text="Load From File" Clicked="LoadJsonTrip_Click"/>
         </MenuBarItem>
 
         <MenuBarItem
             Text="Sort">
-            <!--the command to connect the button to function-->
-            <!--add here backend form teo-->
-            <!--add binding here-->
             <MenuFlyoutItem Text="Price Acending" Clicked="SortByPriceAscending_Click" IconImageSource="arrow.png"/>
             <MenuFlyoutItem Text="Price Decending" Clicked="SortByPriceDescending_Click" IconImageSource="arrow_down.png"/>
             <MenuFlyoutItem Text="Name A-Z" Clicked="SortByHotelNamesAscending_Click"/>
@@ -41,20 +36,23 @@
 
                 <VerticalStackLayout>
                     <Label
-                        Text="Plan your Trip here:"
-                        FontAttributes="Bold">
+                        Text="Plan Your Trip Here:"
+                        FontAttributes="Bold"
+                        Padding="10,15,0,10"
+                        TextColor="Black">
                     </Label>
                     <ScrollView VerticalOptions="Start" HeightRequest="225">
                         <VerticalStackLayout x:Name="CitiesContainer">
                         </VerticalStackLayout>
                     </ScrollView>
                     <Button
-                         Margin="20,0,0,0"
+                         Margin="20,0,10,0"
                          Grid.Column="1"
                          x:Name="CreatePicker"
-                         Text="Add new Stop"
+                         Text="Add New Stop"
                          Clicked="OnClickNewPicker"
                          HorizontalOptions="End"
+                         TextColor="White"
                         />
 
                     <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
@@ -67,7 +65,9 @@
                             <VerticalStackLayout>
                                 <Label
                                     Text="Hotel Prices:"
-                                    FontAttributes="Bold"></Label>
+                                    FontAttributes="Bold"
+                                    TextColor="Black"
+                                    Padding="10,15,0,10"></Label>
                                 <micro:ChartView x:Name="chartView" HeightRequest="550" WidthRequest="1000"/>
                             </VerticalStackLayout>
                         </ScrollView>
@@ -78,18 +78,20 @@
                 <VerticalStackLayout Grid.Column="1">
                     <Label
                         Text="Available Hotels:"
-                        FontAttributes="Bold"></Label>
+                        FontAttributes="Bold"
+                        TextColor="Black"
+                        Padding="0,15,0,10"></Label>
                     <Entry x:Name="SearchBar"
-                   Placeholder="Search Hotels"
-                   TextChanged="OnSearchTextChanged"/>
+                       Placeholder="Search Hotels"
+                       TextChanged="OnSearchTextChanged"
+                       TextColor="Black"/>
                 </VerticalStackLayout>
 
                 <ScrollView 
-                Grid.Column="1" Margin="0,60,0,0" VerticalOptions="Start" HeightRequest="400"
+                Grid.Column="1" Margin="0,60,0,60" VerticalOptions="Start" HeightRequest="400"
                     >
                     <VerticalStackLayout BindableLayout.ItemsSource="{Binding Hotels}" 
                                          x:Name="hotels_Available">
-                        <!--https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/listview?view=net-maui-8.0-->
                         <!--Make the listview for hotels-->
                         <BindableLayout.ItemTemplate >
                             <DataTemplate x:DataType="{x:Type model:Hotel}">
