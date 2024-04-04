@@ -71,14 +71,14 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
-                        <ScrollView Grid.Row="1" Orientation="Both" HeightRequest="500">
+                        <ScrollView Grid.Row="1" Orientation="Both" HeightRequest="600">
                             <VerticalStackLayout>
                                 <Label
                                     Text="Hotel Prices:"
                                     FontAttributes="Bold"
                                     TextColor="Black"
                                     Padding="10,15,0,10"></Label>
-                                <micro:ChartView x:Name="chartView" HeightRequest="550" WidthRequest="1000"/>
+                                <micro:ChartView x:Name="chartView" HeightRequest="900" WidthRequest="1000"/>
                             </VerticalStackLayout>
                         </ScrollView>
                     </Grid>

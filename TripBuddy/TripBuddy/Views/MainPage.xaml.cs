@@ -402,105 +402,96 @@ namespace TripBuddy.Views
         public void loadJsonIU()
         {
             this.lastSelectedPickerIndex = 0;
-
-            // Clean out the previous vertical layout
             CitiesContainer.Children.Clear();
-
-            // Iterate over stops in the currentTrip
-            foreach (LocationStop stopIter in tripCurrent.Stops)
+            if (tripCurrent?.Stops != null && tripCurrent.Stops.Any())
             {
-                // Create a Flex stack similar to that of how it is in our maui
-                var newFlexLayout = new FlexLayout { };
-                // Programmatically align items inside
-                newFlexLayout.JustifyContent = FlexJustify.SpaceBetween;
-                newFlexLayout.Margin = new Thickness(10);
+                var allCities = dataStore.CityCatalogue;
 
-                //gets the click when left click the area of the flex layout
-                TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer
+                foreach (LocationStop stopIter in tripCurrent.Stops)
                 {
-                    Buttons = ButtonsMask.Primary
-                };
-
-                //Grab the sender object (add new pickwr button)
-                Button sender = (Button)FindByName("CreatePicker");
-                //changes lastSelectedPickerIndex to the selected flexlayout
-                tapGestureRecognizer.Tapped += (s, e) =>
-                {
-                    Point? relativeToContainerPosition = e.GetPosition((View)sender);
-                    //checks to see if left-click and the position of the click is within the correct area (middle of the flex layout)
-                    if (e.Buttons == 0 && relativeToContainerPosition.Value.X > -700
-                                       && relativeToContainerPosition.Value.X < 30)
+                    if (stopIter != null && stopIter.Hotel != null)
                     {
-                        var layout = s as FlexLayout;
-                        if (lastSelectedPickerIndex >= 0 && lastSelectedPickerIndex < this.tripCurrent.Stops.Count)
+                        var newFlexLayout = new FlexLayout { };
+                        newFlexLayout.JustifyContent = FlexJustify.SpaceBetween;
+                        newFlexLayout.Margin = new Thickness(10);
+                        TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer
                         {
-                            var oldLayout = CitiesContainer.Children[lastSelectedPickerIndex] as FlexLayout;
-                            oldLayout.BackgroundColor = Colors.AliceBlue;
-                        }
-                        lastSelectedPickerIndex = CitiesContainer.Children.IndexOf(layout);
-                        layout.BackgroundColor = Colors.LightBlue;
+                            Buttons = ButtonsMask.Primary
+                        };
 
-                        // Show hotels relevant to selected city picker
-                        if (lastSelectedPickerIndex >= 0 && lastSelectedPickerIndex < this.tripCurrent.Stops.Count)
+                        Button sender = (Button)FindByName("CreatePicker");
+                        tapGestureRecognizer.Tapped += (s, e) =>
                         {
-                            // Make sure a hotel and city were prev selected
-                            if (tripCurrent.Stops[lastSelectedPickerIndex] != null)
+                            Point? relativeToContainerPosition = e.GetPosition((View)sender);
+                            if (e.Buttons == 0 && relativeToContainerPosition.Value.X > -700
+                                               && relativeToContainerPosition.Value.X < 30)
                             {
-                                getHotelOnSelection(tripCurrent.Stops[lastSelectedPickerIndex].Hotel.City);
+                                var layout = s as FlexLayout;
+                                if (lastSelectedPickerIndex >= 0 && lastSelectedPickerIndex < this.tripCurrent.Stops.Count)
+                                {
+                                    var oldLayout = CitiesContainer.Children[lastSelectedPickerIndex] as FlexLayout;
+                                    oldLayout.BackgroundColor = Colors.AliceBlue;
+                                }
+                                lastSelectedPickerIndex = CitiesContainer.Children.IndexOf(layout);
+                                layout.BackgroundColor = Colors.LightBlue;
+                                if (lastSelectedPickerIndex >= 0 && lastSelectedPickerIndex < this.tripCurrent.Stops.Count)
+                                {
+                                    if (tripCurrent.Stops[lastSelectedPickerIndex] != null)
+                                    {
+                                        getHotelOnSelection(tripCurrent.Stops[lastSelectedPickerIndex].Hotel.City);
+                                    }
+                                }
                             }
+                        };
+
+                        newFlexLayout.GestureRecognizers.Add(tapGestureRecognizer);
+                        Picker newPicker = new Picker
+                        {
+                            Title = $"Stop number {CitiesContainer.Children.Count() + 1}",
+                            TitleColor = Colors.Black,
+                        };
+                        newPicker.BackgroundColor = Colors.DarkGray;
+                        newPicker.TextColor = Colors.Black;
+                        newPicker.ItemsSource = allCities;
+                        newPicker.ItemDisplayBinding = new Binding("Name");
+
+                        var selectedCity = allCities.FirstOrDefault(city => city.Name == stopIter.Hotel.City.Name && city.Country == stopIter.Hotel.City.Country && city.Coordinates == stopIter.Hotel.City.Coordinates);
+                        if (selectedCity != null)
+                        {
+                            // Find the index of the selected city in the list of cities
+                            int selectedIndex = allCities.IndexOf(selectedCity);
+                            // Set the selected index of the picker
+                            newPicker.SelectedIndex = selectedIndex;
                         }
+
+                        Label newLabel = new Label
+                        {
+                            Text = stopIter.Hotel.Name,
+                            TextColor = Colors.Black,
+                        };
+
+                        Button newButton = new Button
+                        {
+                            Text = "Delete",
+                            BackgroundColor = Colors.Purple,
+                        };
+                        newButton.Clicked += DeletePicker;
+                        newPicker.SelectedIndexChanged += SortHotels_Click;
+
+                        // Add the picker to the horizontal layout
+                        newFlexLayout.Children.Add(newPicker);
+                        newFlexLayout.Children.Add(newLabel);
+                        newFlexLayout.Children.Add(newButton);
+
+                        CitiesContainer.Children.Add(newFlexLayout);
                     }
-                };
-
-                newFlexLayout.GestureRecognizers.Add(tapGestureRecognizer);
-
-                // Make the picker
-                Picker newPicker = new Picker
-                {
-                    Title = $"Stop number {CitiesContainer.Children.Count() + 1}",
-                    TitleColor = Colors.Black,
-                };
-                newPicker.BackgroundColor = Colors.DarkGray;
-                newPicker.TextColor = Colors.Black;
-                // Define the bindings
-                newPicker.SetBinding(Picker.ItemsSourceProperty, "Cities");
-                newPicker.ItemDisplayBinding = new Binding("Name");
-                City cityObjTemp = dataStore.GetCityByName(stopIter.Hotel.City.Name);
-                int indexCityTemp = dataStore.CityCatalogue.IndexOf(cityObjTemp);
-                newPicker.SelectedIndex = indexCityTemp;
-
-                Label newLabel = new Label
-                {
-                    Text = stopIter.Hotel.Name,
-                    TextColor = Colors.Black,
-                };
-
-                Button newButton = new Button
-                {
-                    Text = "Delete",
-                    BackgroundColor = Colors.Purple,
-                    TextColor = Colors.White,
-                };
-                newButton.Clicked += DeletePicker;
-
-                // Add a selected index changed event handler for the new picker
-                newPicker.SelectedIndexChanged += SortHotels_Click;
-
-                // Add the picker to the horizontal layout
-                newFlexLayout.Children.Add(newPicker);
-                newFlexLayout.Children.Add(newLabel);
-                newFlexLayout.Children.Add(newButton);
-
-                // Add the stacklayout to the city container vertical layout
-                CitiesContainer.Children.Add(newFlexLayout);
+                }
             }
-
-            // Display total price from JSON
-            TotalPrice.Text = tripCurrent.TotalPrice.ToString();
 
             // Update the layout
             this.ForceLayout();
         }
+
 
         public void AddNewLocationStop(Hotel hotel)
         {
