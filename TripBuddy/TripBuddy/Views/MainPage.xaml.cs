@@ -465,7 +465,9 @@ namespace TripBuddy.Views
                 // Define the bindings
                 newPicker.SetBinding(Picker.ItemsSourceProperty, "Cities");
                 newPicker.ItemDisplayBinding = new Binding("Name");
-                newPicker.SelectedItem = viewModel.Cities.IndexOf(stopIter.Hotel.City);
+                City cityObjTemp = dataStore.GetCityByName(stopIter.Hotel.City.Name);
+                int indexCityTemp = dataStore.CityCatalogue.IndexOf(cityObjTemp);
+                newPicker.SelectedIndex = indexCityTemp;
 
                 Label newLabel = new Label
                 {
@@ -492,6 +494,10 @@ namespace TripBuddy.Views
                 // Add the stacklayout to the city container vertical layout
                 CitiesContainer.Children.Add(newFlexLayout);
             }
+
+            // Display total price from JSON
+            TotalPrice.Text = tripCurrent.TotalPrice.ToString();
+
             // Update the layout
             this.ForceLayout();
         }

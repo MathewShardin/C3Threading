@@ -30,7 +30,12 @@ namespace TripBuddy.ViewModel
             DataStore dStore = new DataStore();
             Trip trip = new Trip();
 
-            dStore.ParseFromCsv();
+            Thread threadCsv = new Thread(() => dStore.ParseFromCsv());
+            threadCsv.IsBackground = true;
+            threadCsv.Start();
+            threadCsv.Join(); //Wait for Threads to end and join them
+
+            //dStore.ParseFromCsv();
 
             Hotels = new ObservableCollection<Hotel>(dStore.HotelCatalogue);
             Cities = new ObservableCollection<City>(dStore.CityCatalogue);
