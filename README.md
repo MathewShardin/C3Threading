@@ -26,7 +26,7 @@ The Hotels can be sorted using the __Sort__ menu on the top-left of the screen. 
 When you are satisfied with the cities and hotels for the trip, you can save the selection by clicking on the __File__ menu, where you can choose to save the work. This will store a JSON file in the __Saves__ folder. If you wish to re-edit the save or open it again at a different time you can choose to reload it by pressing the __load from file__ option.
 
 ### AUTHORS
-Dimitri Vastenhout (DimoTheWizard)	
-Teodor Folea (micriteo)	
-Mathew Shardin (MathewShardin)	
-Corvin Wittmaack (Mr-Iddle)	
+Dimitri Vastenhout (DimoTheWizard)<br>
+Teodor Folea (micriteo)<br>
+Mathew Shardin (MathewShardin)<br>	
+Corvin Wittmaack (Mr-Iddle)<br>
