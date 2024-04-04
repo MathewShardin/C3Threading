@@ -107,6 +107,8 @@ namespace TripBuddy.Views
             Button newButton = new Button
             {
                 Text = "Delete",
+                BackgroundColor = Colors.Purple,
+                TextColor = Colors.White,
             };
             newButton.Clicked += DeletePicker;
 
@@ -470,6 +472,8 @@ namespace TripBuddy.Views
                 Button newButton = new Button
                 {
                     Text = "Delete",
+                    BackgroundColor = Colors.Purple,
+                    TextColor = Colors.White,
                 };
                 newButton.Clicked += DeletePicker;
 
