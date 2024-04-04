@@ -35,6 +35,8 @@ namespace TripBuddy.Views
             viewModel = vm;
             int lastSelectedPickerIndex = 0;
             hotels_Available.IsVisible = false;
+            
+
         }
 
         private void OnClickNewPicker(object sender, EventArgs e)
@@ -154,7 +156,9 @@ namespace TripBuddy.Views
             if (tripCurrent.Stops.Count() == 0)
             {
                 hotels_Available.IsVisible = false;
+                TotalPrice.Text = "0";
             }
+
         }
 
 
@@ -510,10 +514,13 @@ namespace TripBuddy.Views
         {
             LocationStop tempStop = new LocationStop();
             this.tripCurrent.addLocationStop(tempStop);
+            TotalPrice.Text = tripCurrent.TotalPrice.ToString();
+
         }
         public void AddNewLocationStop(LocationStop stop)
         {
             this.tripCurrent.addLocationStop(stop);
+            TotalPrice.Text = tripCurrent.TotalPrice.ToString();
         }
 
         //Remove a LocationStop based on its index in the list. The order stays as users manually add new Stops top to bottom
@@ -532,17 +539,10 @@ namespace TripBuddy.Views
             {
                 Debug.WriteLine(ex.StackTrace);
             }
-            //decrese the total price after removing a stop
-
-            // Parse the current total price and trip price to double
-            double currentTotalPrice = double.Parse(TotalPrice.Text);
-            double tripPrice = tripCurrent.TotalPrice;
-
-            // Subtract the trip price from the current total price
-            double newTotalPrice = currentTotalPrice - tripPrice;
+            tripCurrent.calculateTotalPrice();
 
             // Update the TotalPrice.Text with the new total price
-            TotalPrice.Text = newTotalPrice.ToString();
+            TotalPrice.Text = tripCurrent.TotalPrice.ToString();
 
         }
 
@@ -558,7 +558,7 @@ namespace TripBuddy.Views
             {
                 Debug.WriteLine(ex.StackTrace);
             }
-            
+            TotalPrice.Text = tripCurrent.TotalPrice.ToString();
         }
 
         //Adds a specified Hotel object to a LocationStop with a given index (index for tripCurrent.Stops)
@@ -576,6 +576,8 @@ namespace TripBuddy.Views
                 Debug.WriteLine(ex.StackTrace);
                 return;
             }
+            tripCurrent.calculateTotalPrice();
+            TotalPrice.Text = tripCurrent.TotalPrice.ToString();
         }
 
         private async void getHotelOnSelection(City cityInp)
