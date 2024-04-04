@@ -474,6 +474,7 @@ namespace TripBuddy.Views
                         {
                             Text = "Delete",
                             BackgroundColor = Colors.Purple,
+                            TextColor = Colors.White,
                         };
                         newButton.Clicked += DeletePicker;
                         newPicker.SelectedIndexChanged += SortHotels_Click;
@@ -487,6 +488,10 @@ namespace TripBuddy.Views
                     }
                 }
             }
+
+            // Display total price from JSON
+            tripCurrent.calculateTotalPrice();
+            TotalPrice.Text = tripCurrent.TotalPrice.ToString();
 
             // Update the layout
             this.ForceLayout();
