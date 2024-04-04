@@ -54,6 +54,7 @@
                          Clicked="OnClickNewPicker"
                          HorizontalOptions="End"
                          TextColor="White"
+                         BackgroundColor="Purple"
                         />
                     <!--add total price here-->
 
