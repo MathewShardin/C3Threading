@@ -5,14 +5,14 @@ The purpose of this application is to demonstrate threading abiltiies within C#,
 ## INSTALL REQUIREMENTS
 * Preferably Windows OS
 * Visual Studio 2019 or higher
-* C# .NET and Winui3 Installed
+* C# .NET and MAUI Installed
 * The project solution
 
 ## PROJECT LIMITATIONS
 * This project was done in the time-span of 8 weeks.
 * We have learned threading at the same time as working on the projects, the code may not be perfectly optimised.
 * The program (likely due to a threading reason) has a small chance to crash on launch. (relaunch the application until it runs)
-* Winui3's ui is difficult to use, the scaling is a little weird. (recommended to view in a small window instead of fullscreen)
+* MAUI's ui is difficult to use, the scaling is a little weird. (recommended to view in a small window instead of fullscreen)
 
 ## USAGE INSTRUCTIONS
 
